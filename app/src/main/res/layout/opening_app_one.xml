@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#001136"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="37dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/opening_one"
+            android:layout_gravity="bottom"
+            />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selamat Datang!"
+            android:textColor="@color/white"
+            android:textSize="24dp"
+            android:fontFamily="@font/is_sb"
+            android:layout_marginBottom="23dp"
+            />
+        <TextView
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:text="Sebuah ruang bagi mahasiswa untuk terhubung, berkolaborasi, mengikuti acara dan kompetisi,
+            menemukan barang, serta menjelajahi berbagai
+            peluang di kampus."
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="16dp"
+            android:fontFamily="@font/is_r"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="185dp">
+        <Button
+            android:id="@+id/btn_mulai"
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:background="@drawable/custom_button_rounded"
+            android:text="MULAI"
+            android:fontFamily="@font/is_bold"
+            android:textSize="18dp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dengan menggunakan aplikasi kami, Anda menyetujui "
+            android:textColor="@color/white"
+            android:fontFamily="@font/is_r"
+            android:textSize="12dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/underline_ketentuanpg"
+            android:textColor="@color/white"
+            android:fontFamily="@font/is_r"
+            android:textSize="12dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" dan "
+            android:textColor="@color/white"
+            android:textSize="12dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/underline_kebijakan"
+            android:textColor="@color/white"
+            android:fontFamily="@font/is_r"
+            android:textSize="12dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" kami"
+            android:textColor="@color/white"
+            android:fontFamily="@font/is_r"
+            android:textSize="12dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

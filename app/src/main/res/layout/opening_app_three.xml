@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#001136">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="37dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/opening_three"
+            android:layout_gravity="bottom"/>
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Kompetisi &amp; Acara"
+        android:textColor="@color/white"
+        android:fontFamily="@font/is_bold"
+        android:textSize="24dp"
+        android:layout_marginBottom="23dp"/>
+    <TextView
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:text="Dapatkan informasi terbaru tentang kompetisi, seminar, dan acara yang berlangsung di kampus. Jangan lewatkan setiap kesempatan."
+        android:textColor="@color/white"
+        android:fontFamily="@font/is_r"
+        android:textSize="16dp"
+        android:textAlignment="center"/>
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp">
+        <View
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/circle_dot_two"
+            android:layout_margin="8dp"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/circle_dot"
+            android:layout_margin="8dp"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/circle_dot_two"
+            android:layout_margin="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginTop="195dp"
+        android:layout_marginRight="20dp">
+    <ImageButton
+        android:id="@+id/next_second"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:background="@drawable/custom_button_rounded"
+        android:src="@drawable/panah_kanan"/>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="-60dp">
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:background="@drawable/custom_button_rounded_border"
+            android:text="LEWATI"
+            android:fontFamily="@font/is_bold"
+            android:textSize="18dp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+</LinearLayout>

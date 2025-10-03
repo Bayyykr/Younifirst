@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="together">
+
+<!--    <objectAnimator-->
+<!--        android:duration="3000"-->
+<!--        android:pathData="M540,2500 C1250,1900 540,1850 150,1850 "-->
+<!--        android:propertyXName="x"-->
+<!--        android:propertyYName="y"-->
+<!--        android:valueType="pathType"/>-->
+</set>
