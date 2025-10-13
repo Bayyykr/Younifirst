@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.naufal.younifirst.Home.*;
 import com.naufal.younifirst.R;
 import com.naufal.younifirst.opening.opening;
 
@@ -82,7 +83,7 @@ public class SplashScreen extends AppCompatActivity {
         circleAndLogoAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                startActivity(new Intent(SplashScreen.this, opening.class));
+                startActivity(new Intent(SplashScreen.this, MainActivity.class));
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }

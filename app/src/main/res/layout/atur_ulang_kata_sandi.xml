@@ -8,11 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="330dp"
         android:gravity="center_horizontal"
-        android:layout_marginBottom="37dp" >
+        android:layout_marginBottom="37dp">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/opening_five"
+            android:src="@drawable/reset_password"
             android:layout_gravity="bottom"/>
     </LinearLayout>
 
@@ -24,68 +24,73 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Masuk"
+            android:text="Atur Ulang Kata Sandi"
+            android:textColor="@color/white"
             android:fontFamily="@font/is_bold"
             android:textSize="24dp"
-            android:textColor="@color/white"
             android:layout_marginBottom="23dp">
         </TextView>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Masuk  menggunakan Single Sign On Student (SSO
-            Student)"
-            android:gravity="center"
+            android:textSize="16dp"
+            android:text="Buat kata sandi baru. Kata sandi baru Anda harus berbeda dari kata sandi yang sebelumnya pernah digunakan."
+            android:gravity="center_horizontal"
             android:textColor="@color/white"
             android:fontFamily="@font/is_r"/>
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="20dp">
         <EditText
-            android:id="@+id/etEmail"
-            android:inputType="textEmailAddress"
-            android:layout_width="350dp"
-            android:layout_height="60dp"
-            android:paddingStart="12dp"
-            android:textColor="@color/white"
-            android:background="@drawable/custom_textifield"
-            android:hint="Student Email"
-            android:textColorHint="#80FFFFFF">
-        </EditText>
-
-        <EditText
-            android:id="@+id/pwlogin"
+            android:id="@+id/KataSandi"
             android:inputType="textPassword"
             android:layout_width="350dp"
             android:layout_height="60dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="20dp"
             android:background="@drawable/custom_textifield"
-            android:layout_marginTop="10dp"
             android:textColor="@color/white"
             android:hint="Kata Sandi"
             android:textColorHint="#80FFFFFF"
+            android:paddingStart="12dp"
             android:drawableEnd="@drawable/close_eye"
-            android:drawablePadding="12dp">
+            android:drawablePadding="12dp"
+            android:paddingEnd="20dp">
         </EditText>
-
         <TextView
-            android:layout_width="390dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:gravity="right"
-            android:fontFamily="@font/is_sb"
-            android:text="Lupa Kata Sandi?"
-            android:textColor="#407BFF"/>
+            android:layout_marginTop="12dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/is_r"
+            android:textSize="14sp"
+            android:text="Harus terdiri dari minimal 8 karakter, termasuk huruf, angka, dan karakter khusus.">
+        </TextView>
+        <EditText
+            android:id="@+id/KataSandi1"
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:background="@drawable/custom_textifield"
+            android:layout_marginTop="23dp"
+            android:hint="Konfirmasi Kata Sandi"
+            android:textColor="@color/white"
+            android:paddingStart="12dp"
+            android:fontFamily="@font/is_r"
+            android:textColorHint="#80FFFFFF"
+            android:drawableEnd="@drawable/close_eye"
+            android:paddingEnd="20dp">
+        </EditText>
+        <TextView
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:text="Kedua kata sandi harus sama."
+            android:textColor="@color/white"
+            android:fontFamily="@font/is_r"
+            android:layout_marginTop="12dp"/>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,11 +99,10 @@
         <Button
             android:layout_width="350dp"
             android:layout_height="60dp"
-            android:background="@drawable/custom_button_rounded"
-            android:text="MULAI"
+            android:text="RESET PASSWORD"
             android:fontFamily="@font/is_bold"
+            android:textColor="@color/white"
             android:textSize="18dp"
-            android:textColor="@color/white"/>
+            android:background="@drawable/custom_button_rounded"/>
     </LinearLayout>
-
 </LinearLayout>

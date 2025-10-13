@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/home_icon_selected"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_competition"
+        android:icon="@drawable/icon_competitionteam"
+        android:title="Kompetisi" />
+
+    <item
+        android:id="@+id/nav_lostfound"
+        android:icon="@drawable/icon_lnf"
+        android:title="Keranjang" />
+
+    <item
+        android:id="@+id/nav_event"
+        android:icon="@drawable/icon_event"
+        android:title="Favorit" />
+
+    <item
+        android:id="@+id/nav_forum"
+        android:icon="@drawable/icon_forum"
+        android:title="Profil" />
+</menu>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="320dp"
+    android:layout_height="330dp"
+    android:background="@drawable/background_popup"
+    android:gravity="center">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Waduh!"
+        android:textColor="@color/white"
+        android:fontFamily="@font/is_bold"
+        android:textSize="25dp">
+    </TextView>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/asset_popup_gagal"
+        android:layout_marginTop="20dp">
+    </ImageView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Terjadi Kesalahan.."
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:layout_marginTop="10dp">
+    </TextView>
+    <Button
+        android:id="@+id/Btryagain"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="TRY AGAIN"
+        android:background="@drawable/custom_button_rounded"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/is_bold"
+        android:textSize="18dp"/>
+</LinearLayout>
+</LinearLayout>

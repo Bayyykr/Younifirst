@@ -1,5 +1,6 @@
 package com.naufal.younifirst.opening;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -29,5 +30,4 @@ public class opening extends AppCompatActivity {
         btn_lewati = findViewById(R.id.btn_lewati);
         btn_lewati.setOnClickListener(v -> showLayoutOne());
     }
-
 }
