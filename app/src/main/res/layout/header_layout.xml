@@ -1,0 +1,43 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/header_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginTop="20dp"
+    android:gravity="center_horizontal"
+    android:background="@color/secondary_color">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/icon_left"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:src="@drawable/profile_coba"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/title_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="YouniFirst"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:fontFamily="@font/is_bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/icon_right"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/icon_notifikasi"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
