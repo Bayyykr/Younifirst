@@ -8,12 +8,67 @@
     tools:context=".Home.HomeFragment">
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_width="357dp"
+        android:layout_height="186dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/welcome_asset_dashboard"
+        android:clipToOutline="true"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        android:layout_marginTop="5dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/welcome_bg"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/welcome_asset_dashboard"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="13dp"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Selamat datang Test0206!"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/is_bold"
+                    android:textSize="18sp"
+                    android:layout_marginTop="7dp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Saatnya terhubung dan seru-seruan bareng teman kampus di YouniFirst 💫"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/is_bold"
+                    android:textSize="14sp"
+                    android:layout_marginTop="33dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="10dp"
+                >
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/welcome_char"/>
+            </LinearLayout>
+        </LinearLayout>
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
