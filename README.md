@@ -1,4 +1,4 @@
-# YoUnifirst
+# YouniFirst
 
 YoUnifirst is an integrated digital platform designed to be a solution to the problems that exist in campus life. This platform functions as a center of information for all social-academic activities and needs in the campus environment, ensuring every student gets relevant, fast, and easy access to information.
 
