@@ -54,6 +54,89 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/fabMenuEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="12dp"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnPostingEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/icon_posting"
+            android:contentDescription="Posting Event"
+            app:backgroundTint="#3B5CCC"
+            app:maxImageSize="24dp"
+            app:fabSize="normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fabMenuKompetisi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="12dp"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAddTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/icon_tim"
+            android:contentDescription="Buat Team"
+            app:backgroundTint="#3B5CCC"
+            app:maxImageSize="24dp"
+            app:fabSize="normal" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnPostingLomba"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/icon_posting"
+            android:contentDescription="Posting Lomba"
+            app:backgroundTint="#3B5CCC"
+            app:maxImageSize="24dp"
+            app:fabSize="normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fabMenuLostFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="12dp"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnPostingLostFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/icon_posting"
+            android:contentDescription="Posting Informasi Barang"
+            app:backgroundTint="#3B5CCC"
+            app:maxImageSize="24dp"
+            app:fabSize="normal" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/btnAddContainer"
         android:layout_width="55dp"
         android:layout_height="55dp"

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView btnAdd;
     private View fadeBackground;
     private boolean isMenuVisible = false;
-    private String currentTag = "home"; // simpan fragment aktif
+    private String currentTag = "home";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,28 +31,22 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Referensi elemen global
         fabMenuHome = findViewById(R.id.fabMenuHome);
-//        fabMenuEvent = findViewById(R.id.fabMenuEvent);
+        fabMenuEvent = findViewById(R.id.fabMenuEvent);
 //        fabMenuForum = findViewById(R.id.fabMenuForum);
         btnAdd = findViewById(R.id.btnAdd);
         fadeBackground = findViewById(R.id.globalFadeBackground);
 
-        // Awal disembunyikan
         hideAllMenusInstant();
 
-        // Default fragment
         replaceFragment(new HomeFragment(), "home");
 
-        // Tombol Add (FAB utama)
         btnAdd.setOnClickListener(v -> toggleMenu());
 
-        // Background klik → menutup menu
         fadeBackground.setOnClickListener(v -> hideMenu());
 
-        // Bottom navigation listener
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            hideMenu(); // Tutup semua menu ketika berpindah fragment
+            hideMenu();
             switch (item.getItemId()) {
                 case R.id.nav_home:
                     replaceFragment(new HomeFragment(), "home");
@@ -85,11 +79,11 @@ public class MainActivity extends AppCompatActivity {
 
         switch (tag) {
             case "home":
-                fabMenuHome.setVisibility(View.INVISIBLE); // tetap invisible sampai tombol add diklik
+                fabMenuHome.setVisibility(View.INVISIBLE);
                 break;
-//            case "event":
-//                fabMenuEvent.setVisibility(View.INVISIBLE);
-//                break;
+            case "event":
+                fabMenuEvent.setVisibility(View.INVISIBLE);
+                break;
 //            case "forum":
 //                fabMenuForum.setVisibility(View.INVISIBLE);
 //                break;
@@ -143,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
         switch (tag) {
             case "home":
                 return fabMenuHome;
-//            case "event":
-//                return fabMenuEvent;
+            case "event":
+                return fabMenuEvent;
 //            case "forum":
 //                return fabMenuForum;
             default:
@@ -154,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void hideAllMenusInstant() {
         if (fabMenuHome != null) fabMenuHome.setVisibility(View.INVISIBLE);
-//        if (fabMenuEvent != null) fabMenuEvent.setVisibility(View.INVISIBLE);
+        if (fabMenuEvent != null) fabMenuEvent.setVisibility(View.INVISIBLE);
 //        if (fabMenuForum != null) fabMenuForum.setVisibility(View.INVISIBLE);
         if (fadeBackground != null) fadeBackground.setVisibility(View.GONE);
         isMenuVisible = false;
