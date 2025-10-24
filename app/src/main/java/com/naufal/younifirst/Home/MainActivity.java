@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.animation.ObjectAnimator;
+import android.content.res.ColorStateList;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,11 +21,14 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
-    private LinearLayout fabMenuHome, fabMenuEvent, fabMenuForum;
+    private LinearLayout fabMenuHome, fabMenuEvent, fabMenuKompetisi, fabMenuLostFound,fabMenuForum;
     private ImageView btnAdd;
     private View fadeBackground;
     private boolean isMenuVisible = false;
     private String currentTag = "home";
+    private View btnAddContainer;
+    private int colorAddDefault;
+    private int colorAddActive;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,13 +38,18 @@ public class MainActivity extends AppCompatActivity {
 
         fabMenuHome = findViewById(R.id.fabMenuHome);
         fabMenuEvent = findViewById(R.id.fabMenuEvent);
-//        fabMenuForum = findViewById(R.id.fabMenuForum);
+        fabMenuKompetisi = findViewById(R.id.fabMenuKompetisi);
+        fabMenuLostFound = findViewById(R.id.fabMenuLostFound);
         btnAdd = findViewById(R.id.btnAdd);
         fadeBackground = findViewById(R.id.globalFadeBackground);
+        btnAddContainer = findViewById(R.id.btnAddContainer);
+        colorAddDefault = android.graphics.Color.parseColor("#3B5CCC");
+        colorAddActive = android.graphics.Color.parseColor("#121A2C");
 
         hideAllMenusInstant();
 
         replaceFragment(new HomeFragment(), "home");
+        updateFabMenuState();
 
         btnAdd.setOnClickListener(v -> toggleMenu());
 
@@ -66,33 +76,34 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
+        fadeBackground.setOnClickListener(v -> {
+            if (isMenuVisible) {
+                animateHideFabMenu();
+            }
+        });
     }
 
     private void replaceFragment(Fragment fragment, String tag) {
+        stopAllAnimations();
+        hideAllMenusInstant();
+        isMenuVisible = false;
+
         currentTag = tag;
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragment_container, fragment);
-        ft.commit();
+        ft.commitNowAllowingStateLoss();
 
-        hideAllMenusInstant();
-
-        switch (tag) {
-            case "home":
-                fabMenuHome.setVisibility(View.INVISIBLE);
-                break;
-            case "event":
-                fabMenuEvent.setVisibility(View.INVISIBLE);
-                break;
-//            case "forum":
-//                fabMenuForum.setVisibility(View.INVISIBLE);
-//                break;
-        }
+        updateFabMenuState();
     }
 
     private void toggleMenu() {
-        if (isMenuVisible) hideMenu();
-        else showMenu();
+        if (isMenuVisible) {
+            animateHideFabMenu();
+        } else {
+            animateShowFabMenu();
+        }
     }
 
     private void showMenu() {
@@ -137,20 +148,106 @@ public class MainActivity extends AppCompatActivity {
         switch (tag) {
             case "home":
                 return fabMenuHome;
+            case "competition":
+                return fabMenuKompetisi;
             case "event":
                 return fabMenuEvent;
-//            case "forum":
-//                return fabMenuForum;
+            case "lostfound":
+                return fabMenuLostFound;
             default:
                 return null;
         }
     }
 
     private void hideAllMenusInstant() {
-        if (fabMenuHome != null) fabMenuHome.setVisibility(View.INVISIBLE);
-        if (fabMenuEvent != null) fabMenuEvent.setVisibility(View.INVISIBLE);
-//        if (fabMenuForum != null) fabMenuForum.setVisibility(View.INVISIBLE);
+        if (fabMenuHome != null) fabMenuHome.setVisibility(View.GONE);
+        if (fabMenuEvent != null) fabMenuEvent.setVisibility(View.GONE);
+        if (fabMenuKompetisi != null) fabMenuKompetisi.setVisibility(View.GONE);
+        if (fabMenuLostFound != null) fabMenuLostFound.setVisibility(View.GONE);
         if (fadeBackground != null) fadeBackground.setVisibility(View.GONE);
         isMenuVisible = false;
+    }
+
+    private void stopAllAnimations() {
+        if (fabMenuHome != null) fabMenuHome.clearAnimation();
+        if (fabMenuEvent != null) fabMenuEvent.clearAnimation();
+        if (fabMenuKompetisi != null) fabMenuKompetisi.clearAnimation();
+        if (fabMenuLostFound != null) fabMenuLostFound.clearAnimation();
+        if (fadeBackground != null) fadeBackground.clearAnimation();
+    }
+
+    private void animateShowFabMenu() {
+        LinearLayout currentMenu = getMenuByTag(currentTag);
+        if (currentMenu == null || isFinishing()) return;
+
+        stopAllAnimations();
+
+        fadeBackground.setVisibility(View.VISIBLE);
+        AlphaAnimation fadeIn = new AlphaAnimation(0f, 1f);
+        fadeIn.setDuration(200);
+        fadeIn.setFillAfter(true);
+
+        fadeBackground.startAnimation(fadeIn);
+        currentMenu.setVisibility(View.VISIBLE);
+        currentMenu.startAnimation(fadeIn);
+        btnAdd.animate().rotation(45f).setDuration(200).start();
+
+        btnAddContainer.setBackgroundTintList(ColorStateList.valueOf(colorAddActive));
+
+        isMenuVisible = true;
+    }
+
+    private void animateHideFabMenu() {
+        LinearLayout currentMenu = getMenuByTag(currentTag);
+        if (currentMenu == null) return;
+
+        AlphaAnimation fadeOut = new AlphaAnimation(1f, 0f);
+        fadeOut.setDuration(200);
+        fadeBackground.startAnimation(fadeOut);
+        currentMenu.startAnimation(fadeOut);
+
+        fadeOut.setAnimationListener(new android.view.animation.Animation.AnimationListener() {
+            @Override public void onAnimationStart(android.view.animation.Animation animation) {}
+            @Override public void onAnimationRepeat(android.view.animation.Animation animation) {}
+            @Override
+            public void onAnimationEnd(android.view.animation.Animation animation) {
+                fadeBackground.setVisibility(View.GONE);
+                currentMenu.setVisibility(View.GONE);
+            }
+        });
+
+        btnAdd.animate().rotation(0f).setDuration(200).start();
+
+        btnAddContainer.setBackgroundTintList(ColorStateList.valueOf(colorAddDefault));
+
+        isMenuVisible = false;
+    }
+
+    private void updateFabMenuState() {
+        LinearLayout currentMenu = getMenuByTag(currentTag);
+        if (currentMenu == null) return;
+
+        hideAllMenusInstant();
+
+        int childCount = currentMenu.getChildCount();
+
+        if (childCount == 1) {
+            currentMenu.setVisibility(View.VISIBLE);
+            btnAddContainer.setVisibility(View.GONE);
+
+            currentMenu.setTranslationY(55f);
+            fadeBackground.setVisibility(View.GONE);
+            isMenuVisible = false;
+            btnAdd.setRotation(0f);
+
+        } else if (childCount > 1) {
+            btnAddContainer.setVisibility(View.VISIBLE);
+            currentMenu.setVisibility(View.GONE);
+            fadeBackground.setVisibility(View.GONE);
+            isMenuVisible = false;
+        } else {
+            btnAddContainer.setVisibility(View.GONE);
+            fadeBackground.setVisibility(View.GONE);
+        }
     }
 }

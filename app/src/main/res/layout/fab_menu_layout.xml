@@ -67,8 +67,8 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnPostingEvent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_marginBottom="12dp"
             android:src="@drawable/icon_posting"
             android:contentDescription="Posting Event"
@@ -126,8 +126,8 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnPostingLostFound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_marginBottom="12dp"
             android:src="@drawable/icon_posting"
             android:contentDescription="Posting Informasi Barang"
