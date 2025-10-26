@@ -8,36 +8,149 @@
     android:gravity="center_horizontal"
     android:background="@color/secondary_color">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/icon_left"
-        android:layout_width="70dp"
-        android:layout_height="60dp"
-        android:src="@drawable/profile_coba"
-        android:padding="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+    <LinearLayout
+        android:id="@+id/header_utama"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/title_center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="YouniFirst"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:fontFamily="@font/is_bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/icon_left_utama"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/profile_coba"
+            android:padding="8dp"/>
 
-    <ImageView
-        android:id="@+id/icon_right"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/icon_notifikasi"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/title_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="YouniFirst"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:fontFamily="@font/is_bold"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/icon_right"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/icon_notifikasi"
+            android:padding="6dp"/>
+    </LinearLayout>
+
+
+    <!-- HEADER SECOND -->
+    <LinearLayout
+        android:id="@+id/header_second"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/icon_left_second"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/profile_coba"
+            android:padding="8dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@drawable/seacrh_bar_bg"
+            android:paddingHorizontal="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/search_hint_second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cari"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/is_bold"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/search_icon_second"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_search"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/icon_filter"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/icon_filter"
+            android:padding="6dp"/>
+    </LinearLayout>
+
+
+    <!-- HEADER THIRD -->
+    <LinearLayout
+        android:id="@+id/header_third"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/icon_left_third"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/profile_coba"
+            android:padding="8dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@drawable/seacrh_bar_bg"
+            android:paddingHorizontal="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/search_hint_third"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cari"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/is_bold"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/search_icon_third"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_search"/>
+        </LinearLayout>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

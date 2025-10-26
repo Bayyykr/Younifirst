@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
 
     private LinearLayout fabMenuHome, fabMenuEvent, fabMenuKompetisi, fabMenuLostFound,fabMenuForum;
+    private LinearLayout headerUtama, headerSecond, headerThird;
     private ImageView btnAdd;
     private View fadeBackground;
     private boolean isMenuVisible = false;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         fabMenuEvent = findViewById(R.id.fabMenuEvent);
         fabMenuKompetisi = findViewById(R.id.fabMenuKompetisi);
         fabMenuLostFound = findViewById(R.id.fabMenuLostFound);
+        headerUtama = findViewById(R.id.header_utama);
+        headerSecond = findViewById(R.id.header_second);
+        headerThird = findViewById(R.id.header_third);
         btnAdd = findViewById(R.id.btnAdd);
         fadeBackground = findViewById(R.id.globalFadeBackground);
         btnAddContainer = findViewById(R.id.btnAddContainer);
@@ -96,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         ft.commitNowAllowingStateLoss();
 
         updateFabMenuState();
+        updateHeaderVisibility(tag);
     }
 
     private void toggleMenu() {
@@ -104,21 +109,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             animateShowFabMenu();
         }
-    }
-
-    private void showMenu() {
-        LinearLayout currentMenu = getMenuByTag(currentTag);
-        if (currentMenu == null) return;
-
-        fadeBackground.setVisibility(View.VISIBLE);
-        AlphaAnimation fadeIn = new AlphaAnimation(0f, 1f);
-        fadeIn.setDuration(200);
-        fadeBackground.startAnimation(fadeIn);
-
-        currentMenu.setVisibility(View.VISIBLE);
-        currentMenu.startAnimation(fadeIn);
-
-        isMenuVisible = true;
     }
 
     private void hideMenu() {
@@ -250,4 +240,22 @@ public class MainActivity extends AppCompatActivity {
             fadeBackground.setVisibility(View.GONE);
         }
     }
+    private void updateHeaderVisibility(String tag) {
+        if (headerUtama == null || headerSecond == null || headerThird == null) return;
+        headerUtama.setVisibility(View.GONE);
+        headerSecond.setVisibility(View.GONE);
+        headerThird.setVisibility(View.GONE);
+        switch (tag) {
+            case "home":
+                headerUtama.setVisibility(View.VISIBLE);
+                break;
+            case "event":
+                headerThird.setVisibility(View.VISIBLE);
+                break;
+            default:
+                headerSecond.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
 }
