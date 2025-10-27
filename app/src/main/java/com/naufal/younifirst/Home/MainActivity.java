@@ -1,12 +1,18 @@
 package com.naufal.younifirst.Home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.animation.ObjectAnimator;
 import android.content.res.ColorStateList;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import android.widget.RadioButton;
+import android.widget.Button;
+import android.widget.Toast;
+import android.view.LayoutInflater;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LinearLayout fabMenuHome, fabMenuEvent, fabMenuKompetisi, fabMenuLostFound,fabMenuForum;
     private LinearLayout headerUtama, headerSecond, headerThird;
-    private ImageView btnAdd;
+    private ImageView btnAdd, iconFilter;
     private View fadeBackground;
     private boolean isMenuVisible = false;
     private String currentTag = "home";
@@ -49,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         btnAddContainer = findViewById(R.id.btnAddContainer);
         colorAddDefault = android.graphics.Color.parseColor("#3B5CCC");
         colorAddActive = android.graphics.Color.parseColor("#121A2C");
+        iconFilter = findViewById(R.id.icon_filter);
+        iconFilter.setOnClickListener(v -> showFilterBottomSheet());
 
         hideAllMenusInstant();
 
@@ -257,5 +265,35 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    private void showFilterBottomSheet() {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+
+        View sheetView = LayoutInflater.from(this).inflate(R.layout.filter_layout, null);
+
+        Button btnTerapkan = sheetView.findViewById(R.id.btnTerapkan);
+        btnTerapkan.setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+            Toast.makeText(this, "Filter diterapkan", Toast.LENGTH_SHORT).show();
+        });
+
+        TextView btnReset = sheetView.findViewById(R.id.text_reset);
+        btnReset.setOnClickListener(v -> {
+            ((RadioButton) sheetView.findViewById(R.id.rb_terbaru)).setChecked(false);
+            ((RadioButton) sheetView.findViewById(R.id.rb_terlama)).setChecked(false);
+            ((RadioButton) sheetView.findViewById(R.id.rb_populer)).setChecked(false);
+            ((RadioButton) sheetView.findViewById(R.id.rb_kompetisi)).setChecked(false);
+            ((RadioButton) sheetView.findViewById(R.id.rb_lostfound)).setChecked(false);
+            ((RadioButton) sheetView.findViewById(R.id.rb_event)).setChecked(false);
+            ((RadioButton) sheetView.findViewById(R.id.rb_forum)).setChecked(false);
+            Toast.makeText(this, "Filter direset", Toast.LENGTH_SHORT).show();
+        });
+
+        bottomSheetDialog.setContentView(sheetView);
+        View parent = (View) sheetView.getParent();
+        parent.setBackgroundColor(Color.TRANSPARENT);
+        bottomSheetDialog.show();
+    }
+
 
 }

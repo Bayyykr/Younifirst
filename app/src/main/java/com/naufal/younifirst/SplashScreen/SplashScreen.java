@@ -5,13 +5,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.naufal.younifirst.Home.*;
+import com.naufal.younifirst.Home.MainActivity;
 import com.naufal.younifirst.R;
 import com.naufal.younifirst.opening.opening;
 
@@ -30,10 +31,12 @@ public class SplashScreen extends AppCompatActivity {
 
         lingkarang_splash.setVisibility(View.INVISIBLE);
 
+        // Jalankan animasi logo setelah layout tampil
         logo.post(this::mulaianimasilogo);
     }
 
     private void mulaianimasilogo() {
+        // Mulai dari posisi bawah
         float startY = logo.getY() + 2000;
         logo.setY(startY);
 
@@ -83,11 +86,23 @@ public class SplashScreen extends AppCompatActivity {
         circleAndLogoAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                startActivity(new Intent(SplashScreen.this, MainActivity.class));
+                // ✅ Cek status login setelah animasi selesai
+                SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
+                boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+
+                Intent intent;
+                if (isLoggedIn) {
+                    intent = new Intent(SplashScreen.this, MainActivity.class);
+                } else {
+                    intent = new Intent(SplashScreen.this, opening.class);
+                }
+
+                startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
         });
+
         circleAndLogoAnimator.start();
     }
 }

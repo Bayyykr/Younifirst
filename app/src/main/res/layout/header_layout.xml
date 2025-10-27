@@ -49,11 +49,17 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@drawable/icon_notifikasi"
+            android:layout_marginRight="8dp"
+            android:padding="6dp"/>
+
+        <ImageView
+            android:id="@+id/icon_filter"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/icon_filter"
             android:padding="6dp"/>
     </LinearLayout>
 
-
-    <!-- HEADER SECOND -->
     <LinearLayout
         android:id="@+id/header_second"
         android:layout_width="match_parent"
@@ -99,15 +105,13 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/icon_filter"
+            android:id="@+id/icon_filter_second"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:src="@drawable/icon_filter"
             android:padding="6dp"/>
     </LinearLayout>
 
-
-    <!-- HEADER THIRD -->
     <LinearLayout
         android:id="@+id/header_third"
         android:layout_width="match_parent"

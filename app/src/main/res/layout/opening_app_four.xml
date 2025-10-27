@@ -84,6 +84,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="-60dp">
         <Button
+            android:id="@+id/btn_lewati_third"
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:gravity="center"
