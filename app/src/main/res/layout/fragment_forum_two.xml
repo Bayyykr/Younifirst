@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#001136"
+    tools:context=".Home.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <FrameLayout
+            android:id="@+id/frame_header"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="@drawable/asset_background_list_item"
+            android:clipToOutline="true"
+            android:clipChildren="true"
+            android:clipToPadding="true">
+            <ImageView
+                android:id="@+id/img_header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/gbr_orang_pusing"
+                android:contentDescription="Header Image Dummy" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_asset_head_forum_click" />
+            <ImageButton
+                android:id="@+id/first_next"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:background="@drawable/circle_dot_forum"
+                android:src="@drawable/panah_kiri"
+                />
+            <ImageButton
+                android:id="@+id/flag"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_margin="10dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:background="@drawable/circle_dot_forum"
+                android:src="@drawable/icon_bendera"
+                android:layout_gravity="end" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom">
+                <TextView
+                    android:id="@+id/txt_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bagi Materi UTS!!"
+                    android:textColor="@color/white"
+                    android:gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/is_m" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/txt_sub1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dibuat oleh"
+                        android:textColor="#858891"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_m" />
+
+                    <TextView
+                        android:id="@+id/txt_sub2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@ocean"
+                        android:textColor="#5E8BFF"
+                        android:layout_marginStart="5dp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_m" />
+
+                    <TextView
+                        android:id="@+id/txt_sub3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" • 1 hari lalu"
+                        android:textColor="#858891"
+                        android:layout_marginStart="8dp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_m" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/asset_background_list_item"
+                        android:text="Akademik"
+                        android:padding="8dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/is_r"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/asset_background_list_item"
+                        android:text="Belajar"
+                        android:padding="8dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/is_r"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Help! Besok UTS😭😭😭. Bagi info apa aja "
+                        android:gravity="center"
+                        android:textSize="14dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/is_r"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="bottom">
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/profile_coba"
+                        android:contentDescription="Foto profil"
+                        android:layout_marginLeft="10dp"/>
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/profile_coba"
+                        android:contentDescription="Foto profil"
+                        android:layout_marginLeft="-10dp"
+                        android:translationZ="-1dp"/>
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/profile_coba"
+                        android:contentDescription="Foto profil"
+                        android:layout_marginLeft="-10dp"
+                        android:translationZ="-2dp"/>
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/profile_coba"
+                        android:contentDescription="Foto profil"
+                        android:layout_marginLeft="-10dp"
+                        android:translationZ="-3dp"/>
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/profile_coba"
+                        android:contentDescription="Foto profil"
+                        android:layout_marginLeft="-10dp"
+                        android:translationZ="-4dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="908 anggota"
+                        android:gravity="center"
+                        android:textSize="14dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/is_m"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="10dp">
+                    <ImageButton
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:gravity="center"
+                        android:background="@drawable/circle_polos"
+                        android:src="@drawable/icon_add_anggota"/>
+                    <ImageButton
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/circle_polos"
+                        android:src="@drawable/icon_add_notif"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_height="35dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/custom_polosan_stroke_putih"
+                        android:text="Bergabung"
+                        android:textSize="14dp"
+                        android:fontFamily="@font/is_m"
+                        android:textColor="@color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_height="35dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/custom_polosan_stroke_putih"
+                        android:text="Cari di Forum"
+                        android:textSize="14dp"
+                        android:fontFamily="@font/is_m"
+                        android:textColor="@color/white"
+                        android:drawableEnd="@drawable/icon_search"
+                        android:drawablePadding="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/linear_tab_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="start"
+                    android:layout_gravity="start"
+                    android:padding="10dp">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginHorizontal="15dp">
+
+                        <TextView
+                            android:id="@+id/tab_populer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Populer"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/is_m" />
+                        <View
+                            android:id="@+id/indicator_populer"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="4dp"
+                            android:background="#5E8BFF"
+                            android:visibility="visible"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginHorizontal="15dp">
+
+                        <TextView
+                            android:id="@+id/tab_terbaru"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Terbaru"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/is_m" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginHorizontal="15dp">
+
+                        <TextView
+                            android:id="@+id/tab_media"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Media"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/is_m" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginHorizontal="15dp">
+
+                        <TextView
+                            android:id="@+id/tab_kreator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Postingan Kreator"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/is_m" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#858891"
+                        android:visibility="visible"
+                        android:layout_marginBottom="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Postingan yang disematkan"
+                android:textColor="#ffffff"
+                android:textSize="14sp"
+                android:fontFamily="@font/is_m"
+                android:drawableStart="@drawable/icon_pin"
+                android:drawablePadding="5dp"/>
+        </LinearLayout>
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/asset_background_list_item"
+            android:padding="12dp"
+            android:layout_margin="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/profile_coba"
+                    android:contentDescription="Foto profil"
+                    android:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_nama"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ocean"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/is_m" />
+
+                    <TextView
+                        android:id="@+id/tv_waktu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 hari lalu"
+                        android:textColor="#858891"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_lainnya"
+                    android:contentDescription="Menu lainnya" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please bagi materi disinii😭🥺🙏🏻"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_marginTop="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_like"
+                        android:contentDescription="Like" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1rb"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="15dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_comment"
+                        android:contentDescription="Komentar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="999"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="5dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/icon_share"
+                    android:contentDescription="Bagikan" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/asset_background_list_item"
+            android:padding="12dp"
+            android:layout_margin="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/profile_coba"
+                    android:contentDescription="Foto profil"
+                    android:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Agus"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/is_m" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 hari lalu"
+                        android:textColor="#858891"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_lainnya"
+                    android:contentDescription="Menu lainnya" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/asset_send_code"
+                android:text="Donwload PDF"
+                android:textColor="@color/white"
+                android:padding="20dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/is_sb"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/icon_pdf"
+                android:drawablePadding="10dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PDF materi Interpersonal Skill Guys!!"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_marginTop="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_like"
+                        android:contentDescription="Like" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1rb"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="15dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_comment"
+                        android:contentDescription="Komentar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="876"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="5dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/icon_share"
+                    android:contentDescription="Bagikan" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/asset_background_list_item"
+            android:padding="12dp"
+            android:layout_margin="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/profile_coba"
+                    android:contentDescription="Foto profil"
+                    android:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Elliot"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/is_m" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 hari lalu"
+                        android:textColor="#858891"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_lainnya"
+                    android:contentDescription="Menu lainnya" />
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/gambar_forum"
+                android:textColor="@color/white"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/is_sb"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Belajar dulu🥺🙏🏻"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_marginTop="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_like"
+                        android:contentDescription="Like" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1rb"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="15dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_comment"
+                        android:contentDescription="Komentar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="876"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:layout_marginStart="5dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/icon_share"
+                    android:contentDescription="Bagikan" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

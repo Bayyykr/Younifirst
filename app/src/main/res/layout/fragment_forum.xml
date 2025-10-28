@@ -1,286 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#001136"
+    android:fillViewport="true"
     tools:context=".Home.HomeFragment">
 
-    <FrameLayout
-        android:layout_width="357dp"
-        android:layout_height="186dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/welcome_asset_dashboard"
-        android:clipToOutline="true"
-        android:clipChildren="true"
-        android:clipToPadding="true"
-        android:layout_marginTop="5dp">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/welcome_forum"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/welcome_asset_dashboard"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="13dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="240dp"
-                    android:layout_height="match_parent"
-                    android:text="Selamat datang di forum! Ayo mulai berdiskusi dan berbagi ide dengan komunitasmu."
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/is_bold"
-                    android:textSize="16sp"
-                    android:layout_marginTop="95dp"
-                    />
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
+        <FrameLayout
+            android:id="@+id/frame_header"
+            android:layout_width="357dp"
+            android:layout_height="186dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/welcome_asset_dashboard"
+            android:clipToOutline="true"
+            android:clipChildren="true"
+            android:clipToPadding="true">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/welcome_forum" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/welcome_asset_dashboard" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="13dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="240dp"
+                        android:layout_height="match_parent"
+                        android:text="Selamat datang di forum! Ayo mulai berdiskusi dan berbagi ide dengan komunitasmu."
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/is_bold"
+                        android:textSize="16sp"
+                        android:layout_marginTop="95dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="200dp"
-            android:paddingLeft="25dp"
-            android:textSize="16dp"
-            android:text="Sedang Tren"
-            android:textColor="@color/white"
-            android:fontFamily="@font/is_bold"/>
-        <LinearLayout
-            android:layout_width="357dp"
-            android:layout_height="105dp"
-            android:background="@drawable/asset_background_list_item"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="25dp"
-            android:orientation="horizontal"
-            android:padding="8dp">
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:paddingLeft="25dp"
+                android:textSize="16dp"
+                android:text="Sedang Tren"
+                android:textColor="@color/white"
+                android:fontFamily="@font/is_bold" />
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
-                    android:text="Diskusi Debugging Error di Flutter"
-                    android:fontFamily="@font/is_m"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="#A3A3A3"
-                    android:text="Guys, aku lagi nemu error di Flutter p..."
-                    android:fontFamily="@font/is_m"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="5dp" />
+                android:layout_width="357dp"
+                android:layout_height="105dp"
+                android:background="@drawable/asset_background_list_item"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="25dp"
+                android:orientation="horizontal"
+                android:padding="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="5dp"
-                    android:gravity="center_vertical">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/icon_left"
-                        android:layout_width="20dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/profile_coba"
-                        android:contentDescription="Foto profil"
-                        android:layout_marginRight="8dp" />
-
-                    <TextView
-                        android:id="@+id/tv_username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@qiuqiu"
-                        android:textColor="#5E8BFF"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/is_m" />
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/icon_orang"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/icon_orang"
-                        android:contentDescription="icon orang"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="2dp" />
-
-                    <TextView
-                        android:id="@+id/total_orang"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2.1rb"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/is_m" />
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/icon_comment"
-                        android:layout_width="12dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/icon_comment"
-                        android:contentDescription="komentar"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="2dp" />
-
-                    <TextView
-                        android:id="@+id/total_comment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2.1rb"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/is_m" />
-                </LinearLayout>
-            </LinearLayout>
-            <FrameLayout
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/asset_background_list_item"
-                android:clipToOutline="true"
-                android:clipChildren="true"
-                android:clipToPadding="true">
-                <ImageView
-                    android:id="@+id/image_right"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/foto_coding"
-                    android:contentDescription="Gambar postingan" />
-            </FrameLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="357dp"
-            android:layout_height="105dp"
-            android:background="@drawable/asset_background_list_item"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="25dp"
-            android:orientation="horizontal"
-            android:padding="8dp">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
+                        android:text="Diskusi Debugging Error di Flutter"
+                        android:fontFamily="@font/is_m"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="5dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="#A3A3A3"
+                        android:text="Guys, aku lagi nemu error di Flutter p..."
+                        android:fontFamily="@font/is_m"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="5dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center_vertical">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/icon_left"
+                            android:layout_width="20dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/profile_coba"
+                            android:contentDescription="Foto profil"
+                            android:layout_marginRight="8dp" />
+
+                        <TextView
+                            android:id="@+id/tv_username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@qiuqiu"
+                            android:textColor="#5E8BFF"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/is_m" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/icon_orang"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/icon_orang"
+                            android:contentDescription="icon orang"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="2dp" />
+
+                        <TextView
+                            android:id="@+id/total_orang"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2.1rb"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/is_m" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/icon_comment"
+                            android:layout_width="12dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/icon_comment"
+                            android:contentDescription="komentar"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="2dp" />
+
+                        <TextView
+                            android:id="@+id/total_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2.1rb"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/is_m" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/asset_background_list_item"
+                    android:clipToOutline="true"
+                    android:clipChildren="true"
+                    android:clipToPadding="true">
+
+                    <ImageView
+                        android:id="@+id/image_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/foto_coding"
+                        android:contentDescription="Gambar postingan" />
+                </FrameLayout>
+            </LinearLayout>
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
-                    android:text="Diskusi Debugging Error di Flutter"
-                    android:fontFamily="@font/is_m"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="#A3A3A3"
-                    android:text="Guys, aku lagi nemu error di Flutter p..."
-                    android:fontFamily="@font/is_m"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="5dp" />
+                android:layout_width="357dp"
+                android:layout_height="105dp"
+                android:background="@drawable/asset_background_list_item"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="25dp"
+                android:orientation="horizontal"
+                android:padding="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="5dp"
-                    android:gravity="center_vertical">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="20dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/profile_coba"
-                        android:contentDescription="Foto profil"
-                        android:layout_marginRight="8dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@ereere"
-                        android:textColor="#5E8BFF"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/is_m" />
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/icon_orang"
-                        android:contentDescription="icon orang"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="2dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2.1rb"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/is_m" />
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="12dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/icon_comment"
-                        android:contentDescription="komentar"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="2dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2.1rb"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/is_m" />
-                </LinearLayout>
-            </LinearLayout>
-            <FrameLayout
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/asset_background_list_item"
-                android:clipToOutline="true"
-                android:clipChildren="true"
-                android:clipToPadding="true">
-                <ImageView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/foto_as"
-                    android:contentDescription="Gambar postingan" />
-            </FrameLayout>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
+                        android:text="Diskusi Debugging Error di Flutter"
+                        android:fontFamily="@font/is_m"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="5dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="#A3A3A3"
+                        android:text="Guys, aku lagi nemu error di Flutter p..."
+                        android:fontFamily="@font/is_m"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="5dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center_vertical">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="20dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/profile_coba"
+                            android:contentDescription="Foto profil"
+                            android:layout_marginRight="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@ereere"
+                            android:textColor="#5E8BFF"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/is_m" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/icon_orang"
+                            android:contentDescription="icon orang"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2.1rb"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/is_m" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="12dp"
+                            android:layout_height="15dp"
+                            android:src="@drawable/icon_comment"
+                            android:contentDescription="komentar"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2.1rb"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/is_m" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/asset_background_list_item"
+                    android:clipToOutline="true"
+                    android:clipChildren="true"
+                    android:clipToPadding="true">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/foto_as"
+                        android:contentDescription="Gambar postingan" />
+                </FrameLayout>
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
