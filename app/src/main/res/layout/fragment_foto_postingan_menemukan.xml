@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:id="@+id/gambar_postingan_menemukaan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/gambar_lostandfound"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:contentDescription="Gambar Lost and Found" />
+        <ImageView
+            android:id="@+id/icon_overlay"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/icon_silang"
+            android:layout_gravity="top|end"
+            android:layout_margin="10dp"
+            android:padding="6dp"
+            android:contentDescription="Ikon informasi" />
+    </FrameLayout>
+</FrameLayout>

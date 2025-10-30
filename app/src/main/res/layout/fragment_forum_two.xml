@@ -369,8 +369,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/profile_coba"
-                    android:contentDescription="Foto profil"
-                    android:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+                    android:contentDescription="Foto profil" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -494,8 +493,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/profile_coba"
-                    android:contentDescription="Foto profil"
-                    android:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+                    android:contentDescription="Foto profil"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -628,8 +626,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/profile_coba"
-                    android:contentDescription="Foto profil"
-                    android:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+                    android:contentDescription="Foto profil" />
 
                 <LinearLayout
                     android:layout_width="0dp"

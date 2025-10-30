@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#001136"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/panah_kiri"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Postingan Menemukan"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:fontFamily="@font/is_sb"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Apa yang  anda temukan?"
+            android:textColorHint="#80ffffff"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/is_r"
+            android:background="@null"
+            />
+<!--        <include-->
+<!--            android:id="@+id/gambar_postingan_menemukaan"-->
+<!--            layout="@layout/fragment_foto_postingan_menemukan"/>-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="80dp"
+            android:background="#80ffffff"
+            android:layout_marginBottom="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Foto/Video"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/icon_camera"
+            android:drawableEnd="@drawable/icon_panah_kanan"
+            android:drawablePadding="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tambahkan Lokasi Menemukan"
+            android:drawableEnd="@drawable/icon_panah_kanan"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/icon_lokasi"
+            android:drawablePadding="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tambahkan Nomor"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/icon_telepon"
+            android:drawableEnd="@drawable/icon_panah_kanan"
+            android:drawablePadding="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tambahkan Email"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/icon_email"
+            android:drawableEnd="@drawable/icon_panah_kanan"
+            android:drawablePadding="10dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="360dp">
+        <Button
+            android:layout_width="170dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button_rounded_border"
+            android:text="Simpan Draf"
+            android:fontFamily="@font/is_bold"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textAllCaps="false" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:layout_width="170dp"
+            android:layout_height="56dp"
+            android:background="@drawable/custom_button_rounded"
+            android:text="Bagikan"
+            android:fontFamily="@font/is_bold"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textAllCaps="false" />
+    </LinearLayout>
+</LinearLayout>

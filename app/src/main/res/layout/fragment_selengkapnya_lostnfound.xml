@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_deskripsi_singkat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ada yang merasa kehilangan earphone? Bisa segera hubungi 0812345678901
+Yang ngerasa punya bisa langsung hubungi aku ya, biar bisa segera dikembalikan 😊
+Kalau dalam 24 jam tidak ada yang menghubungi, earphone akan aku titipkan ke Pak Satpam"
+        android:textColor="#80FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#858891"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_nomor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="+62 812345678901"
+        android:textColor="#80FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        android:drawableStart="@drawable/icon_telepon"
+        android:drawablePadding="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="kipukaqiu@gmail.com"
+        android:textColor="#80FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        android:drawableStart="@drawable/icon_email"
+        android:drawablePadding="5dp"/>
+    <TextView
+        android:id="@+id/btn_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lebih sedikit"
+        android:textColor="#5E8BFF"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp" />
+</LinearLayout>
