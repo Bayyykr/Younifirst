@@ -9,7 +9,7 @@
         android:id="@+id/tv_deskripsi_singkat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ada yang merasa kehilangan earphone? Bisa segera hubungi 0812345678901
+        android:text="Ada yang merasa kehilangan earphone? Bisa segera hubungi 0812345678901,
 Yang ngerasa punya bisa langsung hubungi aku ya, biar bisa segera dikembalikan 😊
 Kalau dalam 24 jam tidak ada yang menghubungi, earphone akan aku titipkan ke Pak Satpam"
         android:textColor="#80FFFFFF"
@@ -45,7 +45,7 @@ Kalau dalam 24 jam tidak ada yang menghubungi, earphone akan aku titipkan ke Pak
         android:drawableStart="@drawable/icon_email"
         android:drawablePadding="5dp"/>
     <TextView
-        android:id="@+id/btn_toggle"
+        android:id="@+id/btn_toggle_singkat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lebih sedikit"

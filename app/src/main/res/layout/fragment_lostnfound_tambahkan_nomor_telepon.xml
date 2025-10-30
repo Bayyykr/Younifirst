@@ -75,9 +75,19 @@
                     android:drawableStart="@drawable/icon_telepon_biru"
                     android:drawablePadding="10dp"
                     />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Riwayat"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/is_m"
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
         </LinearLayout>
         <Button
+            android:id="@+id/ButtonTambahkanNomor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tambahkan Nomor"

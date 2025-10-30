@@ -6,12 +6,13 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_lebih_banyak"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#80FFFFFF"
         android:textSize="14sp"
         android:layout_marginTop="10dp"
-        android:text="@string/text_info"
         android:linksClickable="false" />
 </LinearLayout>
+
+

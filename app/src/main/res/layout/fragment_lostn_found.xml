@@ -102,10 +102,13 @@
         android:orientation="vertical">
         <include
             android:id="@+id/include_singkat"
-            layout="@layout/fragment_lebihsedikit_lostnfound" />
+            layout="@layout/fragment_lebihsedikit_lostnfound"
+            android:visibility="visible" />
+
         <include
             android:id="@+id/include_lengkap"
-            layout="@layout/fragment_selengkapnya_lostnfound" />
+            layout="@layout/fragment_selengkapnya_lostnfound"
+            android:visibility="gone" />
     </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

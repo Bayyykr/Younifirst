@@ -16,7 +16,7 @@
         android:theme="@style/Theme.YOUNIFIRST">
 
         <activity
-            android:name=".SplashScreen.SplashScreen"
+            android:name=".Home.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.YOUNIFIRST">
@@ -36,11 +36,11 @@
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.YOUNIFIRST"/>
-        <activity
-            android:name=".Home.MainActivity"
-            android:exported="false"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.YOUNIFIRST"/>
+<!--        <activity-->
+<!--            android:name=".Home.MainActivity"-->
+<!--            android:exported="false"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:theme="@style/Theme.YOUNIFIRST"/>-->
     </application>
 
 </manifest>

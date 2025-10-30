@@ -17,40 +17,87 @@
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnAddContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        android:elevation="12dp"
         android:layout_marginBottom="16dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnForum"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/icon_forum_welcome"
-            android:contentDescription="Buat Forum"
-            app:backgroundTint="#3B5CCC"
-            app:maxImageSize="24dp"
-            app:fabSize="normal" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end"
+            android:layout_marginBottom="12dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnTim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/icon_tim"
-            android:contentDescription="Buat Tim"
-            app:backgroundTint="#3B5CCC"
-            app:maxImageSize="24dp"
-            app:fabSize="normal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forum"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/is_m" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnPosting"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnForum"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/icon_forum_welcome"
+                android:contentDescription="Buat Forum"
+                app:backgroundTint="#3B5CCC"
+                app:maxImageSize="24dp"
+                app:fabSize="normal" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_posting"
-            android:contentDescription="Posting"
-            app:backgroundTint="#3B5CCC"
-            app:maxImageSize="24dp"
-            app:fabSize="normal" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tim"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/is_m" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnTim"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/icon_tim"
+                android:contentDescription="Buat Tim"
+                app:backgroundTint="#3B5CCC"
+                app:maxImageSize="24dp"
+                app:fabSize="normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Posting"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/is_m" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnPosting"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/icon_posting"
+                android:contentDescription="Posting"
+                app:backgroundTint="#3B5CCC"
+                app:maxImageSize="24dp"
+                app:fabSize="normal" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -60,21 +107,38 @@
         android:orientation="vertical"
         android:gravity="end"
         android:visibility="gone"
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
         app:layout_constraintBottom_toTopOf="@+id/btnAddContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        android:elevation="12dp"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="28.3dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnPostingEvent"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/icon_posting"
-            android:contentDescription="Posting Event"
-            app:backgroundTint="#3B5CCC"
-            app:maxImageSize="24dp"
-            app:fabSize="normal" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end"
+            android:background="@android:color/transparent"
+            android:elevation="0dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnPostingEvent"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/icon_posting"
+                android:contentDescription="Posting Event"
+                app:backgroundTint="#3B5CCC"
+                app:maxImageSize="24dp"
+                app:fabSize="normal"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                app:useCompatPadding="false"
+                app:rippleColor="@android:color/transparent"
+                android:outlineProvider="none"
+                android:clipToOutline="false" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -86,30 +150,60 @@
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnAddContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        android:elevation="12dp"
         android:layout_marginBottom="16dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnAddTeam"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/icon_tim"
-            android:contentDescription="Buat Team"
-            app:backgroundTint="#3B5CCC"
-            app:maxImageSize="24dp"
-            app:fabSize="normal" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end"
+            android:layout_marginBottom="12dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnPostingLomba"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buat Tim"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/is_m" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnAddTeam"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/icon_tim"
+                android:contentDescription="Buat Team"
+                app:backgroundTint="#3B5CCC"
+                app:maxImageSize="24dp"
+                app:fabSize="normal" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/icon_posting"
-            android:contentDescription="Posting Lomba"
-            app:backgroundTint="#3B5CCC"
-            app:maxImageSize="24dp"
-            app:fabSize="normal" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Posting Lomba"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/is_m" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnPostingLomba"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/icon_posting"
+                android:contentDescription="Posting Lomba"
+                app:backgroundTint="#3B5CCC"
+                app:maxImageSize="24dp"
+                app:fabSize="normal" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -121,19 +215,61 @@
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnAddContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        android:elevation="12dp"
         android:layout_marginBottom="16dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnPostingLostFound"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/icon_posting"
-            android:contentDescription="Posting Informasi Barang"
-            app:backgroundTint="#3B5CCC"
-            app:maxImageSize="24dp"
-            app:fabSize="normal" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Menemukan"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/is_m" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnMenemukan"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/icon_posting"
+                android:contentDescription="Posting Menemukan"
+                app:backgroundTint="#3B5CCC"
+                app:maxImageSize="24dp"
+                app:fabSize="normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kehilangan"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/is_m" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnKehilangan"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/icon_posting"
+                android:contentDescription="Posting Kehilangan"
+                app:backgroundTint="#3B5CCC"
+                app:maxImageSize="24dp"
+                app:fabSize="normal" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -147,7 +283,6 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/circle_dot_welcome"
-        android:elevation="13dp"
         android:padding="15dp">
 
         <ImageView

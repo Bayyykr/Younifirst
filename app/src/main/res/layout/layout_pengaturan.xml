@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A1124">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:src="@drawable/panah_kiri"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Kembali" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Pengaturan"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:fontFamily="@font/is_sb"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_search"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Cari" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="10dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_profile"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/profile_coba"
+                android:contentDescription="Foto profil" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp">
+
+                <TextView
+                    android:id="@+id/tv_nama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test0206"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:padding="5dp"
+                    android:fontFamily="@font/is_sb" />
+
+                <TextView
+                    android:id="@+id/tv_waktu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="e41240238@student.polije.ac.id"
+                    android:textColor="#858891"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:fontFamily="@font/is_r"/>
+            </LinearLayout>
+
+            <ImageButton
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/icon_settings"
+                android:contentDescription="Menu lainnya" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#335D6FFF" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
+
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_pesan"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="Kembali" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Postingan"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_sb" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Postingan, kompetisi, rekrut tim, event"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_r"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_history"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="Kembali" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aktivitas"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_sb" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Suka dan Komentar"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_r"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_dark"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="Kembali" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Atur Tema"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_sb" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sesuaikan tampilan aplikasi"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_r"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_tema"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:thumb="@drawable/selector_switch_thumb"
+                    android:trackTint="@color/white"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:showText="false"
+                    android:paddingVertical="4dp"
+                    android:paddingHorizontal="6dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_notifikasi"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="Kembali" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Notifikasi"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_sb" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aktif atau bisukan notifikasi"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_r"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_notifikasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:thumb="@drawable/selector_switch_thumb"
+                    android:trackTint="@color/white"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:showText="false"
+                    android:paddingVertical="4dp"
+                    android:paddingHorizontal="6dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_bantuan"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="Kembali" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bantuan dan Masukkan"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_sb" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pusat bantuan, FAQ, hubungi kami, info aplikasi"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_r"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
