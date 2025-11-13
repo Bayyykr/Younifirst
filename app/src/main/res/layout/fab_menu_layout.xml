@@ -273,6 +273,47 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/fabMenuForum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:visibility="gone"
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="40.3dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end"
+            android:background="@android:color/transparent"
+            android:elevation="0dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnPostingForum"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/icon_posting"
+                android:contentDescription="Posting Event"
+                app:backgroundTint="#3B5CCC"
+                app:maxImageSize="24dp"
+                app:fabSize="normal"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                app:useCompatPadding="false"
+                app:rippleColor="@android:color/transparent"
+                android:outlineProvider="none"
+                android:clipToOutline="false" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/btnAddContainer"
         android:layout_width="55dp"
         android:layout_height="55dp"

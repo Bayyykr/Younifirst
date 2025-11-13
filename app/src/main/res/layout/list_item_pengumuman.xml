@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_pengumuman"
+    android:layout_width="match_parent"
+    android:layout_height="74dp"
+    android:orientation="horizontal"
+    android:background="@drawable/asset_background_list_item"
+    android:padding="8dp"
+    android:gravity="center_vertical">
+
+    <!-- Gambar kiri -->
+    <FrameLayout
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/asset_background_list_item"
+        android:clipToOutline="true"
+        android:clipChildren="true"
+        android:clipToPadding="true">
+
+        <ImageButton
+            android:id="@+id/image_right"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/foto_coding"
+            android:scaleType="centerCrop"
+            android:contentDescription="Gambar postingan"
+            android:background="@android:color/transparent" />
+    </FrameLayout>
+
+    <!-- Area teks kanan -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="10dp">
+
+        <!-- Grup teks kiri (title + sub) -->
+        <LinearLayout
+            android:id="@+id/textGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pengumuman"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/is_m" />
+
+            <TextView
+                android:id="@+id/tvSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ocean: kisi-kisi struktur data dah kebany..."
+                android:textSize="14sp"
+                android:textColor="#A3A3A3"
+                android:fontFamily="@font/is_m" />
+        </LinearLayout>
+
+        <!-- Waktu di kanan atas -->
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="22.00"
+            android:textSize="10sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/is_r"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

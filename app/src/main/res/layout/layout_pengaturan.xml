@@ -9,9 +9,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_margin="10dp">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="25dp">
 
         <ImageView
+            android:id="@+id/back_to_mainactivity"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:src="@drawable/panah_kiri"
@@ -44,8 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,6 +92,7 @@
             </LinearLayout>
 
             <ImageButton
+                android:id="@+id/btn_setting_profile"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@android:color/transparent"
@@ -234,13 +237,10 @@
                     android:id="@+id/switch_tema"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:thumb="@drawable/selector_switch_thumb"
-                    android:trackTint="@color/white"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    android:showText="false"
-                    android:paddingVertical="4dp"
-                    android:paddingHorizontal="6dp" />
+                    android:thumb="@drawable/thumb_selector"
+                    android:track="@drawable/track_selector"
+                    android:textColor="@color/white" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -286,16 +286,13 @@
                     android:id="@+id/switch_notifikasi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:thumb="@drawable/selector_switch_thumb"
-                    android:trackTint="@color/white"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    android:showText="false"
-                    android:paddingVertical="4dp"
-                    android:paddingHorizontal="6dp" />
+                    android:thumb="@drawable/thumb_selector"
+                    android:track="@drawable/track_selector"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/bantuandanmasukkan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -329,6 +326,47 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Pusat bantuan, FAQ, hubungi kami, info aplikasi"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_r"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_logout"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="Kembali" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Keluar"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/is_sb" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="keluar dari akun anda"
                         android:textColor="#ffffff"
                         android:textSize="14sp"
                         android:layout_marginLeft="5dp"

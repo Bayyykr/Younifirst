@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A1124">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/back_to_mainactivity"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:contentDescription="Kembali"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/panah_kiri"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/title_buat_forum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/is_sb"
+            android:text="Buat Forum"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view_separator"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="#335D6FFF"
+        app:layout_constraintTop_toBottomOf="@id/header_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/view_separator"
+        app:layout_constraintBottom_toTopOf="@id/btnBuatForum"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="16dp"
+            android:clipChildren="false">
+
+            <FrameLayout
+                android:id="@+id/profile_image_container"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:background="@drawable/custom_textfield_chat_forum"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="75dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_forum2"
+                    android:contentDescription="Foto profil"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center" />
+
+                <ImageView
+                    android:id="@+id/icon_camera"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@drawable/icon_refresh"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="-6dp"
+                    android:layout_marginBottom="-6dp"
+                    android:background="@drawable/circle_dot_welcome"
+                    android:padding="6dp"/>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_ubah_foto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Ubah Foto"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:fontFamily="@font/is_r"
+                android:layout_gravity="center"/>
+
+            <com.naufal.younifirst.custom.CustomEditText
+                android:id="@+id/et_namaforum"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:inputType="textCapSentences"
+                android:textColor="@color/white"
+                android:textColorHint="#66FFFFFF"/>
+
+            <com.naufal.younifirst.custom.CustomEditText
+                android:id="@+id/et_deskripsiforum"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="16dp"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences"
+                android:textColor="@color/white"
+                android:textColorHint="#66FFFFFF"/>
+
+            <TextView
+                android:id="@+id/et_Tagar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/is_sb"
+                android:text="Tagar"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+            <com.naufal.younifirst.custom.CustomEditText
+                android:id="@+id/et_tagar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:inputType="textCapSentences"
+                android:textColor="@color/white"
+                android:textColorHint="#66FFFFFF" />
+
+            <TextView
+                android:id="@+id/et_PreferensiForum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/is_sb"
+                android:text="Preferensi Forum"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <RadioButton
+                    android:id="@+id/rb_publik"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Publik"
+                    android:textColor="@color/white"
+                    android:button="@null"
+                    android:drawableStart="@drawable/custom_radio"
+                    android:drawablePadding="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="- siapapun bisa bergabung"
+                    android:textColor="#50ffffff"
+                    android:textSize="14sp"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/is_r"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <RadioButton
+                    android:id="@+id/rb_pribadi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pribadi"
+                    android:textColor="@color/white"
+                    android:button="@null"
+                    android:drawableStart="@drawable/custom_radio"
+                    android:drawablePadding="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="- perlu undangan untuk bergabung"
+                    android:textColor="#50ffffff"
+                    android:textSize="14sp"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/is_r"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btnBuatForum"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
+        android:text="Buat Forum"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:background="@drawable/custom_button_rounded"
+        android:textAllCaps="false"
+        android:fontFamily="@font/is_bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,21 +26,36 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".opening.opening"
-            android:exported="false"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.YOUNIFIRST"/>
+<!--        <activity-->
+<!--            android:name=".opening.opening"-->
+<!--            android:exported="false"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:theme="@style/Theme.YOUNIFIRST"/>-->
         <activity
             android:name=".LognReg.login"
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.YOUNIFIRST"/>
-<!--        <activity-->
-<!--            android:name=".Home.MainActivity"-->
-<!--            android:exported="false"-->
-<!--            android:label="@string/app_name"-->
-<!--            android:theme="@style/Theme.YOUNIFIRST"/>-->
+        <activity
+            android:name=".Home.PengaturanActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.YOUNIFIRST"/>
+        <activity
+            android:name=".Home.ProfileActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.YOUNIFIRST"/>
+        <activity
+            android:name=".Home.PostingFoundActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.YOUNIFIRST"/>
+        <activity
+            android:name=".Forum.BuatForumActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.YOUNIFIRST"/>
     </application>
 
 </manifest>

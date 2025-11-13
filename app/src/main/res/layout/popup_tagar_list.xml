@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:fadeScrollbars="false"
+    android:scrollbarThumbVertical="@drawable/custom_scroll_thumb">
+
+    <LinearLayout
+        android:id="@+id/layout_tagar_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/custom_item_forum_tagar"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_tagar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Akademik"
+                android:drawableStart="@drawable/icon_add_kecil"
+                android:textColor="@android:color/white"
+                android:drawablePadding="5dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                android:background="@drawable/custom_item_forum_tagar" />
+
+            <TextView
+                android:id="@+id/item_tagar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Belajar"
+                android:drawableStart="@drawable/icon_add_kecil"
+                android:textColor="@android:color/white"
+                android:drawablePadding="5dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:background="@drawable/custom_item_forum_tagar" />
+
+            <TextView
+                android:id="@+id/item_tagar3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Backend"
+                android:drawableStart="@drawable/icon_add_kecil"
+                android:textColor="@android:color/white"
+                android:drawablePadding="5dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:background="@drawable/custom_item_forum_tagar" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp">
+
+            <TextView
+                android:id="@+id/item_tagar4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diskusi"
+                android:drawableStart="@drawable/icon_add_kecil"
+                android:textColor="@android:color/white"
+                android:drawablePadding="5dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                android:background="@drawable/custom_item_forum_tagar" />
+
+            <TextView
+                android:id="@+id/item_tagar5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Frontend"
+                android:drawableStart="@drawable/icon_add_kecil"
+                android:textColor="@android:color/white"
+                android:drawablePadding="5dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:background="@drawable/custom_item_forum_tagar" />
+
+            <TextView
+                android:id="@+id/item_tagar6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mobile Dev"
+                android:drawableStart="@drawable/icon_add_kecil"
+                android:textColor="@android:color/white"
+                android:drawablePadding="5dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:background="@drawable/custom_item_forum_tagar" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp">
+
+            <TextView
+                android:id="@+id/item_tagar7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Organisasi"
+                android:drawableStart="@drawable/icon_add_kecil"
+                android:textColor="@android:color/white"
+                android:drawablePadding="5dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center"
+                android:background="@drawable/custom_item_forum_tagar" />
+
+            <TextView
+                android:id="@+id/item_tagar8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Programming"
+                android:drawableStart="@drawable/icon_add_kecil"
+                android:textColor="@android:color/white"
+                android:drawablePadding="5dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:background="@drawable/custom_item_forum_tagar" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

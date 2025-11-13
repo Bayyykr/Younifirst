@@ -1,0 +1,268 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A1124">
+
+    <LinearLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Header -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/back_to_mainactivity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/panah_kiri"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Kembali"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/title_pengaturan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pusat Bantuan"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:fontFamily="@font/is_sb"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#335D6FFF" />
+
+        <LinearLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ViewFlipper
+                    android:id="@+id/viewFlipperBantuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoStart="true"
+                    android:flipInterval="5000">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="220dp"
+                            android:layout_height="220dp"
+                            android:src="@drawable/gambar_apayangbisakamibantu"
+                            android:contentDescription="Bantuan"
+                            android:scaleType="fitCenter"
+                            android:adjustViewBounds="true" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Apa yang bisa kami bantu?"
+                            android:textSize="20sp"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/is_sb"
+                            android:layout_marginTop="12dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Temukan jawaban atas pertanyaan Anda, mulai dari penggunaan fitur, pengaturan akun, hingga panduan umum tentang aplikasi Younifirst."
+                            android:textSize="14sp"
+                            android:textColor="#B0B0B0"
+                            android:fontFamily="@font/is_r"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="6dp"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="220dp"
+                            android:layout_height="220dp"
+                            android:src="@drawable/gambar_hubungikami"
+                            android:contentDescription="Hubungi Kami"
+                            android:scaleType="fitCenter"
+                            android:adjustViewBounds="true" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hubungi Kami"
+                            android:textSize="20sp"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/is_sb"
+                            android:layout_marginTop="12dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Hubungi tim Younifirst untuk pertanyaan, saran, atau laporan masalah melalui formulir kontak atau email resmi kami."
+                            android:textSize="14sp"
+                            android:textColor="#B0B0B0"
+                            android:fontFamily="@font/is_r"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="6dp"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </ViewFlipper>
+
+                <LinearLayout
+                    android:id="@+id/layoutDots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+                    <View
+                        android:id="@+id/dot1"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/circle_dot_two"
+                        android:layout_margin="8dp"/>
+
+                    <View
+                        android:id="@+id/dot2"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/circle_dot"
+                        android:layout_margin="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/custom_textfield_search"
+                android:hint="Telusuri pusat bantuan"
+                android:textColorHint="#80ffffff"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/icon_search_biru"
+                android:drawablePadding="10dp"
+                android:layout_marginTop="30dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="25dp">
+
+                <TextView
+                    android:id="@+id/akundanlogin"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/circle_dot_profile_forum"
+                    android:text="Akun dan Login"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/is_m"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:drawableStart="@drawable/icon_key"
+                    android:drawablePadding="10dp"
+                    android:padding="20dp"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:id="@+id/panduanumum"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/circle_dot_profile_forum"
+                    android:text="Panduan Umum"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/is_m"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:drawableStart="@drawable/icon_bukupanduan"
+                    android:drawablePadding="10dp"
+                    android:padding="20dp"
+                    android:layout_marginStart="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/fituraplikasi"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/circle_dot_profile_forum"
+                    android:text="Fitur Aplikasi"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/is_m"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:drawableStart="@drawable/icon_fitur"
+                    android:drawablePadding="10dp"
+                    android:padding="20dp"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:id="@+id/hubungikami"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/circle_dot_profile_forum"
+                    android:text="Hubungi Kami"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/is_m"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:drawableStart="@drawable/icon_hubungikami"
+                    android:drawablePadding="10dp"
+                    android:padding="20dp"
+                    android:layout_marginStart="12dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

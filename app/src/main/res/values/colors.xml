@@ -11,4 +11,5 @@
     <color name="secondary_color">#001136</color>
     <color name="third_color">#3F5FCE</color>
     <color name="btn_fabmenu">#3B5CCC</color>
+    <color name="item_tagar">#10ffffff</color>
 </resources>

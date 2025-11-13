@@ -5,4 +5,5 @@
     <string name="underline_kebijakan"><u>Kebijakan Privasi</u></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="info_text">Untuk masalah lain seperti spam atau penipuan, Anda bisa mendapatkan bantuan atau hubungi tim kami di <b>Pusat Bantuan</b>.</string>
 </resources>

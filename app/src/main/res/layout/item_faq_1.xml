@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:background="#0A1124">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
+
+        <LinearLayout
+            android:id="@+id/dropdwon_faq_item_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_faq_default">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:id="@+id/faq_header_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/faq_question_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Apa itu Younifirst"
+                        android:textColor="#5E8BFF"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <ImageView
+                        android:id="@+id/faq_icon_1"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/icon_drop_down_off"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/faq_answer_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="Younifirst adalah platform yang membantu mahasiswa tetap terhubung dengan berbagai aktivitas, acara, komunitas, dan sumber daya kampus."
+                    android:textColor="#B0FFFFFF"
+                    android:textSize="14sp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dropdwon_faq_item_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/bg_faq_default">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:id="@+id/faq_header_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/faq_question_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Siapa yang dapat menggunakan Younifirst?"
+                        android:textColor="#5E8BFF"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <ImageView
+                        android:id="@+id/faq_icon_2"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/icon_drop_down_off"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/faq_answer_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="Saat ini, Younifirst dapat digunakan oleh mahasiswa, dosen, dan staf kampus yang terdaftar di Politeknik Negeri Jember."
+                    android:textColor="#B0FFFFFF"
+                    android:textSize="14sp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dropdwon_faq_item_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/bg_faq_default">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:id="@+id/faq_header_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/faq_question_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Bagaimana cara membuat akun??"
+                        android:textColor="#5E8BFF"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <ImageView
+                        android:id="@+id/faq_icon_3"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/icon_drop_down_off"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/faq_answer_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="Anda dapat mendaftar menggunakan NIM atau alamat email SSO Anda."
+                    android:textColor="#B0FFFFFF"
+                    android:textSize="14sp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dropdwon_faq_item_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/bg_faq_default">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:id="@+id/faq_header_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/faq_question_4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Apa itu fitur Lost &amp; Found?"
+                        android:textColor="#5E8BFF"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <ImageView
+                        android:id="@+id/faq_icon_4"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/icon_drop_down_off"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/faq_answer_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="Fitur Lost &amp; Found memungkinkan pengguna untuk melaporkan barang yang hilang atau menemukan barang milik orang lain di lingkungan kampus. Pengguna dapat mengirimkan detail barang yang hilang atau ditemukan, dan sistem akan membantu menghubungkan dengan orang yang tepat."
+                    android:textColor="#B0FFFFFF"
+                    android:textSize="14sp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dropdwon_faq_item_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/bg_faq_default">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:id="@+id/faq_header_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/faq_question_5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Bagaimana cara melaporkan barang yang hilang?"
+                        android:textColor="#5E8BFF"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <ImageView
+                        android:id="@+id/faq_icon_5"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/icon_drop_down_off"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/faq_answer_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="Anda dapat mengunggah informasi barang hilang atau ditemukan melalui menu Lost &amp; Found di aplikasi Younifirst. Pengguna lain yang menemukan atau merasa memiliki barang tersebut bisa langsung menghubungi Anda lewat kontak yang tertera di postingan."
+                    android:textColor="#B0FFFFFF"
+                    android:textSize="14sp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

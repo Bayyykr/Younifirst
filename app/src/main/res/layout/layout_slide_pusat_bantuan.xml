@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ViewFlipper
+        android:id="@+id/viewFlipperBantuan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoStart="true"
+        android:flipInterval="5000">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="20dp">
+
+            <ImageView
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:src="@drawable/gambar_apayangbisakamibantu"
+                android:contentDescription="Bantuan"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apa yang bisa kami bantu?"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/is_sb"
+                android:layout_marginTop="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Temukan jawaban atas pertanyaan Anda, mulai dari penggunaan fitur, pengaturan akun, hingga panduan umum tentang aplikasi Younifirst."
+                android:textSize="14sp"
+                android:textColor="#B0B0B0"
+                android:fontFamily="@font/is_r"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="6dp"
+                android:lineSpacingExtra="4dp" />
+        </LinearLayout>
+
+        <!-- Slide 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="20dp">
+
+            <ImageView
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:src="@drawable/gambar_hubungikami"
+                android:contentDescription="Hubungi Kami"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hubungi Kami"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/is_sb"
+                android:layout_marginTop="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hubungi tim Younifirst untuk pertanyaan, saran, atau laporan masalah melalui formulir kontak atau email resmi kami."
+                android:textSize="14sp"
+                android:textColor="#B0B0B0"
+                android:fontFamily="@font/is_r"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="6dp"
+                android:lineSpacingExtra="4dp" />
+        </LinearLayout>
+    </ViewFlipper>
+    <LinearLayout
+        android:id="@+id/layoutDots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <View
+            android:id="@+id/dot1"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/circle_dot_two"
+            android:layout_margin="8dp"/>
+
+        <View
+            android:id="@+id/dot2"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/circle_dot"
+            android:layout_margin="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Slide pusat bantuan -->
+        <include
+            android:id="@+id/slide_bantuan_include"
+            layout="@layout/layout_slide_pusat_bantuan"/>
+
+        <!-- Kolom pencarian -->
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/custom_textfield_search"
+            android:hint="Telusuri pusat bantuan"
+            android:textColorHint="#80ffffff"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:drawableStart="@drawable/icon_search_biru"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="30dp" />
+
+        <!-- Baris tombol pertama -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/akundanlogin"
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_weight="1"
+                android:background="@drawable/circle_dot_profile_forum"
+                android:text="Akun dan Login"
+                android:textColor="@color/white"
+                android:fontFamily="@font/is_m"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:drawableStart="@drawable/icon_key"
+                android:drawablePadding="10dp"
+                android:padding="20dp"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_weight="1"
+                android:background="@drawable/circle_dot_profile_forum"
+                android:text="Panduan Umum"
+                android:textColor="@color/white"
+                android:fontFamily="@font/is_m"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:drawableStart="@drawable/icon_bukupanduan"
+                android:drawablePadding="10dp"
+                android:padding="20dp"
+                android:layout_marginStart="12dp" />
+        </LinearLayout>
+
+        <!-- Baris tombol kedua -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_weight="1"
+                android:background="@drawable/circle_dot_profile_forum"
+                android:text="Fitur Aplikasi"
+                android:textColor="@color/white"
+                android:fontFamily="@font/is_m"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:drawableStart="@drawable/icon_fitur"
+                android:drawablePadding="10dp"
+                android:padding="20dp"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="75dp"
+                android:layout_weight="1"
+                android:background="@drawable/circle_dot_profile_forum"
+                android:text="Hubungi Kami"
+                android:textColor="@color/white"
+                android:fontFamily="@font/is_m"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:drawableStart="@drawable/icon_hubungikami"
+                android:drawablePadding="10dp"
+                android:padding="20dp"
+                android:layout_marginStart="12dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

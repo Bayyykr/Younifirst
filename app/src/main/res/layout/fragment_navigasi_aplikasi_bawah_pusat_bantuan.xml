@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A1124">
+
+    <LinearLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/back_to_mainactivity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/panah_kiri"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Kembali"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/title_pengaturan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Artikel Bantuan"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:fontFamily="@font/is_sb"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#335D6FFF" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/header_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/list_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Navigasi Aplikasi Bawah"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/is_sb" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Untuk membantu pengguna menjelajahi fitur utama di aplikasi Younifirst, tersedia menu navigasi di bagian bawah layar. Melalui menu ini, Anda dapat berpindah antarhalaman utama dengan mudah dan cepat tanpa perlu kembali ke beranda terlebih dahulu."
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_r" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Ikon pada menu navigasi : "
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_sb" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="• Beranda menampilkan rangkuman aktivitas terbaru dari berbagai fitur seperti Kompetisi dan Tim, Lost dan Found, serta Event. Halaman ini menjadi pusat informasi utama yang menampilkan konten terbaru dan populer dari seluruh pengguna."
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_r" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="• Kompetisi dan Tim menampilkan daftar lomba, fitur membuat tim, dan bergabung dengan tim lain."
+                    android:textColor="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_r" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="• Lost dan Found membantu pengguna melaporkan atau mencari barang yang hilang maupun ditemukan di lingkungan kampus."
+                    android:textColor="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_r" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="• Event menampilkan daftar acara dan kegiatan yang dapat diikuti oleh mahasiswa."
+                    android:textColor="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_r" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="• Forum menyediakan ruang diskusi untuk berbagi ide, bertanya, dan berinteraksi antar pengguna."
+                    android:textColor="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_r" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Tampilan Aktif"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_sb" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Ketika pengguna membuka salah satu halaman, ikon pada menu navigasi yang sesuai akan berubah menjadi tampilan aktif (filled) untuk menunjukkan posisi halaman yang sedang diakses. Ikon lainnya tetap berada dalam tampilan outline sebagai pembeda visual."
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_r" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="30dp"
+                android:background="#10ffffff">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Apakah ini menjawab pertanyaan Anda?"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_m" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Tanggapan Anda bersifat anonim dan membantu kami meningkatkan sumber daya bantuan"
+                    android:textColor="@color/white"
+                    android:textAlignment="center"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/is_r"
+                    android:gravity="center" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginEnd="20dp">
+
+                        <ImageButton
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/custom_textfield_search"
+                            android:src="@drawable/icon_jempol"
+                            android:scaleType="centerInside" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ya"
+                            android:textColor="#5E8BFF"
+                            android:textAlignment="center"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/is_sb" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageButton
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/custom_textfield_search"
+                            android:src="@drawable/icon_jempol_no"
+                            android:scaleType="centerInside" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tidak"
+                            android:textColor="#5E8BFF"
+                            android:textAlignment="center"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/is_sb" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

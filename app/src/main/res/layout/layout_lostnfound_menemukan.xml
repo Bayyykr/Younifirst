@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color">
+
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/back_to_mainactivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/panah_kiri" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Postingan Menemukan"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:fontFamily="@font/is_sb" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/header_container"
+        app:layout_constraintBottom_toTopOf="@id/button_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
+
+                <EditText
+                    style="@style/EditTextLowerUnderline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Apa yang anda temukan?"
+                    android:textColorHint="#80ffffff"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/is_r"
+                    android:background="?android:attr/editTextBackground" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Foto/Video"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"
+                    android:drawableStart="@drawable/icon_camera"
+                    android:drawableEnd="@drawable/icon_panah_kanan"
+                    android:drawablePadding="10dp" />
+
+                <TextView
+                    android:id="@+id/tambah_lokasi_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tambahkan Lokasi Menemukan"
+                    android:drawableEnd="@drawable/icon_panah_kanan"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginTop="20dp"
+                    android:drawableStart="@drawable/icon_lokasi"
+                    android:drawablePadding="10dp" />
+
+                <TextView
+                    android:id="@+id/tambah_telepon_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tambahkan Nomor"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginTop="20dp"
+                    android:drawableStart="@drawable/icon_telepon"
+                    android:drawableEnd="@drawable/icon_panah_kanan"
+                    android:drawablePadding="10dp" />
+
+                <TextView
+                    android:id="@+id/tambah_email_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tambahkan Email"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginTop="20dp"
+                    android:drawableStart="@drawable/icon_email"
+                    android:drawableEnd="@drawable/icon_panah_kanan"
+                    android:drawablePadding="10dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/button_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/btn_draft"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@drawable/custom_button_rounded_border"
+            android:text="Simpan Draf"
+            android:fontFamily="@font/is_bold"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_share"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.45" />
+
+        <Button
+            android:id="@+id/btn_share"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@drawable/custom_button_rounded"
+            android:text="Bagikan"
+            android:fontFamily="@font/is_bold"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toEndOf="@id/btn_draft"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.45" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,8 @@
+<resources>
+    <!-- Spacing untuk item tahun -->
+    <dimen name="year_item_spacing">5dp</dimen>
+
+    <!-- Ukuran item tahun -->
+    <dimen name="year_item_width">80dp</dimen>
+    <dimen name="year_item_height">30dp</dimen>
+</resources>
