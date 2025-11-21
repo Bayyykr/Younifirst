@@ -3,11 +3,40 @@
     android:id="@+id/item_chat_bubble"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="right"
     android:orientation="vertical"
-    android:background="@drawable/custom_chat_forum"
+    android:background="@drawable/custom_chat_admin_forum"
     android:padding="10dp"
     android:layout_marginBottom="8dp"
     android:layout_marginStart="8dp">
+
+    <LinearLayout
+        android:id="@+id/chat_reply_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#1AFFFFFF"
+        android:padding="6dp"
+        android:layout_marginBottom="6dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/reply_sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin"
+            android:textColor="#38BDF8"
+            android:textStyle="bold"
+            android:fontFamily="@font/is_sb"/>
+
+        <TextView
+            android:id="@+id/reply_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pesan yang dibalas"
+            android:textColor="#D4D4D4"
+            android:fontFamily="@font/is_r"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/chat_bubble_header"
@@ -21,11 +50,9 @@
             android:id="@+id/chat_bubble_avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="start|center_vertical"
             android:src="@drawable/gambar_profil"
             android:background="@drawable/rounded_image"
             android:clipToOutline="true"
-            android:contentDescription="Avatar"
             android:layout_marginEnd="6dp" />
 
         <LinearLayout
@@ -54,14 +81,44 @@
                 android:fontFamily="@font/is_r" />
         </LinearLayout>
     </LinearLayout>
+
     <TextView
         android:id="@+id/chat_bubble_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ada yang punya materi kjk?"
         android:textColor="@color/white"
+        android:text=""
         android:textSize="14sp"
-        android:fontFamily="@font/is_r" />
+        android:fontFamily="@font/is_r"/>
+
+    <ImageView
+        android:id="@+id/chat_bubble_image"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/chat_bubble_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:layout_marginTop="4dp"
+        android:maxLines="5"
+        android:ellipsize="end"
+        android:visibility="gone"
+        android:fontFamily="@font/is_r"/>
+
+
+    <LinearLayout
+        android:id="@+id/chat_bubble_emotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/chat_bubble_time"
@@ -72,5 +129,7 @@
         android:gravity="end"
         android:textSize="10sp"
         android:fontFamily="@font/is_r"
-        android:layout_marginTop="4dp" />
+        android:layout_marginTop="4dp"
+        android:drawableEnd="@drawable/icon_centang"
+        android:drawablePadding="10dp"/>
 </LinearLayout>

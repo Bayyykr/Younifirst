@@ -15,7 +15,10 @@ import android.text.style.ClickableSpan;
 import android.text.style.ReplacementSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -29,8 +32,11 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.naufal.younifirst.R;
 import com.naufal.younifirst.custom.CustomEditText;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class BuatForumActivity extends AppCompatActivity {
 
@@ -52,6 +58,10 @@ public class BuatForumActivity extends AppCompatActivity {
 
         findViewById(R.id.back_to_mainactivity).setOnClickListener(v -> finish());
 
+        findViewById(R.id.btnBuatForum).setOnClickListener(v -> {
+            Intent i = new Intent(BuatForumActivity.this, BerhasilBuatForumActivity.class);
+            startActivity(i);
+        });
         etNamaForum = findViewById(R.id.et_namaforum);
         etDeskripsiForum = findViewById(R.id.et_deskripsiforum);
         etTagar = findViewById(R.id.et_tagar);
@@ -92,11 +102,11 @@ public class BuatForumActivity extends AppCompatActivity {
     }
 
     private void openGallery() {
-        Intent intent = new Intent();
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Pilih Foto"), PICK_IMAGE_REQUEST);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
+
 
     private void showTagarPopup() {
         if (popupWindow != null && popupWindow.isShowing()) {

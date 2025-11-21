@@ -56,6 +56,10 @@
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.YOUNIFIRST"/>
+        <activity android:name=".Forum.BerhasilBuatForumActivity"/>
+        <activity android:name=".Forum.ChatForumAdminActivity"/>
+        <activity android:name=".Forum.ChatAnggotaDanAdminActivity"/>
+        <activity android:name=".Forum.EditForumActivity" />
     </application>
 
 </manifest>

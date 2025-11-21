@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:fontFamily="@font/is_sb"
-            android:text="Buat Forum"
+            android:text="Edit Forum"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintTop_toTopOf="parent"
@@ -78,12 +78,15 @@
                 android:layout_height="125dp"
                 android:background="@drawable/custom_rounded"
                 android:layout_gravity="center"
+
                 android:layout_marginTop="20dp">
 
-                <com.google.android.material.imageview.ShapeableImageView
+                <ImageView
                     android:id="@+id/img_profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:src="@drawable/gambar_kita"
+                    android:background="@drawable/custom_rounded"
                     android:contentDescription="Foto profil"
                     android:scaleType="centerCrop"
                     android:clipToOutline="true"
@@ -223,7 +226,7 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_margin="16dp"
-        android:text="Buat Forum"
+        android:text="Edit Forum"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"

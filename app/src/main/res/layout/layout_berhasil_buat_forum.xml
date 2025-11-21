@@ -17,14 +17,14 @@
             android:layout_width="0dp"
             android:layout_height="400dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/gbr_orang_pusing"
+            android:src="@drawable/gambar_kita"
             android:contentDescription="Header Image"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageButton
-            android:id="@+id/first_next"
+            android:id="@+id/back_to_mainactivity"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_margin="10dp"
@@ -47,7 +47,6 @@
             android:id="@+id/container_filter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-40dp"
             android:background="@drawable/filter_bg"
             android:padding="16dp"
             app:layout_constraintTop_toBottomOf="@id/img_header"
@@ -67,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/asset_background_list_item"
-                    android:text="Akademik"
+                    android:text="Diskusi"
                     android:padding="8dp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/is_r" />
@@ -77,7 +76,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:background="@drawable/asset_background_list_item"
-                    android:text="Belajar"
+                    android:text="Projek"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/is_r" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/asset_background_list_item"
+                    android:text="Tim"
                     android:padding="8dp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/is_r" />
@@ -87,7 +96,9 @@
                 android:id="@+id/txt_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bagi Materi UTS!!"
+                android:text="Kelompok 4"
+                android:drawableEnd="@drawable/icon_gembok_kecil"
+                android:drawablePadding="10dp"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:fontFamily="@font/is_m"
@@ -115,7 +126,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@ocean"
+                    android:text="@Test0206"
                     android:textColor="#5E8BFF"
                     android:layout_marginStart="5dp"
                     android:textSize="14sp"
@@ -124,7 +135,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" • 1 hari lalu"
+                    android:text=" • 5 Mnt"
                     android:textColor="#858891"
                     android:layout_marginStart="8dp"
                     android:textSize="14sp"
@@ -135,7 +146,7 @@
                 android:id="@+id/txt_isi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Help! Besok UTS😭😭😭. Bagi info apa aja"
+                android:text="AE24"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:layout_marginTop="8dp"
@@ -156,31 +167,13 @@
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/profile_coba"
+                    android:src="@drawable/gambar_profil"
                     android:contentDescription="Foto profil" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="-10dp"
-                    android:src="@drawable/profile_coba" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="-10dp"
-                    android:src="@drawable/profile_coba" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="-10dp"
-                    android:src="@drawable/profile_coba" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="908 anggota"
+                    android:text="1 anggota"
                     android:layout_marginStart="10dp"
                     android:gravity="center_vertical"
                     android:textColor="@color/white"
@@ -197,7 +190,7 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <Button
-                    android:id="@+id/btnTerapkan"
+                    android:id="@+id/btnTambahGrup"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:text="Bergabung"
@@ -209,6 +202,7 @@
                     android:textAllCaps="false" />
 
                 <LinearLayout
+                    android:id="@+id/pengumuman"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/asset_background_list_item"
@@ -219,11 +213,13 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/anggotadanadmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/asset_background_list_item"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal">
+
                     <include layout="@layout/list_item_pengumuman_2" />
                 </LinearLayout>
             </LinearLayout>
