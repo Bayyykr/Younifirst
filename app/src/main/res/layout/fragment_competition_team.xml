@@ -4,62 +4,126 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#001136"
-    tools:context=".Home.HomeFragment">
+    android:background="#0A1124"
+    tools:context=".Home.CompetitionTeamFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_tabs"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/container_tabs"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/icon_filter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:id="@+id/tab_kompetisi"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_kompetisi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Kompetisi"
+                    android:textColor="#3A7BFF"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/is_m"
+                    android:gravity="center" />
+
+                <View
+                    android:id="@+id/underline_kompetisi"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#3A7BFF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tab_tim"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_tim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Tim"
+                    android:textColor="#80FFFFFF"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/is_r"
+                    android:gravity="center" />
+
+                <View
+                    android:id="@+id/underline_tim"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:color/transparent" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/icon_filter"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/icon_filter"
+            app:tint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <View
+            android:id="@+id/bottom_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#25FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
+        android:id="@+id/container_competition"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/header_tabs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <FrameLayout
+        android:id="@+id/bottom_sheet_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal">
-        <LinearLayout
-            android:layout_width="357dp"
-            android:layout_height="643dp"
-            android:background="@drawable/asset_background_list_item"
-            android:layout_marginTop="17dp"
-            android:orientation="horizontal">
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/icon_left"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/profile_coba"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:padding="8dp">
-            </com.google.android.material.imageview.ShapeableImageView>
-            <LinearLayout
-                android:layout_width="280dp"
-                android:layout_height="50dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="qiuqiu"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="16dp">
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="qiuqiu"
-                    android:textColor="#898D96"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="12dp">
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/icon_lainnya"
-                    android:layout_marginTop="17dp"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-        
-
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="#80000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/dropdown_dibutuhkan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/custom_bg_transparant_tipis"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:id="@+id/dropdown_header_dibutuhkan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/icon_tanda_seru" />
+
+            <TextView
+                android:id="@+id/dropdown_title_dibutuhkan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Dibutuhkan"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:fontFamily="@font/is_sb" />
+
+            <ImageView
+                android:id="@+id/dropdown_icon_dibutuhkan"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/icon_drop_down_off" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dropdown_content_dibutuhkan_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="6dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="UI/UX Designer"
+                    android:textColor="#B0FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_r" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1 orang"
+                    android:textColor="#5E8BFF"
+                    android:textSize="13sp"
+                    android:background="@drawable/custom_bg_biru_tipis"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:fontFamily="@font/is_sb"
+                    android:layout_marginLeft="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/detail_ketentuan_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ketentuan :"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_sb" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mengerti wireframing dan prototyping"
+                    android:textColor="#FFFFFF"
+                    android:drawableStart="@drawable/icon_centang_2"
+                    android:drawablePadding="10dp"
+                    android:textSize="14sp"
+                    android:layout_marginTop="6dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Familiar dengan Figma"
+                    android:textColor="#FFFFFF"
+                    android:drawableStart="@drawable/icon_centang_2"
+                    android:drawablePadding="10dp"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bisa kerja sama dengan tim"
+                    android:textColor="#FFFFFF"
+                    android:drawableStart="@drawable/icon_centang_2"
+                    android:drawablePadding="10dp"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Portofolio minimal 1 project"
+                    android:textColor="#FFFFFF"
+                    android:drawableStart="@drawable/icon_centang_2"
+                    android:drawablePadding="10dp"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:background="@drawable/custom_bg_biru_tipis"
+                    android:layout_marginTop="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bonus : "
+                        android:drawableStart="@drawable/icon_bintang"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:textColor="#5E8BFF"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_sb" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Kalo punya pengalaman kompetisi UI/UX jadi nilai plus"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_r"
+                        android:layout_marginLeft="4dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dropdown_informasi_lomba"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/custom_bg_transparant_tipis"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:layout_marginTop="14dp">
+
+        <LinearLayout
+            android:id="@+id/dropdown_header_informasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/icon_tanda_tanya" />
+
+            <TextView
+                android:id="@+id/dropdown_title_informasi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Informasi Lomba"
+                android:textColor="#ffffff"
+                android:textSize="14sp"
+                android:fontFamily="@font/is_sb" />
+
+            <ImageView
+                android:id="@+id/dropdown_icon_informasi"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/icon_drop_down_off" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dropdown_content_informasi_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama lomba:"
+                android:textColor="#B0FFFFFF"
+                android:fontFamily="@font/is_r"
+                android:textSize="10sp"
+                android:paddingBottom="5dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NIFC 3.0"
+                android:textColor="#B0FFFFFF"
+                android:fontFamily="@font/is_m"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Penyelanggara:"
+                android:textColor="#B0FFFFFF"
+                android:fontFamily="@font/is_r"
+                android:textSize="10sp"
+                android:paddingBottom="5dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama Penyelenggara"
+                android:textColor="#B0FFFFFF"
+                android:fontFamily="@font/is_m"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/icon_tautan_biru"
+                    android:layout_marginRight="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Link Lomba"
+                    android:textColor="#5E8BFF"
+                    android:fontFamily="@font/is_m"
+                    android:textSize="16sp"
+                    android:drawableEnd="@drawable/icon_panah_kanan">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:background="@drawable/custom_bg_biru_tipis"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hadiah : "
+                    android:drawableStart="@drawable/icon_hadiah"
+                    android:drawablePadding="10dp"
+                    android:textColor="#5E8BFF"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_sb" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Uang Tunai + Sertifikat + Pengalaman + etc"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_r"
+                    android:layout_marginLeft="4dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

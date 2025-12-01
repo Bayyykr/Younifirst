@@ -1,86 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#121A2C"
-    tools:context=".Home.HomeFragment">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/badge_green"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
-            android:layout_marginRight="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Umum"
-                android:fontFamily="@font/is_r"
-                android:textSize="8sp"
-                android:textColor="@color/white" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/badge_blue"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
-            android:layout_marginRight="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Seminar"
-                android:fontFamily="@font/is_r"
-                android:textSize="8sp"
-                android:textColor="@color/white" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/badge_red"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
-            android:layout_marginRight="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Offline"
-                android:fontFamily="@font/is_r"
-                android:textSize="8sp"
-                android:textColor="@color/white" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/badge_purple"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:layout_marginRight="10dp"
-            android:paddingVertical="4dp"
-            android:visibility="gone">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hanya Mahasiswa"
-                android:fontFamily="@font/is_r"
-                android:textSize="8sp"
-                android:textColor="@color/white" />
-        </LinearLayout>
-    </LinearLayout>
+    android:background="@drawable/badge_green"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="4dp"
+    android:layout_marginEnd="10dp"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/text_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Badge"
+        android:fontFamily="@font/is_r"
+        android:textSize="8sp"
+        android:textColor="@color/white" />
+</LinearLayout>

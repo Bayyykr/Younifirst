@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A1124">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/back_to_mainactivity"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:padding="8dp"
+            android:src="@drawable/panah_kiri"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tittle_BuatEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buat Event"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:fontFamily="@font/is_sb"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view_separator"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="#335D6FFF"
+        app:layout_constraintTop_toBottomOf="@id/header_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/view_separator"
+        app:layout_constraintBottom_toTopOf="@id/btnBuatEvent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/containerPostinganKehilangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="16dp"
+            android:clipChildren="false">
+
+            <FrameLayout
+                android:id="@+id/profile_image_container"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@drawable/custom_transparant_tipis_rounded"
+                android:layout_marginTop="20dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <FrameLayout
+                    android:id="@+id/poster_overlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="20dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/img_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="Poster"
+                        android:clipToOutline="true"/>
+
+                    <ImageView
+                        android:id="@+id/icon_poster"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="top|center"
+                        android:src="@drawable/icon_galeri" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="bottom">
+
+                        <TextView
+                            android:id="@+id/tvTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tambahkan Poster Event"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/tvSubtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Format jpg, jpeg, png. Maks 15MB"
+                            android:textColor="#8A8FA3"
+                            android:textSize="12sp"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/icon_camera"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/icon_refresh"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginBottom="-5dp"
+                    android:background="@drawable/circle_dot_welcome"
+                    android:padding="8dp"/>
+            </FrameLayout>
+
+            <com.naufal.younifirst.custom.CustomEditText
+                android:id="@+id/et_namaevent"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/white"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="textCapSentences"/>
+
+            <com.naufal.younifirst.custom.CustomEditText
+                android:id="@+id/et_lokasievent"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="textCapSentences"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tanggal dan Waktu pelaksanaan"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Atur tanggal dan waktu event. Tambahkan hari jika berlangsung lebih dari satu."
+                        android:textColor="#50FFFFFF"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/is_r"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnTambahHari"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tambah Hari"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/is_r"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:drawableStart="@drawable/icon_add_kecil"
+                    android:textAllCaps="false"
+                    android:background="@drawable/custom_bbg_transparant_border"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/containerHariEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:dividerPadding="8dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/custom_bbg_transparant_border"
+                android:layout_marginTop="20dp"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/Gratis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Gratis"
+                        android:textColor="@color/white"
+                        android:button="@null"
+                        android:drawableStart="@drawable/custom_radio"
+                        android:drawablePadding="5dp"/>
+
+                    <RadioButton
+                        android:id="@+id/Berbayar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="Berbayar"
+                        android:textColor="@color/white"
+                        android:button="@null"
+                        android:drawableStart="@drawable/custom_radio"
+                        android:drawablePadding="5dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.naufal.younifirst.custom.CustomEditText
+                android:id="@+id/et_hargatiket"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="textCapSentences"/>
+
+            <com.naufal.younifirst.custom.CustomEditText
+                android:id="@+id/et_linkPendaftaran"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="textCapSentences"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Batas Tanggal dan Waktu pelaksanaan"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/is_sb"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Tentukkan kapan pendaftaran dibuka dan ditutup."
+                android:textColor="#50FFFFFF"
+                android:textSize="12sp"
+                android:fontFamily="@font/is_r"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.naufal.younifirst.custom.CustomEditText
+                    android:id="@+id/tglmulai"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="#66FFFFFF"
+                    android:inputType="textCapSentences"/>
+
+                <com.naufal.younifirst.custom.CustomEditText
+                    android:id="@+id/wktmulai"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="#66FFFFFF"
+                    android:inputType="textCapSentences"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.naufal.younifirst.custom.CustomEditText
+                    android:id="@+id/tgltutup"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="#66FFFFFF"
+                    android:inputType="textCapSentences"/>
+
+                <com.naufal.younifirst.custom.CustomEditText
+                    android:id="@+id/wkttutup"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textColorHint="#66FFFFFF"
+                    android:inputType="textCapSentences"/>
+
+            </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tag Terkait"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/is_sb"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Pilih atau ketuk tag yang sesuai dengan jenis event"
+                    android:textColor="#50FFFFFF"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/is_r"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:id="@+id/containerTags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    android:padding="10dp"
+                    android:background="@drawable/custom_bbg_transparant_border">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seminar"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/year_item_background"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Webinar"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/year_item_background"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Konser"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/year_item_background"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pameran"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/year_item_background"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Turnament"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/year_item_background"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Festival"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/year_item_background"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Online"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/year_item_background"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Offline"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/year_item_background"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Umum"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/year_item_background"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/is_sb"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hanya Mahasiswa"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:padding="10dp"
+                        android:background="@drawable/year_item_background"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/is_sb"/>
+                </LinearLayout>
+
+            </HorizontalScrollView>
+                <com.naufal.younifirst.custom.CustomEditText
+                    android:id="@+id/et_keterangan"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="#66FFFFFF"
+                    android:inputType="textCapSentences"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Media Sosial"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/is_sb"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Tambahkan media sosial agar peserta mudah terhubung dengan Anda (Opsional)"
+                android:textColor="#50FFFFFF"
+                android:textSize="12sp"
+                android:fontFamily="@font/is_r"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/BtnInstagram"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_button_chat_forum"
+                android:src="@drawable/icon_instagram"/>
+            <ImageButton
+                android:id="@+id/BtnWhatsApp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_button_chat_forum"
+                android:src="@drawable/icon_whatsapp"/>
+        </LinearLayout>
+
+            <com.naufal.younifirst.custom.CustomEditText
+                android:id="@+id/et_wa"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="textCapSentences"/>
+
+            <com.naufal.younifirst.custom.CustomEditText
+                android:id="@+id/et_instagram"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="#66FFFFFF"
+                android:inputType="textCapSentences"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btnBuatEvent"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
+        android:text="Buat Event"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/is_bold"
+        android:textAllCaps="false"
+        android:background="@drawable/custom_button_rounded"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

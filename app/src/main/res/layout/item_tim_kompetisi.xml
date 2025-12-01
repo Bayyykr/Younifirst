@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="14dp"
+    app:cardBackgroundColor="#0E152A"
+    app:cardElevation="0dp"
+    android:id="@+id/container_team_utama">
+
+    <LinearLayout
+        android:id="@+id/container_team_posts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- Header Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/chat_bubble_avatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/gambar_profil_2"
+                android:background="@drawable/rounded_image"
+                android:clipToOutline="true"
+                android:contentDescription="Avatar" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="qiuqiu"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_sb" />
+
+                <TextView
+                    android:id="@+id/text_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2 jam lalu"
+                    android:textColor="#7FFFFFFF"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/icon_lainnya"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_lainnya" />
+        </LinearLayout>
+
+        <!-- Poster Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardUseCompatPadding="false"
+            app:cardPreventCornerOverlap="true">
+
+            <ImageView
+                android:id="@+id/img_poster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/tryposter" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Role & Member Info Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Role Section -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/icon_role" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dibutuhkan"
+                            android:textColor="#7FFFFFFF"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/text_role"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="UI/UX Designer"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_m"/>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="#FFFFFF" />
+                </LinearLayout>
+
+                <!-- Member Section -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/icon_team" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Member saat ini"
+                            android:textColor="#7FFFFFFF"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/text_member"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="3/4"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/is_m"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Join Button -->
+        <Button
+            android:id="@+id/ikuttim"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#3C6CFF"
+            android:text="IKUT TIM"
+            android:textColor="@color/white"
+            android:fontFamily="@font/is_sb"
+            android:gravity="center"/>
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Butuh 1 orang lagi yuk yang mau join!…Selengkapnya"
+            android:textColor="#7FFFFFFF"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp" />
+
+        <!-- Footer Stats -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_like" />
+
+            <TextView
+                android:id="@+id/text_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2,5rb"
+                android:textColor="#7FFFFFFF"
+                android:layout_marginLeft="6dp" />
+
+            <ImageView
+                android:id="@+id/comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_comment"
+                android:layout_marginLeft="20dp" />
+
+            <TextView
+                android:id="@+id/text_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2,5rb"
+                android:textColor="#7FFFFFFF"
+                android:layout_marginLeft="6dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_share" />
+
+            <TextView
+                android:id="@+id/text_share_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2,5rb"
+                android:textColor="#7FFFFFFF"
+                android:layout_marginLeft="6dp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

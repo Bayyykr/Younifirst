@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Garis di atas -->
+    <View
+        android:id="@+id/garis"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="16dp"
+        android:background="#50FFFFFF" />
+
+    <!-- Container input -->
+    <LinearLayout
+        android:id="@+id/comment_input_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:id="@+id/comment_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/gambar_profil"
+            android:background="@drawable/rounded_image"
+            android:clipToOutline="true"
+            android:layout_marginEnd="6dp" />
+
+        <EditText
+            android:id="@+id/comment_input_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Tambahkan komentar"
+            android:layout_marginRight="10dp"
+            android:textColorHint="#50ffffff"
+            android:textColor="#ffffff"
+            android:background="@null"
+            android:textSize="14sp"
+            android:fontFamily="@font/is_r" />
+        <ImageView
+            android:id="@+id/comment_icon_send"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/icon_send_chat" />
+
+    </LinearLayout>
+
+</LinearLayout>

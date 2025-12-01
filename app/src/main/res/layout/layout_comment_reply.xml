@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/comment_reply_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/custom_transparant_tipis_rounded"
+    android:padding="4dp">
+
+    <ImageView
+        android:id="@+id/comment_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/gambar_profil"
+        android:background="@drawable/rounded_image"
+        android:clipToOutline="true"
+        android:contentDescription="Avatar"
+        android:layout_marginEnd="8dp"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Membalas"
+                android:textColor="#20FFFFFF"
+                android:textSize="14sp"
+                android:fontFamily="@font/is_sb"/>
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@Elliot"
+                android:textColor="#20FFFFFF"
+                android:textSize="14sp"
+                android:fontFamily="@font/is_sb"/>
+
+
+        </LinearLayout>
+        <View
+            android:id="@+id/garis"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#50FFFFFF" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/usernamereply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@Elliot"
+                android:textColor="#5E8BFF"
+                android:textSize="14sp"
+                android:fontFamily="@font/is_sb"/>
+
+            <EditText
+                android:id="@+id/input_reply_chat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ketik pesan anda disini!!"
+                android:textColorHint="#50ffffff"
+                android:background="@null"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="10dp"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/is_r" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/comment_icon_emote"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:src="@drawable/icon_emote"
+        android:layout_marginRight="5dp"
+        android:contentDescription="Emoji"/>
+
+    <ImageView
+        android:id="@+id/send"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:src="@drawable/icon_send_chat"
+        android:layout_marginStart="8dp"
+        android:contentDescription="Emoji"/>
+
+</LinearLayout>

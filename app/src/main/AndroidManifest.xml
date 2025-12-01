@@ -31,11 +31,11 @@
 <!--            android:exported="false"-->
 <!--            android:label="@string/app_name"-->
 <!--            android:theme="@style/Theme.YOUNIFIRST"/>-->
-        <activity
-            android:name=".LognReg.login"
-            android:exported="false"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.YOUNIFIRST"/>
+<!--        <activity-->
+<!--            android:name=".LognReg.login"-->
+<!--            android:exported="false"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:theme="@style/Theme.YOUNIFIRST"/>-->
         <activity
             android:name=".Home.PengaturanActivity"
             android:exported="false"
@@ -52,7 +52,37 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.YOUNIFIRST"/>
         <activity
+            android:name=".Home.PostingLostActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.YOUNIFIRST"/>
+        <activity
             android:name=".Forum.BuatForumActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.YOUNIFIRST"/>
+        <activity
+            android:name=".Event.BuatEvent"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.YOUNIFIRST"/>
+        <activity
+            android:name=".Kompetisi.TambahPostingLomba"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.YOUNIFIRST"/>
+        <activity
+            android:name=".Kompetisi.PostingLomba"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.YOUNIFIRST"/>
+        <activity
+            android:name=".Event.DetailEventActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.YOUNIFIRST"/>
+        <activity
+            android:name=".Event.EditEvent"
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.YOUNIFIRST"/>

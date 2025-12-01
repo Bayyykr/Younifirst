@@ -22,7 +22,10 @@
     import androidx.fragment.app.FragmentTransaction;
 
     import com.google.android.material.floatingactionbutton.FloatingActionButton;
+    import com.naufal.younifirst.Event.BuatEvent;
     import com.naufal.younifirst.Forum.BuatForumActivity;
+    import com.naufal.younifirst.Event.BuatEvent;
+    import com.naufal.younifirst.Kompetisi.PostingLomba;
     import com.naufal.younifirst.R;
     import com.naufal.younifirst.databinding.ActivityMainBinding;
 
@@ -38,7 +41,7 @@
         private View btnAddContainer;
         private int colorAddDefault;
         private int colorAddActive;
-        private FloatingActionButton btnMenemukanFab, btnAddForumFab;
+        private FloatingActionButton btnMenemukanFab, btnAddForumFab, btnKehilanganFab, btnPostingEvent, btnPostingLomba;
 
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,6 +121,24 @@
             btnMenemukanFab.setOnClickListener(v -> {
                 hideMenu();
                 startActivity(new Intent(MainActivity.this, PostingFoundActivity.class));
+            });
+
+            btnKehilanganFab = fabMenuLostFound.findViewById(R.id.btnKehilangan);
+            btnKehilanganFab.setOnClickListener(v -> {
+                hideMenu();
+                startActivity(new Intent(MainActivity.this, PostingLostActivity.class));
+            });
+
+            btnPostingEvent = fabMenuEvent.findViewById(R.id.btnPostingEvent);
+            btnPostingEvent.setOnClickListener(v -> {
+                hideMenu();
+                startActivity(new Intent(MainActivity.this, BuatEvent.class));
+            });
+
+            btnPostingLomba = fabMenuKompetisi.findViewById(R.id.btnPostingLomba);
+            btnPostingLomba.setOnClickListener(v -> {
+                hideMenu();
+                startActivity(new Intent(MainActivity.this, PostingLomba.class));
             });
 
             btnAddForumFab = fabMenuForum.findViewById(R.id.btnPostingForum);
@@ -293,6 +314,9 @@
                     headerUtama.setVisibility(View.VISIBLE);
                     break;
                 case "event":
+                    headerThird.setVisibility(View.VISIBLE);
+                    break;
+                case "competition":
                     headerThird.setVisibility(View.VISIBLE);
                     break;
                 default:

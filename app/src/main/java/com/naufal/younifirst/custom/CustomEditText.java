@@ -25,7 +25,7 @@ public class CustomEditText extends FrameLayout {
 
     private static final WeakHashMap<CustomEditText, Boolean> instances = new WeakHashMap<>();
 
-    private static final String COLOR_BORDER_DEFAULT = "#2A3256";
+    private static final String COLOR_BORDER_DEFAULT = "#33FFFFFF";
     private static final String COLOR_BORDER_FOCUS = "#5E8BFF";
     private static final String COLOR_FILL = "#0A1124";
 
@@ -54,7 +54,6 @@ public class CustomEditText extends FrameLayout {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
-
     private void init(AttributeSet attrs) {
         instances.put(this, true);
 
