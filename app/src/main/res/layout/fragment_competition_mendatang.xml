@@ -58,7 +58,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/text_status_mendatang"
+                            android:id="@+id/text_biaya"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Berbayar"
@@ -75,12 +75,12 @@
                             android:textSize="10sp" />
 
                         <TextView
-                            android:id="@+id/text_scope_mendatang"
+                            android:id="@+id/text_scope"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/is_r"
                             android:text="Nasional"
                             android:textColor="@color/white"
-                            android:fontFamily="@font/is_r"
                             android:textSize="10sp" />
                     </LinearLayout>
 
@@ -94,34 +94,21 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/icon_lomba_type_kelompok"
                             android:layout_width="13dp"
                             android:layout_height="8dp"
                             android:src="@drawable/icon_orang"
                             android:layout_gravity="center" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tim "
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/is_r"
-                            android:textSize="10sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="+ "
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/is_r"
-                            android:textSize="10sp" />
-
                         <ImageView
+                            android:id="@+id/icon_lomba_type_individu"
                             android:layout_width="13dp"
                             android:layout_height="8dp"
                             android:src="@drawable/icon_people"
                             android:layout_gravity="center" />
 
                         <TextView
+                            android:id="@+id/text_lomba_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Individu"

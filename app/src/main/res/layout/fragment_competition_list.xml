@@ -36,7 +36,7 @@
                 android:clipToOutline="true">
 
                 <ImageView
-                    android:id="@+id/POSTER_KONTOL"
+                    android:id="@+id/poster_lomba"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -66,7 +66,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/text_status_list"
+                            android:id="@+id/text_biaya"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Berbayar"
@@ -83,7 +83,7 @@
                             android:fontFamily="@font/is_r" />
 
                         <TextView
-                            android:id="@+id/text_scope_list"
+                            android:id="@+id/text_scope"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Nasional"
@@ -100,30 +100,27 @@
                         android:gravity="end">
 
                         <ImageView
+                            android:id="@+id/icon_lomba_type_kelompok"
                             android:layout_width="11dp"
                             android:layout_height="8dp"
-                            android:src="@drawable/icon_orang" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" Tim"
-                            android:textColor="@color/white"
-                            android:textSize="9sp"
-                            android:fontFamily="@font/is_r" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" + "
-                            android:textColor="@color/white"
-                            android:textSize="9sp"
-                            android:fontFamily="@font/is_r" />
-
+                            android:src="@drawable/icon_orang"
+                            android:layout_gravity="center"/>
                         <ImageView
+                            android:id="@+id/icon_lomba_type_individu"
                             android:layout_width="11dp"
                             android:layout_height="8dp"
-                            android:src="@drawable/icon_people" />
+                            android:src="@drawable/icon_people"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/text_lomba_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="individu"
+                            android:textColor="@color/white"
+                            android:textSize="9sp"
+                            android:fontFamily="@font/is_r" />
+
                     </LinearLayout>
                 </LinearLayout>
 

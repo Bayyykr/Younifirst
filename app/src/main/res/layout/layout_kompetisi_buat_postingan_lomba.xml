@@ -220,17 +220,6 @@
                             android:textColorHint="#66FFFFFF"
                             android:inputType="textCapSentences"/>
 
-                        <Button
-                            android:id="@+id/bTimdanIndividu"
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_weight="1"
-                            android:textColor="@color/white"
-                            android:background="@drawable/custom_bbg_transparant_border"
-                            android:textColorHint="#66FFFFFF"
-                            android:inputType="textCapSentences"/>
-
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -270,7 +259,7 @@
                 android:orientation="horizontal">
 
                 <com.naufal.younifirst.custom.CustomEditText
-                    android:id="@+id/tglAwal"
+                    android:id="@+id/et_bataspendaftaran"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
@@ -281,20 +270,6 @@
                     android:focusable="false"
                     android:clickable="true"
                     android:inputType="none"/>
-
-                <com.naufal.younifirst.custom.CustomEditText
-                    android:id="@+id/tglAkhir"
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/white"
-                    android:textColorHint="#66FFFFFF"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:inputType="none"/>
-
 
             </LinearLayout>
 

@@ -27,11 +27,11 @@ public class TambahPostingLomba extends AppCompatActivity {
     private ShapeableImageView imgProfile;
 
     private CustomEditText etNamaLomba, etLokasiLomba,
-            tglAwal, tglAkhir, etBiayaPendaftaran, etLinkPendaftaran, etLinkPanduanatauGuidebookLomba,
+            tglbataspendaftaran, etBiayaPendaftaran, etLinkPendaftaran, etLinkPanduanatauGuidebookLomba,
             etMasukkanHadiahPerlombaan, etNamaPenyelenggara, etLinkProfilePenyelenggara,
             etMasukkanNoWhatsApp, etMasukkanUsernameIG, etKeterangan;
 
-    private Button bIndividu, bTim, bTimdanIndividu;
+    private Button bIndividu, bTim;
     private Button btnSertifikat, btnSertifikatDanTunai, btnSertifikatDanHadiahMenarik,
             btnSertifikatTunaiDanHadiahMenarik;
 
@@ -45,11 +45,10 @@ public class TambahPostingLomba extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_kompetisi_buat_postingan_lomba);
 
+        // Inisialisasi EditText
         etNamaLomba = findViewById(R.id.et_namalomba);
         etLokasiLomba = findViewById(R.id.et_lokasiLomba);
-        tglAwal = findViewById(R.id.tglAwal);
-        tglAkhir = findViewById(R.id.tglAkhir);
-        BackButton = findViewById(R.id.back_to_mainactivity);
+        tglbataspendaftaran = findViewById(R.id.et_bataspendaftaran);
         etBiayaPendaftaran = findViewById(R.id.et_BiayaPendaftaran);
         etLinkPendaftaran = findViewById(R.id.et_LinkPendaftaran);
         etLinkPanduanatauGuidebookLomba = findViewById(R.id.et_linkPanduanatauGuidebookLomba);
@@ -60,26 +59,49 @@ public class TambahPostingLomba extends AppCompatActivity {
         etMasukkanUsernameIG = findViewById(R.id.et_masukkanusernameig);
         etKeterangan = findViewById(R.id.et_keterangan);
 
+        // Inisialisasi Buttons
         bIndividu = findViewById(R.id.bIndividu);
         bTim = findViewById(R.id.bTim);
-        bTimdanIndividu = findViewById(R.id.bTimdanIndividu);
 
         btnSertifikat = findViewById(R.id.btn_sertifikat);
         btnSertifikatDanTunai = findViewById(R.id.btn_sertifikatdantunai);
         btnSertifikatDanHadiahMenarik = findViewById(R.id.btn_sertifikatdanhadiahmenariklainnya);
         btnSertifikatTunaiDanHadiahMenarik = findViewById(R.id.btn_sertifikattunaidanhadiahmenariklainnnya);
 
+        // Inisialisasi RadioButton
         radioGratis = findViewById(R.id.Gratis);
         radioBerbayar = findViewById(R.id.Berbayar);
         radioNasional = findViewById(R.id.Nasional);
         radioInternasional = findViewById(R.id.Internasional);
 
+        // Inisialisasi ImageView
         imgProfile = findViewById(R.id.img_profile);
         iconCamera = findViewById(R.id.icon_camera);
         iconPoster = findViewById(R.id.icon_poster);
+        BackButton = findViewById(R.id.back_to_mainactivity);
 
+        // Set hint EditText
+        etNamaLomba.setHint("Nama lomba");
+        etLokasiLomba.setHint("Lokasi lomba");
+        tglbataspendaftaran.setHint("Tanggal Batas Pendaftaran");
+        etBiayaPendaftaran.setHint("Biaya pendaftaran");
+        etLinkPendaftaran.setHint("Link pendaftaran");
+        etLinkPanduanatauGuidebookLomba.setHint("Link Panduan/Guidebook Lomba");
+        etMasukkanHadiahPerlombaan.setHint("Masukkan Hadiah Perlombaan");
+        etNamaPenyelenggara.setHint("Nama Penyelenggara");
+        etLinkProfilePenyelenggara.setHint("Link Profil Penyelenggara");
+        etMasukkanNoWhatsApp.setHint("Masukkan nomor WhatsApp");
+        etMasukkanUsernameIG.setHint("Username Instagram (Opsional)");
+        etKeterangan.setHint("Keterangan tambahan");
+
+        // Set text Buttons kategori
+        bIndividu.setText("Individu");
+        bTim.setText("Tim");
+
+        // Back button
         BackButton.setOnClickListener(v -> finish());
 
+        // Setup image picker
         setupImagePicker();
 
         pickExtraImageLauncher = registerForActivityResult(
@@ -95,26 +117,8 @@ public class TambahPostingLomba extends AppCompatActivity {
         iconCamera.setOnClickListener(v -> pickImageLauncher.launch("image/*"));
         imgProfile.setOnClickListener(v -> pickImageLauncher.launch("image/*"));
 
-        etNamaLomba.setHint("Nama lomba");
-        etLokasiLomba.setHint("Lokasi lomba");
-        tglAwal.setHint("Tanggal Awal");
-        tglAkhir.setHint("Tanggal Akhir");
-        etBiayaPendaftaran.setHint("Biaya pendaftaran");
-        etLinkPendaftaran.setHint("Link pendaftaran");
-        etLinkPanduanatauGuidebookLomba.setHint("Link Panduan/Guidebook Lomba");
-        etMasukkanHadiahPerlombaan.setHint("Masukkan Hadiah Perlombaan");
-        etNamaPenyelenggara.setHint("Nama Penyelenggara");
-        etLinkProfilePenyelenggara.setHint("Link Profil Penyelenggara");
-        etMasukkanNoWhatsApp.setHint("Masukkan nomor WhatsApp");
-        etMasukkanUsernameIG.setHint("Username Instagram (Opsional)");
-        etKeterangan.setHint("Keterangan tambahan");
-
-        bIndividu.setText("Individu");
-        bTim.setText("Tim");
-        bTimdanIndividu.setText("Tim & Individu");
-
+        // Button simpan posting
         Button btnSimpanPosting = findViewById(R.id.btnSimpanPostingLomba);
-
         btnSimpanPosting.setOnClickListener(v -> {
             Intent result = new Intent();
             result.putExtra("posted", true);
@@ -122,13 +126,14 @@ public class TambahPostingLomba extends AppCompatActivity {
             finish();
         });
 
+        // Setup logika tombol dan radio
         setupCategoryButtons();
         setupHadiahButtons();
         setupRadioButtons();
         setupRadioButtonWilayah();
-        setupDatePicker(tglAwal);
-        setupDatePicker(tglAkhir);
+        setupDatePicker(tglbataspendaftaran);
 
+        // Setup containerTags
         LinearLayout containerTags = findViewById(R.id.containerTags);
         for (int i = 0; i < containerTags.getChildCount(); i++) {
             View child = containerTags.getChildAt(i);
@@ -146,6 +151,7 @@ public class TambahPostingLomba extends AppCompatActivity {
             }
         }
 
+        // Tambah hari dengan image picker
         Button btnTambahHari = findViewById(R.id.btnTambahHari);
         ImageView profileImage = findViewById(R.id.profile);
         ActivityResultLauncher<String> pickImageLauncher2 = registerForActivityResult(
@@ -161,8 +167,7 @@ public class TambahPostingLomba extends AppCompatActivity {
     }
 
     private void setupCategoryButtons() {
-        List<Button> categoryButtons = Arrays.asList(bIndividu, bTim, bTimdanIndividu);
-
+        List<Button> categoryButtons = Arrays.asList(bIndividu, bTim);
         for (Button btn : categoryButtons) {
             btn.setOnClickListener(v -> {
                 for (Button b : categoryButtons) {
@@ -199,7 +204,6 @@ public class TambahPostingLomba extends AppCompatActivity {
                 radioGratis.setChecked(true);
                 radioBerbayar.setChecked(false);
                 etBiayaPendaftaran.setVisibility(View.GONE);
-
             } else if (v.getId() == R.id.Berbayar) {
                 radioBerbayar.setChecked(true);
                 radioGratis.setChecked(false);

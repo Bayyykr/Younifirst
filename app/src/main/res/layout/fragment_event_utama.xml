@@ -78,6 +78,7 @@
             android:paddingHorizontal="18dp"
             android:paddingTop="10dp">
 
+            <!-- Data statis (akan di-hide) -->
             <LinearLayout
                 android:id="@+id/trending_item_1"
                 android:layout_width="wrap_content"
@@ -96,6 +97,7 @@
                 <include layout="@layout/fragment_event_list"/>
             </LinearLayout>
 
+            <!-- Data statis lainnya tanpa ID (akan di-hide semua) -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,24 +1,23 @@
 package com.naufal.younifirst.api;
 
 import android.util.Log;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class ApiHelper {
-
-    private static final String BASE_URL = "http://192.168.1.13:8000";
+    private static final String BASE_URL = "http://192.168.1.12:8000";
     private static final String TAG = "API_DEBUG";
-
-    // Client dengan konfigurasi yang lebih robust
     private static OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(0, TimeUnit.SECONDS)  // Kurangi timeout
-            .readTimeout(0, TimeUnit.SECONDS)
-            .writeTimeout(0, TimeUnit.SECONDS)
-            .retryOnConnectionFailure(true) // Tambah retry
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
             .build();
 
     public interface ApiCallback {
@@ -26,16 +25,36 @@ public class ApiHelper {
         void onFailure(String error);
     }
 
+    // Method untuk mengambil teams dari endpoint API Anda
     public static void fetchTeams(ApiCallback callback) {
         executeApiCall("/api/teams", "teams", callback);
+    }
+
+    // Method baru: fetch teams dengan status tertentu
+    public static void fetchTeamsByStatus(String status, ApiCallback callback) {
+        String url = BASE_URL + "/api/teams?status=" + status;
+        executeApiCallWithUrl(url, "teams_by_status", callback);
+    }
+
+    // Method baru: fetch teams aktif (default)
+    public static void fetchActiveTeams(ApiCallback callback) {
+        fetchTeamsByStatus("active", callback);
     }
 
     public static void fetchKompetisi(ApiCallback callback) {
         executeApiCall("/api/kompetisi", "kompetisi", callback);
     }
 
+    public static void fetchEvent(ApiCallback callback) {
+        executeApiCall("/api/events", "events", callback);
+    }
+
     private static void executeApiCall(String endpoint, String apiName, ApiCallback callback) {
         String url = BASE_URL + endpoint;
+        executeApiCallWithUrl(url, apiName, callback);
+    }
+
+    private static void executeApiCallWithUrl(String url, String apiName, ApiCallback callback) {
         Log.d(TAG, "🔗 Fetching " + apiName + " from: " + url);
 
         Request request = new Request.Builder()
@@ -56,6 +75,14 @@ public class ApiHelper {
                 if (response.isSuccessful() && response.body() != null) {
                     String result = response.body().string();
                     Log.d(TAG, "✅ " + apiName + " API success, data length: " + result.length());
+
+                    // Debug: print first 500 characters of response
+                    if (result.length() > 500) {
+                        Log.d(TAG, "📋 Response preview: " + result.substring(0, 500) + "...");
+                    } else {
+                        Log.d(TAG, "📋 Response: " + result);
+                    }
+
                     callback.onSuccess(result);
                 } else {
                     String error = "❌ HTTP Error: " + response.code() + " - " + response.message();
@@ -76,41 +103,6 @@ public class ApiHelper {
                 String error = "❌ Network Error: " + e.getMessage();
                 Log.e(TAG, error, e);
                 callback.onFailure(error);
-            }
-        }).start();
-    }
-
-    // Method untuk test koneksi dengan timeout lebih singkat
-    public static void testConnection(ApiCallback callback) {
-        String url = BASE_URL + "/";
-        Log.d(TAG, "🧪 Testing connection to: " + url);
-
-        // Client khusus untuk test dengan timeout lebih pendek
-        OkHttpClient testClient = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .build();
-
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("Connection", "close")
-                .build();
-
-        new Thread(() -> {
-            try {
-                Response response = testClient.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    callback.onSuccess("✅ Server is reachable! Status: " + response.code());
-                } else {
-                    callback.onSuccess("⚠️ Server responded but with error: " + response.code());
-                }
-                response.close();
-            } catch (SocketTimeoutException e) {
-                callback.onFailure("⏰ Timeout: Server tidak merespons dalam 10 detik");
-            } catch (ConnectException e) {
-                callback.onFailure("🔌 Connection refused: Pastikan server berjalan dan IP benar");
-            } catch (Exception e) {
-                callback.onFailure("❌ Cannot reach server: " + e.getMessage());
             }
         }).start();
     }

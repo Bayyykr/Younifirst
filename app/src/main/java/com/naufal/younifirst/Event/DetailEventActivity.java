@@ -1,6 +1,8 @@
 package com.naufal.younifirst.Event;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,12 +16,19 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.graphics.drawable.ColorDrawable;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.naufal.younifirst.R;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class DetailEventActivity extends AppCompatActivity {
 
@@ -47,6 +56,7 @@ public class DetailEventActivity extends AppCompatActivity {
         setupBackPressedHandler();
 
         btnFlag.setOnClickListener(v -> showFlagPopup());
+        loadEventDataFromIntent();
     }
 
     private void initViews() {
@@ -269,5 +279,147 @@ public class DetailEventActivity extends AppCompatActivity {
                     ((ViewGroup) overlay.getParent()).removeView(overlay);
                 })
                 .start();
+    }
+    private void loadEventDataFromIntent() {
+        String name = getIntent().getStringExtra("event_name");
+        String date = getIntent().getStringExtra("event_date");
+        String time = getIntent().getStringExtra("event_time");
+        String place = getIntent().getStringExtra("event_location"); // organizer
+        String place2 = getIntent().getStringExtra("event_detail_place"); // lokasi
+        String price = getIntent().getStringExtra("event_price");
+        String desc = getIntent().getStringExtra("event_description");
+        String poster = getIntent().getStringExtra("event_poster");
+        String dlPendaftaran = getIntent().getStringExtra("event_dl_pendaftaran");
+
+        String kategori = getIntent().getStringExtra("event_kategori");
+
+        ImageView img = findViewById(R.id.img_header);
+        TextView title = findViewById(R.id.title_event);
+        TextView dateText = findViewById(R.id.tanggalEvent);
+        TextView timeText = findViewById(R.id.jamEvent);
+        TextView loc = findViewById(R.id.lokasiEvent);
+        TextView loc2 = findViewById(R.id.lokasiDetailEvent);
+        TextView priceText = findViewById(R.id.hargaEvent);
+        TextView descText = findViewById(R.id.content_event);
+        TextView batasWaktuText = findViewById(R.id.BatasWaktuPendaftaran);
+
+        View badgeView = findViewById(R.id.badge_event);
+
+        title.setText(name != null ? name : "Nama Event");
+
+        if (date != null && !date.isEmpty()) {
+            dateText.setText(formatDate(date));
+        } else {
+            dateText.setText("Tanggal belum ditentukan");
+        }
+
+        if (time != null && !time.isEmpty()) {
+            timeText.setText(time);
+        } else {
+            timeText.setText("Waktu akan diumumkan");
+        }
+
+        loc.setText(place != null ? place : "Organizer tidak tersedia");
+        loc2.setText(place2 != null ? place2 : "Lokasi tidak tersedia");
+
+        priceText.setText(price != null ? price : "Gratis");
+
+        descText.setText(desc != null ? desc : "Deskripsi tidak tersedia");
+
+        if (batasWaktuText != null) {
+            if (dlPendaftaran != null && !dlPendaftaran.isEmpty() && !"null".equals(dlPendaftaran)) {
+                batasWaktuText.setText(dlPendaftaran);
+            } else {
+            }
+        }
+
+        setBadgeWithCategory(badgeView, kategori);
+
+        Glide.with(this)
+                .load(poster)
+                .placeholder(R.drawable.tryposter)
+                .into(imgHeader);
+    }
+
+    private String formatDate(String dateString) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID"));
+            Date date = inputFormat.parse(dateString);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            return dateString;
+        }
+    }
+
+    private String formatDateTimeForDisplay(String dateTimeString) {
+        try {
+            SimpleDateFormat inputFormat;
+
+            // Cek format input
+            if (dateTimeString.contains(" ")) {
+                // Format dengan waktu: "2025-12-13 12:00:00"
+                inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            } else {
+                // Format tanpa waktu: "2025-12-13"
+                inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            }
+
+            SimpleDateFormat outputFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy | HH:mm", new Locale("id", "ID"));
+            Date date = inputFormat.parse(dateTimeString);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            // Jika parsing gagal, return original string
+            return dateTimeString;
+        }
+    }
+
+    // PERBAIKAN: Method baru untuk set badge berdasarkan kategori
+    private void setBadgeWithCategory(View badgeView, String kategori) {
+        if (badgeView == null) return;
+
+        TextView badgeTextView = badgeView.findViewById(R.id.badge_status);
+        if (badgeTextView != null) {
+            // PERBAIKAN: Generate warna berdasarkan kategori (jika ada) atau nama event
+            String baseString = (kategori != null && !kategori.isEmpty()) ? kategori : "DefaultEvent";
+            int color = generateColorFromString(baseString);
+
+            // Set warna background badge
+            GradientDrawable drawable = new GradientDrawable();
+            drawable.setShape(GradientDrawable.RECTANGLE);
+            drawable.setCornerRadius(20); // radius sesuai dengan XML
+            badgeTextView.setBackground(null);
+
+            // Set teks badge
+            if (kategori != null && !kategori.isEmpty()) {
+                // Ambil kata pertama jika kategori berupa multiple (contoh: "Webinar, Seminar")
+                String[] kategoriParts = kategori.split(",");
+                String firstKategori = kategoriParts[0].trim().toUpperCase();
+                badgeTextView.setText(firstKategori);
+            } else {
+                badgeTextView.setText("EVENT");
+            }
+        }
+    }
+
+    private int generateColorFromString(String input) {
+        int[] badgeColors = {
+                Color.parseColor("#FF6B6B"),  // Merah muda
+                Color.parseColor("#4ECDC4"),  // Turquoise
+                Color.parseColor("#FFD166"),  // Kuning
+                Color.parseColor("#06D6A0"),  // Hijau mint
+                Color.parseColor("#118AB2"),  // Biru
+                Color.parseColor("#EF476F"),  // Pink
+                Color.parseColor("#7209B7"),  // Ungu
+                Color.parseColor("#3A86FF"),  // Biru cerah
+                Color.parseColor("#FB5607"),  // Orange
+                Color.parseColor("#8338EC")   // Ungu tua
+        };
+
+        // Hash string untuk mendapatkan index yang konsisten
+        int hash = Math.abs(input.hashCode());
+        int index = hash % badgeColors.length;
+
+        return badgeColors[index];
     }
 }

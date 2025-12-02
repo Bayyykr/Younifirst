@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#001136"
+    android:background="#121A2C"
     tools:context=".Home.HomeFragment">
 
     <ScrollView
@@ -83,6 +83,7 @@
                         android:layout_marginStart="19dp">
 
                         <TextView
+                            android:id="@+id/tanggalEvent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Sabtu, 22 November 2025"
@@ -92,6 +93,7 @@
                             android:fontFamily="@font/is_sb" />
 
                         <TextView
+                            android:id="@+id/jamEvent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="22.00 WIB - Selesai"
@@ -129,6 +131,7 @@
                         android:layout_marginStart="19dp">
 
                         <TextView
+                            android:id="@+id/lokasiEvent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -138,6 +141,7 @@
                             android:fontFamily="@font/is_sb" />
 
                         <TextView
+                            android:id="@+id/lokasiDetailEvent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Lapangan Hijau"
@@ -147,7 +151,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Price Segment -->
                 <LinearLayout
                     android:id="@+id/price_segment"
                     android:layout_width="match_parent"
@@ -167,6 +170,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/hargaEvent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Rp. 80.000"
@@ -215,6 +219,7 @@
                             android:fontFamily="@font/is_sb" />
 
                         <TextView
+                            android:id="@+id/BatasWaktuPendaftaran"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Jumat, 21 November 2025 | 12:00"
@@ -237,7 +242,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Header Transparan di atas -->
     <RelativeLayout
         android:id="@+id/header_container"
         android:layout_width="match_parent"
@@ -245,7 +249,6 @@
         android:background="@android:color/transparent"
         android:elevation="10dp">
 
-        <!-- Tombol Back -->
         <ImageButton
             android:id="@+id/back_to_mainactivity"
             android:layout_width="35dp"

@@ -66,6 +66,7 @@
             <include layout="@layout/badge_kecil"/>
 
             <TextView
+                android:id="@+id/text_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="15 November 2025"
@@ -75,6 +76,7 @@
                 android:layout_marginVertical="10dp"/>
 
             <TextView
+                android:id="@+id/text_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SEMINAR NASIONAL EPIM 2025"
@@ -95,8 +97,10 @@
                     android:src="@drawable/icon_lokasi_abu"
                     android:layout_marginRight="4dp"/>
                 <TextView
+                    android:id="@+id/text_location"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:text="Gor Djoeang 45 Politeknik Negeri Jember"
                     android:textColor="#7FFFFFFF"
