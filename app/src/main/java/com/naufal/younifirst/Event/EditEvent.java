@@ -166,20 +166,17 @@ public class EditEvent extends AppCompatActivity {
 
         int nomorHari = containerHariEvent.getChildCount() + 1;
 
-        CustomEditText etTanggal = item.findViewById(R.id.et_tanggalEventHariKe1);
+        CustomEditText etTanggal = item.findViewById(R.id.et_tanggalEvent);
         CustomEditText etMulai = item.findViewById(R.id.et_waktuMulai);
-        CustomEditText etSelesai = item.findViewById(R.id.et_waktuSelesai);
         ImageView close = item.findViewById(R.id.close);
         android.widget.TextView tvHari = item.findViewById(R.id.hari);
 
         etTanggal.setHint("Tanggal event hari ke-" + nomorHari);
         etMulai.setHint("Waktu Mulai");
-        etSelesai.setHint("Waktu Selesai");
         tvHari.setText("Hari " + nomorHari);
 
         setupDatePicker(etTanggal);
         setupTimePicker(etMulai);
-        setupTimePicker(etSelesai);
 
         close.setOnClickListener(v -> {
             containerHariEvent.removeView(item);
@@ -192,7 +189,7 @@ public class EditEvent extends AppCompatActivity {
     private void updateNomorHari() {
         for (int i = 0; i < containerHariEvent.getChildCount(); i++) {
             View item = containerHariEvent.getChildAt(i);
-            CustomEditText etTanggal = item.findViewById(R.id.et_tanggalEventHariKe1);
+            CustomEditText etTanggal = item.findViewById(R.id.et_tanggalEvent);
             android.widget.TextView tvHari = item.findViewById(R.id.hari);
 
             int nomorHari = i + 1;

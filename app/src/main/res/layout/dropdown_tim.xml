@@ -102,6 +102,7 @@
                     android:fontFamily="@font/is_sb" />
 
                 <TextView
+                    android:id="@+id/Kt1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mengerti wireframing dan prototyping"
@@ -112,6 +113,7 @@
                     android:layout_marginTop="6dp" />
 
                 <TextView
+                    android:id="@+id/Kt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Familiar dengan Figma"
@@ -122,6 +124,7 @@
                     android:layout_marginTop="4dp" />
 
                 <TextView
+                    android:id="@+id/Kt3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bisa kerja sama dengan tim"
@@ -132,6 +135,7 @@
                     android:layout_marginTop="4dp" />
 
                 <TextView
+                    android:id="@+id/Kt4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Portofolio minimal 1 project"
@@ -140,37 +144,6 @@
                     android:drawablePadding="10dp"
                     android:textSize="14sp"
                     android:layout_marginTop="4dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
-                    android:background="@drawable/custom_bg_biru_tipis"
-                    android:layout_marginTop="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Bonus : "
-                        android:drawableStart="@drawable/icon_bintang"
-                        android:drawablePadding="10dp"
-                        android:gravity="center"
-                        android:textColor="#5E8BFF"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/is_sb" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Kalo punya pengalaman kompetisi UI/UX jadi nilai plus"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/is_r"
-                        android:layout_marginLeft="4dp" />
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

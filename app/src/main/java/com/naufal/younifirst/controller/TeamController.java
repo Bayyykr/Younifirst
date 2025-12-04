@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class TeamController {
@@ -21,9 +22,7 @@ public class TeamController {
         void onFailure(String error);
     }
 
-    public void loadTeamsData(TeamCallback callback) {
-        Log.d(TAG, "Loading teams data from API...");
-
+    public void loadTeamsData(final TeamCallback callback) {
         ApiHelper.fetchTeams(new ApiHelper.ApiCallback() {
             @Override
             public void onSuccess(String result) {
@@ -77,30 +76,43 @@ public class TeamController {
 
             List<Team> teams = new ArrayList<>();
             int successfulParses = 0;
+            int skippedCount = 0;
 
             for (int i = 0; i < teamsArray.length(); i++) {
                 try {
                     JSONObject teamJson = teamsArray.getJSONObject(i);
 
-                    // Debug: log JSON structure
                     Log.d(TAG, "Team JSON " + i + ": " + teamJson.toString());
 
                     Team team = new Team(teamJson);
 
-                    // Filter hanya tim dengan status aktif
                     String status = team.getStatus();
-                    if (status != null &&
-                            (status.equalsIgnoreCase("confirm") ||
-                                    status.equalsIgnoreCase("approved") ||
-                                    status.equalsIgnoreCase("open"))) {
+                    boolean isConfirmed = false;
 
+                    // 🔥 FILTER: Hanya tampilkan yang statusnya "confirm"
+                    if (status != null) {
+                        String statusLower = status.toLowerCase().trim();
+                        // Cek berbagai variasi penulisan "confirm"
+                        isConfirmed = statusLower.equals("confirm") ||
+                                statusLower.equals("confirmed") ||
+                                statusLower.equals("konfirm") ||
+                                statusLower.equals("konfirmasi");
+
+                        Log.d(TAG, "Team: " + team.getNamaTeam() +
+                                " | Status: " + status +
+                                " | isConfirmed: " + isConfirmed);
+                    }
+
+                    if (isConfirmed) {
                         teams.add(team);
                         successfulParses++;
-                        Log.d(TAG, "✓ Added team: " + team.getNamaTeam() +
+                        Log.d(TAG, "✅ Added team: " + team.getNamaTeam() +
+                                " | Status: " + status +
                                 " | Role: " + team.getRoleRequired() +
                                 " | Max: " + team.getMaxAnggota());
                     } else {
-                        Log.d(TAG, "✗ Skipped team (inactive): " + team.getNamaTeam() +
+                        skippedCount++;
+                        Log.d(TAG, "❌ Skipped team (not confirmed): " + team.getNamaTeam() +
                                 " | Status: " + status);
                     }
 
@@ -112,11 +124,26 @@ public class TeamController {
                 }
             }
 
-            Log.d(TAG, "✅ Successfully parsed " + successfulParses + " of " +
-                    teamsArray.length() + " teams");
+            Log.d(TAG, "✅ Successfully parsed " + successfulParses + " confirmed teams of " +
+                    teamsArray.length() + " total teams (skipped " + skippedCount + " non-confirmed teams)");
 
             if (teams.isEmpty()) {
-                Log.w(TAG, "⚠️ No active teams found in response");
+                Log.w(TAG, "⚠️ No confirmed teams found in response");
+
+                // 🔥 DEBUG: Tampilkan semua data untuk troubleshooting
+                Log.d(TAG, "=== DEBUG: ALL TEAMS DATA ===");
+                for (int i = 0; i < teamsArray.length(); i++) {
+                    try {
+                        JSONObject teamJson = teamsArray.getJSONObject(i);
+                        String teamName = teamJson.optString("nama_team", "N/A");
+                        String teamStatus = teamJson.optString("status", "N/A");
+                        Log.d(TAG, "Team " + i + ": " + teamName +
+                                " | Status: " + teamStatus);
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error logging team " + i, e);
+                    }
+                }
+                Log.d(TAG, "=== END DEBUG ===");
             }
 
             callback.onSuccess(teams);
@@ -130,21 +157,9 @@ public class TeamController {
         }
     }
 
-    // Method untuk load hanya tim aktif
-    public void loadActiveTeams(TeamCallback callback) {
-        Log.d(TAG, "Loading active teams...");
-
-        ApiHelper.fetchActiveTeams(new ApiHelper.ApiCallback() {
-            @Override
-            public void onSuccess(String result) {
-                parseTeamData(result, callback);
-            }
-
-            @Override
-            public void onFailure(String error) {
-                Log.e(TAG, "API Error for active teams: " + error);
-                callback.onFailure(error);
-            }
-        });
+    // 🔥 Method untuk load hanya tim dengan status "confirm"
+    public void loadConfirmedTeams(TeamCallback callback) {
+        Log.d(TAG, "Loading confirmed teams...");
+        loadTeamsData(callback); // Gunakan method yang sama dengan filter confirm
     }
 }

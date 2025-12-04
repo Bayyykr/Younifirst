@@ -47,7 +47,9 @@
             app:layout_constraintStart_toEndOf="@id/containerImg"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <include layout="@layout/badge_kecil" />
+            <include
+                android:id="@+id/include_badge_kecil"
+                layout="@layout/badge_kecil" />
 
             <TextView
                 android:id="@+id/text_date"

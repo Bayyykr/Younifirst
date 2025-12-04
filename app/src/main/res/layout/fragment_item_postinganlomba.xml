@@ -9,7 +9,7 @@
     tools:context=".Home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="357dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/asset_background_list_item"
         android:clipToOutline="true"

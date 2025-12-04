@@ -1,13 +1,17 @@
 package com.naufal.younifirst.Home;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.content.Intent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +34,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.naufal.younifirst.Kompetisi.Detail_Kompetisi;
 import com.naufal.younifirst.R;
 import com.naufal.younifirst.controller.KompetisiController;
 import com.naufal.younifirst.controller.TeamController;
@@ -38,8 +43,12 @@ import com.naufal.younifirst.model.Team;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class CompetitionTeamFragment extends Fragment {
 
@@ -49,6 +58,8 @@ public class CompetitionTeamFragment extends Fragment {
     private LinearLayout containerCompetition;
 
     private KompetisiController kompetisiController;
+    private Map<String, Boolean> teamLikedMap = new HashMap<>();
+    private Map<String, Integer> teamLikeCountMap = new HashMap<>();
     private TeamController teamController;
 
     @Override
@@ -165,27 +176,28 @@ public class CompetitionTeamFragment extends Fragment {
         containerCompetition.addView(emptyText);
     }
 
-    // Di CompetitionTeamFragment, panggil dengan cara ini:
     private void loadTeamsData() {
-        Log.d("TEAM_FRAGMENT", "Starting to load teams data...");
+        Log.d("TEAM_FRAGMENT", "Starting to load CONFIRMED teams data...");
 
-        // Gunakan controller yang sudah diperbaiki
-        teamController.loadTeamsData(new TeamController.TeamCallback() {
+        // 🔥 GUNAKAN loadConfirmedTeams BUKAN loadTeamsData
+        teamController.loadConfirmedTeams(new TeamController.TeamCallback() {
             @Override
             public void onSuccess(List<Team> teams) {
-                Log.d("TEAM_FRAGMENT", "Teams data loaded successfully. Total teams: " + teams.size());
+                Log.d("TEAM_FRAGMENT", "✅ CONFIRMED teams data loaded successfully. Total confirmed teams: " + teams.size());
 
-                // Debug: log semua teams
+                // Debug: log semua teams yang CONFIRMED
                 for (Team team : teams) {
-                    Log.d("TEAM_FRAGMENT", "Team: " + team.getNamaTeam() +
+                    Log.d("TEAM_FRAGMENT", "✅ Confirmed Team: " + team.getNamaTeam() +
+                            ", Status: " + team.getStatus() +
                             ", Role: " + team.getRoleRequired() +
-                            ", Max: " + team.getMaxAnggota());
+                            ", Max: " + team.getMaxAnggota() +
+                            ", Hadiah: " + team.getHadiah());
                 }
 
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(() -> {
                         if (teams.isEmpty()) {
-                            showEmptyState("Belum ada tim yang aktif");
+                            showEmptyState("Belum ada tim yang dikonfirmasi");
                         } else {
                             setupTeamLayout(teams);
                         }
@@ -195,7 +207,7 @@ public class CompetitionTeamFragment extends Fragment {
 
             @Override
             public void onFailure(String error) {
-                Log.e("TEAM_FRAGMENT", "Failed to load teams: " + error);
+                Log.e("TEAM_FRAGMENT", "❌ Failed to load confirmed teams: " + error);
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(() -> {
                         showEmptyState("Gagal memuat data tim: " + error);
@@ -216,6 +228,50 @@ public class CompetitionTeamFragment extends Fragment {
 
         // Setup vertical competition list
         setupCompetitionList(kompetisiView, competitions);
+
+        // ===== TAMBAHKAN KODE INI =====
+        // Setup trending section click listeners
+        setupTrendingSectionClickListeners(kompetisiView, competitions);
+        // ==============================
+    }
+
+    private void setupTrendingSectionClickListeners(View kompetisiView, List<Kompetisi> competitions) {
+        try {
+            // Cari LinearLayout yang mengandung item trending
+            LinearLayout containerTrending = kompetisiView.findViewById(R.id.listitemkompetisitrending);
+
+            if (containerTrending != null) {
+                containerTrending.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Ambil kompetisi pertama dari list untuk trending
+                        if (competitions != null && !competitions.isEmpty()) {
+                            Kompetisi trendingKompetisi = competitions.get(0); // Atau sesuaikan logika trending Anda
+                            onCompetitionItemClicked(trendingKompetisi);
+                        } else {
+                            Toast.makeText(getContext(), "Tidak ada data kompetisi trending", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                // Juga tambahkan ke CardView di dalamnya jika ada
+                CardView cardView = containerTrending.findViewById(R.id.container_competition_list);
+                if (cardView != null) {
+                    cardView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (competitions != null && !competitions.isEmpty()) {
+                                Kompetisi trendingKompetisi = competitions.get(0);
+                                onCompetitionItemClicked(trendingKompetisi);
+                            }
+                        }
+                    });
+                }
+            }
+
+        } catch (Exception e) {
+            Log.e("TRENDING_CLICK", "Error setting up trending click listeners", e);
+        }
     }
 
     private void setupUpcomingCompetitions(View parentView, List<Kompetisi> competitions) {
@@ -442,7 +498,7 @@ public class CompetitionTeamFragment extends Fragment {
                         biaya.setText("Berbayar");
                     }
                 } else {
-                    biaya.setText("Berbayar"); // Default
+                    biaya.setText("Tidak Ada"); // Default
                 }
             }
 
@@ -491,6 +547,17 @@ public class CompetitionTeamFragment extends Fragment {
 
             // Setup badges
             setupBadges(itemView, competition.getKategori(), R.id.badge_container_list);
+
+            // ===== TAMBAHKAN ON CLICK LISTENER =====
+            CardView cardView = itemView.findViewById(R.id.container_competition_list);
+            if (cardView == null) {
+                // Jika tidak ada CardView, gunakan root view
+                cardView = (CardView) itemView;
+            }
+
+            cardView.setOnClickListener(v -> {
+                onCompetitionItemClicked(competition);
+            });
 
         } catch (Exception e) {
             Log.e("COMPETITION_ITEM", "Error setting up competition list item: " + competition.getNamaLomba(), e);
@@ -600,9 +667,47 @@ public class CompetitionTeamFragment extends Fragment {
             // Setup badges berdasarkan kategori
             setupBadges(itemView, competition.getKategori(), R.id.badge_container_mendatang);
 
+            // ===== TAMBAHKAN ON CLICK LISTENER =====
+            CardView cardView = itemView.findViewById(R.id.card_mendatang);
+            if (cardView == null) {
+                // Jika tidak ada CardView, gunakan root view
+                cardView = (CardView) itemView;
+            }
+
+            cardView.setOnClickListener(v -> {
+                onCompetitionItemClicked(competition);
+            });
+
+
         } catch (Exception e) {
             Log.e("COMPETITION_MENDATANG", "Error setting up competition mendatang item", e);
         }
+    }
+
+    private void onCompetitionItemClicked(Kompetisi kompetisi) {
+        Log.d("COMPETITION_CLICK", "Clicked on: " + kompetisi.getNamaLomba());
+
+        // Buat Intent untuk membuka Detail_Kompetisi
+        Intent intent = new Intent(getActivity(), Detail_Kompetisi.class);
+
+        // Pass data kompetisi ke activity detail
+        intent.putExtra("KOMPETISI_ID", kompetisi.getId());
+        intent.putExtra("NAMA_LOMBA", kompetisi.getNamaLomba());
+        intent.putExtra("TANGGAL_LOMBA", kompetisi.getTanggalLomba());
+        intent.putExtra("LOKASI", kompetisi.getLokasi());
+        intent.putExtra("KATEGORI", kompetisi.getKategori());
+        intent.putExtra("POSTER", kompetisi.getPoster());
+        intent.putExtra("SCOPE", kompetisi.getScope());
+        intent.putExtra("DESKRIPSI", kompetisi.getDeskripsi());
+        intent.putExtra("HADIAH", kompetisi.getHadiah());
+        intent.putExtra("LOMBA_TYPE", kompetisi.getLomba_type());
+        intent.putExtra("BIAYA", kompetisi.getBiaya());
+        intent.putExtra("STATUS", kompetisi.getStatus());
+        intent.putExtra("NAMA_PENYELENGGARA", kompetisi.getPenyelenggara()); // Pastikan ada di model
+        intent.putExtra("HARGA_LOMBA", kompetisi.getHargaLomba()); // Pastikan ada di model
+
+        // Start activity
+        startActivity(intent);
     }
 
     private void setupTeamItem(View itemView, Team team) {
@@ -617,10 +722,10 @@ public class CompetitionTeamFragment extends Fragment {
             }
 
             if (textTime != null) {
-                textTime.setText(team.getWaktuPost() != null ? formatTime(team.getWaktuPost()) : "Baru saja");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
+                textTime.setText(sdf.format(team.getWaktuPost()));
             }
 
-            // Avatar/Logo Team
             if (chatBubbleAvatar != null && getContext() != null) {
                 String logoUrl = team.getAvatarPemilik();
                 if (logoUrl != null && !logoUrl.isEmpty()) {
@@ -634,46 +739,71 @@ public class CompetitionTeamFragment extends Fragment {
                 }
             }
 
-            // Poster Section
             ImageView imgPoster = itemView.findViewById(R.id.img_poster);
             if (imgPoster != null && getContext() != null) {
-                String posterUrl = team.getPoster();
-                if (posterUrl != null && !posterUrl.isEmpty()) {
+                String posterPath = team.getPoster();
+
+                Log.d("TEAM_POSTER_DEBUG", "=== POSTER SETUP ===");
+                Log.d("TEAM_POSTER_DEBUG", "Team: " + team.getNamaTeam());
+                Log.d("TEAM_POSTER_DEBUG", "Poster path from DB: " + posterPath);
+
+                // Method untuk mendapatkan full URL
+                String fullPosterUrl = getFullPosterUrl(posterPath);
+                Log.d("TEAM_POSTER_DEBUG", "Full poster URL: " + fullPosterUrl);
+
+                if (fullPosterUrl != null && !fullPosterUrl.isEmpty()) {
+                    // Load gambar dengan Glide
                     Glide.with(this)
-                            .load(posterUrl)
+                            .load(fullPosterUrl)
                             .placeholder(R.drawable.tryposter)
                             .error(R.drawable.tryposter)
                             .into(imgPoster);
                 } else {
+                    // Gunakan default
                     imgPoster.setImageResource(R.drawable.tryposter);
                 }
+
+                Log.d("TEAM_POSTER_DEBUG", "=== END POSTER SETUP ===");
             }
 
-            // Role Section (menggunakan role_required dari database)
+            // =============================
+            // ROLE SECTION
+            // =============================
             TextView textRole = itemView.findViewById(R.id.text_role);
             if (textRole != null) {
                 String roleRequired = team.getRoleRequired();
                 if (roleRequired != null && !roleRequired.isEmpty()) {
                     textRole.setText(roleRequired);
                 } else {
-                    // Fallback ke role jika role_required kosong
                     textRole.setText(team.getRole() != null ? team.getRole() : "UI/UX Designer");
                 }
             }
 
-            // Member Section (menggunakan max_anggota dari database)
+            // =============================
+            // MEMBER SECTION
+            // =============================
             TextView textMember = itemView.findViewById(R.id.text_member);
             if (textMember != null) {
-                String maxAnggota = team.getMaxAnggota();
-                if (maxAnggota != null && !maxAnggota.isEmpty()) {
-                    // Anggap ada 0 member saat ini (bisa diubah sesuai kebutuhan)
-                    textMember.setText("0/" + maxAnggota);
-                } else {
-                    textMember.setText("0/4"); // Default
+                String currentMembers = team.getMemberSaatIni();
+                String maxMembers = team.getMaxAnggota();
+
+                Log.d("TEAM_MEMBER_DEBUG", "Team: " + team.getNamaTeam() +
+                        " | Current: " + currentMembers + " | Max: " + maxMembers);
+
+                if (currentMembers == null || currentMembers.isEmpty()) {
+                    currentMembers = "1";
                 }
+
+                if (maxMembers == null || maxMembers.isEmpty()) {
+                    maxMembers = "4";
+                }
+
+                textMember.setText(currentMembers + "/" + maxMembers + " member");
             }
 
-            // Description (menggunakan deskripsi_anggota dari database)
+            // =============================
+            // DESCRIPTION
+            // =============================
             TextView textDescription = itemView.findViewById(R.id.text_description);
             if (textDescription != null) {
                 String deskripsi = team.getDeskripsiAnggota();
@@ -684,16 +814,15 @@ public class CompetitionTeamFragment extends Fragment {
                 }
             }
 
-            // Nama Kegiatan (tambahkan jika ada TextView untuk ini)
-//            TextView textKegiatan = itemView.findViewById(); /
-//            if (textKegiatan != null) {
-//                textKegiatan.setText(team.getNamaKegiatan() != null ? team.getNamaKegiatan() : "");
-//            }
-
-            // Footer Stats
+            // =============================
+            // FOOTER: LIKE - COMMENT - SHARE
+            // =============================
+            ImageView iclike = itemView.findViewById(R.id.iclike);
+            ImageView comment = itemView.findViewById(R.id.comment);
             TextView textLikeCount = itemView.findViewById(R.id.text_like_count);
             TextView textCommentCount = itemView.findViewById(R.id.text_comment_count);
             TextView textShareCount = itemView.findViewById(R.id.text_share_count);
+
 
             if (textLikeCount != null) {
                 textLikeCount.setText(formatCount(team.getJumlahLike()));
@@ -707,25 +836,53 @@ public class CompetitionTeamFragment extends Fragment {
                 textShareCount.setText(formatCount(team.getJumlahShare()));
             }
 
-            // Join Button
+            // =============================
+            // JOIN BUTTON
+            // =============================
             Button joinButton = itemView.findViewById(R.id.ikuttim);
             if (joinButton != null) {
-                joinButton.setOnClickListener(v -> {
-                    onJoinTeamClicked(team);
-                });
+                joinButton.setOnClickListener(v -> onJoinTeamClicked(team));
             }
 
-            // Status Badge (jika ingin menampilkan status)
-            setupStatusBadge(itemView, team.getStatus());
-
             Log.d("TEAM_ITEM", "Setup team: " + team.getNamaTeam() +
-                    " | Role: " + team.getRoleRequired() +
-                    " | Max: " + team.getMaxAnggota());
+                    " | Members: " + team.getMemberSaatIni() + "/" + team.getMaxAnggota() +
+                    " | Role: " + team.getRoleRequired());
 
         } catch (Exception e) {
             Log.e("TEAM_ITEM", "Error setting up team item", e);
         }
     }
+
+    private String getFullPosterUrl(String posterPath) {
+        if (posterPath == null || posterPath.isEmpty() || posterPath.equals("null")) {
+            Log.d("POSTER_URL", "Poster path is null or empty");
+            return null;
+        }
+
+        // Trim spasi
+        posterPath = posterPath.trim();
+
+        // Jika sudah full URL, langsung return
+        if (posterPath.startsWith("http://") || posterPath.startsWith("https://")) {
+            Log.d("POSTER_URL", "Already full URL: " + posterPath);
+            return posterPath;
+        }
+
+        // Base URL API Anda
+        String baseUrl = "http://192.168.1.11:8000"; // Ganti dengan IP server Anda
+
+        // Pastikan path diawali dengan "/"
+        if (!posterPath.startsWith("/")) {
+            posterPath = "/" + posterPath;
+        }
+
+        // Buat full URL
+        String fullUrl = baseUrl + posterPath;
+        Log.d("POSTER_URL", "Generated full URL: " + fullUrl);
+
+        return fullUrl;
+    }
+
 
     // Method untuk menampilkan badge status
     private void setupStatusBadge(View itemView, String status) {
@@ -749,23 +906,6 @@ public class CompetitionTeamFragment extends Fragment {
 //                    statusBadge.setVisibility(View.GONE);
 //            }
 //        }
-    }
-
-    // Helper method untuk format waktu
-    private String formatTime(String timestamp) {
-        if (timestamp == null || timestamp.isEmpty()) {
-            return "Baru saja";
-        }
-
-        // Implementasi format waktu sesuai kebutuhan
-        // Contoh sederhana:
-        try {
-            // Jika timestamp dalam format yang bisa di-parse, lakukan parsing di sini
-            // Untuk sekarang, return as-is atau format sederhana
-            return timestamp;
-        } catch (Exception e) {
-            return "Baru saja";
-        }
     }
 
     // Helper method untuk format angka (like, comment, share count)
@@ -806,10 +946,28 @@ public class CompetitionTeamFragment extends Fragment {
                         String kat = kategoriArray[j].trim();
 
                         if (!kat.isEmpty()) {
+                            // Inflate layout badge_kecil
                             View badge = LayoutInflater.from(getContext())
                                     .inflate(R.layout.badge_kecil, badgeContainer, false);
 
-                            TextView badgeText = badge.findViewById(R.id.badge_status);
+                            // Cari TextView di badge_kecil.xml - PERBAIKAN INI
+                            TextView badgeText = null;
+
+                            // Coba beberapa kemungkinan ID
+                            badgeText = badge.findViewById(R.id.badge_text); // Coba ID ini
+                            if (badgeText == null) {
+                                // Jika tidak ada ID khusus, cari TextView pertama
+                                if (badge instanceof ViewGroup) {
+                                    ViewGroup group = (ViewGroup) badge;
+                                    for (int k = 0; k < group.getChildCount(); k++) {
+                                        View child = group.getChildAt(k);
+                                        if (child instanceof TextView) {
+                                            badgeText = (TextView) child;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
 
                             if (badgeText != null) {
                                 badgeText.setText(kat);
@@ -905,7 +1063,6 @@ public class CompetitionTeamFragment extends Fragment {
         if (btnDaftar != null) {
             btnDaftar.setOnClickListener(v -> {
                 // Handle pendaftaran ke tim
-                handleTeamRegistration(team, sheetView);
                 bottomSheetDialog.dismiss();
             });
         }
@@ -914,7 +1071,6 @@ public class CompetitionTeamFragment extends Fragment {
         TextView btnReset = sheetView.findViewById(R.id.text_reset);
         if (btnReset != null) {
             btnReset.setOnClickListener(v -> {
-                resetBottomSheetForm(sheetView);
                 Toast.makeText(getContext(), "Form direset", Toast.LENGTH_SHORT).show();
             });
         }
@@ -935,12 +1091,11 @@ public class CompetitionTeamFragment extends Fragment {
             // Set judul dengan nama tim
             TextView textFilter = sheetView.findViewById(R.id.text_filter);
             if (textFilter != null) {
-                textFilter.setText("IKUT TIM - " + team.getNamaTeam());
+                textFilter.setText("IKUT TIM : " + team.getNamaTeam());
             }
 
             // Cari GridLayout
             GridLayout gridLayout = null;
-            // Cari GridLayout dalam struktur view
             LinearLayout linearLayout = sheetView.findViewById(R.id.container_filter);
             if (linearLayout != null) {
                 NestedScrollView scrollView = (NestedScrollView) linearLayout.getChildAt(0);
@@ -963,13 +1118,26 @@ public class CompetitionTeamFragment extends Fragment {
                 View memberLayout = gridLayout.getChildAt(0);
                 if (memberLayout != null && memberLayout instanceof LinearLayout) {
                     LinearLayout layout = (LinearLayout) memberLayout;
-                    // TextView adalah child kedua (indeks 1)
                     if (layout.getChildCount() > 1) {
                         View textView = layout.getChildAt(1);
                         if (textView instanceof TextView) {
                             String currentMembers = team.getMemberSaatIni();
                             String maxMembers = team.getMaxAnggota();
+
+                            // 🔥 VALIDASI DATA
+                            if (currentMembers == null || currentMembers.isEmpty()) {
+                                currentMembers = "1"; // Minimal ketua
+                            }
+                            if (maxMembers == null || maxMembers.isEmpty()) {
+                                maxMembers = "4"; // Default
+                            }
+
                             ((TextView) textView).setText(currentMembers + "/" + maxMembers + " member");
+
+                            // 🔥 DEBUG LOG
+                            Log.d("BOTTOM_SHEET_DEBUG", "Team: " + team.getNamaTeam() +
+                                    " | Current Members: " + currentMembers +
+                                    " | Max Members: " + maxMembers);
                         }
                     }
                 }
@@ -978,7 +1146,6 @@ public class CompetitionTeamFragment extends Fragment {
                 View teamNameLayout = gridLayout.getChildAt(1);
                 if (teamNameLayout != null && teamNameLayout instanceof LinearLayout) {
                     LinearLayout layout = (LinearLayout) teamNameLayout;
-                    // TextView adalah child kedua (indeks 1)
                     if (layout.getChildCount() > 1) {
                         View textView = layout.getChildAt(1);
                         if (textView instanceof TextView) {
@@ -991,13 +1158,10 @@ public class CompetitionTeamFragment extends Fragment {
                 View deadlineLayout = gridLayout.getChildAt(2);
                 if (deadlineLayout != null && deadlineLayout instanceof LinearLayout) {
                     LinearLayout layout = (LinearLayout) deadlineLayout;
-                    // TextView adalah child kedua (indeks 1)
                     if (layout.getChildCount() > 1) {
                         View textView = layout.getChildAt(1);
                         if (textView instanceof TextView) {
-                            // Gunakan waktu post sebagai deadline jika tidak ada field khusus
-                            String deadline = team.getWaktuPost() != null ?
-                                    formatDate(team.getWaktuPost()) : "Belum ditentukan";
+                            String deadline = team.getFormattedTenggatJoin();
                             ((TextView) textView).setText(deadline);
                         }
                     }
@@ -1007,7 +1171,6 @@ public class CompetitionTeamFragment extends Fragment {
                 View statusLayout = gridLayout.getChildAt(3);
                 if (statusLayout != null && statusLayout instanceof LinearLayout) {
                     LinearLayout layout = (LinearLayout) statusLayout;
-                    // TextView adalah child kedua (indeks 1)
                     if (layout.getChildCount() > 1) {
                         View textView = layout.getChildAt(1);
                         if (textView instanceof TextView) {
@@ -1021,6 +1184,7 @@ public class CompetitionTeamFragment extends Fragment {
                                     ((TextView) textView).setText("Tim sudah penuh");
                                 }
                             } catch (NumberFormatException e) {
+                                // Jika parsing gagal, gunakan default
                                 ((TextView) textView).setText("Member dibutuhkan");
                             }
                         }
@@ -1064,37 +1228,88 @@ public class CompetitionTeamFragment extends Fragment {
             LinearLayout detailKetentuan = dropdownView.findViewById(R.id.detail_ketentuan_container);
 
             if (contentContainer != null) {
-                // Kosongkan konten yang ada
-                contentContainer.removeAllViews();
+                int childCount = contentContainer.getChildCount();
+                for (int i = childCount - 1; i >= 0; i--) {
+                    View child = contentContainer.getChildAt(i);
+                    if (child.getId() != R.id.detail_ketentuan_container) {
+                        contentContainer.removeViewAt(i);
+                    }
+                }
 
                 String roleRequired = team.getRoleRequired();
                 if (roleRequired != null && !roleRequired.isEmpty()) {
-                    // Split multiple roles jika dipisah koma
                     String[] roles = roleRequired.split(",");
 
                     for (String role : roles) {
                         String trimmedRole = role.trim();
                         if (!trimmedRole.isEmpty()) {
-                            // Buat layout untuk setiap role
                             LinearLayout roleLayout = createRoleLayout(trimmedRole);
-                            contentContainer.addView(roleLayout);
+                            contentContainer.addView(roleLayout,
+                                    Math.max(0, contentContainer.indexOfChild(detailKetentuan)));
                         }
                     }
 
-                    // Tambahkan detail ketentuan jika ada
-                    if (detailKetentuan != null) {
-                        contentContainer.addView(detailKetentuan);
+                    updateKetentuanFromDatabaseNew(team, detailKetentuan);
 
-                        // Anda bisa mengisi ketentuan dari data tim jika ada
-                        // Contoh: setupKetentuan(detailKetentuan, team);
-                    }
-
-                    // Buat bonus section jika ada
-                    createBonusSection(contentContainer, team);
+                    createBonusSectionSimple(contentContainer, team);
                 }
             }
         } catch (Exception e) {
             Log.e("DIBUTUHKAN_SETUP", "Error setting up dibutuhkan dropdown", e);
+            e.printStackTrace();
+        }
+    }
+
+    private void updateKetentuanFromDatabaseNew(Team team, LinearLayout detailKetentuan) {
+        if (detailKetentuan == null) {
+            Log.e("KETENTUAN", "detailKetentuan is null");
+            return;
+        }
+
+        try {
+            Log.d("KETENTUAN_DEBUG", "=== UPDATE KETENTUAN START ===");
+            Log.d("KETENTUAN_DEBUG", "Team: " + team.getNamaTeam());
+            Log.d("KETENTUAN_DEBUG", "Raw ketentuan from DB: " + team.getKetentuan());
+
+            List<String> ketentuanList = team.getKetentuanList();
+            Log.d("KETENTUAN_DEBUG", "Ketentuan list size: " + ketentuanList.size());
+
+            int[] ketentuanIds = {R.id.Kt1, R.id.Kt2, R.id.Kt3, R.id.Kt4};
+
+            for (int id : ketentuanIds) {
+                TextView tv = detailKetentuan.findViewById(id);
+                if (tv != null) {
+                    tv.setVisibility(View.GONE);
+                    Log.d("KETENTUAN_DEBUG", "Hiding TextView ID: " + id);
+                }
+            }
+
+            if (!ketentuanList.isEmpty()) {
+                for (int i = 0; i < Math.min(ketentuanList.size(), ketentuanIds.length); i++) {
+                    String ketentuan = ketentuanList.get(i);
+                    TextView tv = detailKetentuan.findViewById(ketentuanIds[i]);
+
+                    if (tv != null) {
+                        tv.setText(ketentuan);
+                        tv.setVisibility(View.VISIBLE);
+                        Log.d("KETENTUAN_DEBUG", "Updated TextView ID " + ketentuanIds[i] + " with: " + ketentuan);
+                    }
+                }
+
+                detailKetentuan.setVisibility(View.VISIBLE);
+                Log.d("KETENTUAN_DEBUG", "Detail ketentuan container VISIBLE");
+
+            } else {
+                detailKetentuan.setVisibility(View.GONE);
+                Log.d("KETENTUAN_DEBUG", "Detail ketentuan container GONE (no data)");
+            }
+
+            Log.d("KETENTUAN_DEBUG", "=== UPDATE KETENTUAN END ===");
+
+        } catch (Exception e) {
+            Log.e("KETENTUAN", "Error updating ketentuan from database", e);
+            e.printStackTrace();
+            detailKetentuan.setVisibility(View.GONE);
         }
     }
 
@@ -1147,61 +1362,84 @@ public class CompetitionTeamFragment extends Fragment {
         return roleLayout;
     }
 
-    private void createBonusSection(LinearLayout container, Team team) {
-        // Buat bonus section
-        LinearLayout bonusLayout = new LinearLayout(getContext());
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        layoutParams.setMargins(0, 12, 0, 0);
-        bonusLayout.setLayoutParams(layoutParams);
-        bonusLayout.setOrientation(LinearLayout.HORIZONTAL);
-        bonusLayout.setGravity(Gravity.CENTER_VERTICAL);
-        bonusLayout.setPadding(10, 10, 10, 10);
-        bonusLayout.setBackgroundResource(R.drawable.custom_bg_biru_tipis);
+    private void createBonusSectionSimple(LinearLayout container, Team team) {
+        try {
+            // Layout utama bonus (dengan margin top 10dp)
+            LinearLayout bonusLayout = new LinearLayout(getContext());
 
-        // Icon dan teks "Bonus"
-        TextView bonusLabel = new TextView(getContext());
-        bonusLabel.setText("Bonus : ");
-        bonusLabel.setTextColor(0xFF5E8BFF);
-        bonusLabel.setTextSize(14);
-        bonusLabel.setTypeface(getResources().getFont(R.font.is_sb));
+            LinearLayout.LayoutParams bonusParams =
+                    new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+            bonusParams.setMargins(0, dp(10), 0, 0); // MARGIN TOP 10dp
+            bonusLayout.setLayoutParams(bonusParams);
 
-        // Set icon bintang menggunakan drawableStart
-        bonusLabel.setCompoundDrawablesWithIntrinsicBounds(
-                R.drawable.icon_bintang, 0, 0, 0
-        );
-        bonusLabel.setCompoundDrawablePadding(
-                (int) (10 * getResources().getDisplayMetrics().density)
-        );
+            bonusLayout.setOrientation(LinearLayout.HORIZONTAL);
+            bonusLayout.setGravity(Gravity.CENTER_VERTICAL);
+            bonusLayout.setPadding(10, 10, 10, 10);
+            bonusLayout.setBackgroundResource(R.drawable.custom_bg_biru_tipis);
 
-        // Teks bonus (gunakan deskripsi tim atau custom)
-        TextView bonusText = new TextView(getContext());
-        LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1
-        );
-        textParams.setMargins(4, 0, 0, 0);
-        bonusText.setLayoutParams(textParams);
+            // ================= LEFT PART =================
+            LinearLayout leftPart = new LinearLayout(getContext());
+            leftPart.setOrientation(LinearLayout.HORIZONTAL);
+            leftPart.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+            leftPart.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
 
-        // Isi teks bonus dari data tim atau default
-        String bonusContent = team.getDeskripsiAnggota();
-        if (bonusContent != null && !bonusContent.isEmpty()) {
-            bonusText.setText(bonusContent);
-        } else {
-            bonusText.setText("Bergabung untuk pengalaman berharga dan networking");
+            ImageView icon = new ImageView(getContext());
+            icon.setImageResource(R.drawable.icon_bintang);
+            icon.setPadding(0, 0, dp(6), 0);
+            leftPart.addView(icon);
+
+            TextView bonusLabel = new TextView(getContext());
+            bonusLabel.setText("Bonus : ");
+            bonusLabel.setTextColor(0xFF5E8BFF);
+            bonusLabel.setTextSize(14);
+            bonusLabel.setTypeface(getResources().getFont(R.font.is_sb));
+            leftPart.addView(bonusLabel);
+
+            TextView bonusText = new TextView(getContext());
+            LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1f
+            );
+            textParams.setMargins(dp(0), 0, 0, 0);
+            bonusText.setLayoutParams(textParams);
+
+            String bonusContent = team.getKeteranganTambahan();
+            bonusText.setText(
+                    (bonusContent != null && !bonusContent.trim().isEmpty())
+                            ? bonusContent.trim()
+                            : "Bergabung untuk pengalaman berharga dan networking"
+            );
+
+            bonusText.setTextColor(Color.WHITE);
+            bonusText.setTextSize(14);
+            bonusText.setTypeface(getResources().getFont(R.font.is_r));
+            bonusText.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+            bonusText.setMaxLines(3);
+            bonusText.setEllipsize(TextUtils.TruncateAt.END);
+            bonusLayout.addView(leftPart);
+            bonusLayout.addView(bonusText);
+
+            if (container.findViewById(R.id.detail_ketentuan_container) != null) {
+                int index = container.indexOfChild(container.findViewById(R.id.detail_ketentuan_container)) + 1;
+                container.addView(bonusLayout, index);
+            } else {
+                container.addView(bonusLayout);
+            }
+
+        } catch (Exception e) {
+            Log.e("BONUS_SECTION", "Error creating bonus section", e);
         }
+    }
 
-        bonusText.setTextColor(Color.WHITE);
-        bonusText.setTextSize(14);
-        bonusText.setTypeface(getResources().getFont(R.font.is_r));
-
-        bonusLayout.addView(bonusLabel);
-        bonusLayout.addView(bonusText);
-
-        container.addView(bonusLayout);
+    private int dp(int value) {
+        return (int) (value * getResources().getDisplayMetrics().density);
     }
 
     private void setupInformasiLombaDropdown(View dropdownView, Team team) {
@@ -1245,8 +1483,8 @@ public class CompetitionTeamFragment extends Fragment {
                         break;
 
                     case "Uang Tunai + Sertifikat + Pengalaman + etc":
-                        // Setup hadiah jika ada
-                        setupHadiah(textView, team);
+                        // 🔥 UPDATE: Setup hadiah dari database
+                        setupHadiahFromDatabase(textView, team);
                         break;
                 }
             } else if (child instanceof LinearLayout) {
@@ -1258,13 +1496,75 @@ public class CompetitionTeamFragment extends Fragment {
                         View innerChild = linearLayout.getChildAt(j);
                         if (innerChild instanceof TextView) {
                             TextView innerText = (TextView) innerChild;
-                            if (innerText.getText().toString().contains("Uang Tunai")) {
-                                setupHadiah(innerText, team);
+                            if (innerText.getText().toString().contains("Uang Tunai") ||
+                                    innerText.getText().toString().contains("Sertifikat")) {
+                                // 🔥 UPDATE: Setup hadiah dari database
+                                setupHadiahFromDatabase(innerText, team);
                             }
                         }
                     }
                 }
             }
+        }
+    }
+
+    private void setupHadiahFromDatabase(TextView hadiahTextView, Team team) {
+        try {
+            Log.d("HADIAH_DEBUG", "=== SETUP HADIAH FROM DATABASE ===");
+            Log.d("HADIAH_DEBUG", "Team: " + team.getNamaTeam());
+            Log.d("HADIAH_DEBUG", "Raw hadiah from DB: " + team.getHadiah());
+
+            // 🔥 CEK JIKA HADIAH NULL/KOSONG
+            String rawHadiah = team.getHadiah();
+            if (rawHadiah == null || rawHadiah.isEmpty() ||
+                    rawHadiah.equalsIgnoreCase("null") || rawHadiah.trim().isEmpty()) {
+
+                Log.d("HADIAH_DEBUG", "Hadiah is empty/null, showing 'Tidak ada hadiah'");
+                hadiahTextView.setText("Tidak ada hadiah"); // 🔥 TAMPILKAN INI
+                return;
+            }
+
+            List<String> hadiahList = team.getHadiahList();
+            Log.d("HADIAH_DEBUG", "Hadiah list size: " + hadiahList.size());
+
+            if (!hadiahList.isEmpty()) {
+                // Format 1: Satu baris dengan pemisah
+                if (hadiahList.size() <= 3) {
+                    StringBuilder builder = new StringBuilder();
+                    for (int i = 0; i < hadiahList.size(); i++) {
+                        builder.append(hadiahList.get(i));
+                        if (i < hadiahList.size() - 1) {
+                            builder.append(" + ");
+                        }
+                    }
+                    hadiahTextView.setText(builder.toString());
+                }
+                // Format 2: Multi-line dengan bullet points
+                else {
+                    StringBuilder builder = new StringBuilder();
+                    for (int i = 0; i < Math.min(hadiahList.size(), 4); i++) {
+                        builder.append("• ").append(hadiahList.get(i));
+                        if (i < Math.min(hadiahList.size(), 4) - 1) {
+                            builder.append("\n");
+                        }
+                    }
+                    hadiahTextView.setText(builder.toString());
+                    hadiahTextView.setSingleLine(false);
+                    hadiahTextView.setMaxLines(4);
+                }
+
+                Log.d("HADIAH_DEBUG", "Formatted hadiah: " + hadiahTextView.getText());
+            } else {
+                // 🔥 JIKA LIST KOSONG SETELAH PARSING
+                hadiahTextView.setText("Tidak ada hadiah");
+                Log.d("HADIAH_DEBUG", "Hadiah list is empty after parsing, showing 'Tidak ada hadiah'");
+            }
+
+            Log.d("HADIAH_DEBUG", "=== END SETUP HADIAH ===");
+
+        } catch (Exception e) {
+            Log.e("HADIAH_SETUP", "Error setting up hadiah from database", e);
+            hadiahTextView.setText("Tidak ada hadiah"); // 🔥 FALLBACK
         }
     }
 
@@ -1336,120 +1636,5 @@ public class CompetitionTeamFragment extends Fragment {
             icon.setRotation(0); // Rotate up
             icon.setImageResource(R.drawable.icon_drop_down_off); // Ganti dengan icon yang sesuai
         }
-    }
-
-    private void resetBottomSheetForm(View sheetView) {
-//        try {
-//            // Reset dropdown
-//            View dropdownView = sheetView.findViewById(R.id.include_dropdown_tim);
-//            if (dropdownView != null) {
-//                // Reset spinner
-//                Spinner roleSpinner = dropdownView.findViewById(R.id.spinner_role);
-//                if (roleSpinner != null) {
-//                    roleSpinner.setSelection(0);
-//                }
-//
-//                // Reset edit text
-//                EditText motivationInput = dropdownView.findViewById(R.id.edit_motivation);
-//                if (motivationInput != null) {
-//                    motivationInput.setText("");
-//                }
-//
-//                // Reset input lainnya jika ada
-//            }
-//
-//            Toast.makeText(getContext(), "Form berhasil direset", Toast.LENGTH_SHORT).show();
-//
-//        } catch (Exception e) {
-//            Log.e("RESET_FORM", "Error resetting form", e);
-//        }
-    }
-
-    private void handleTeamRegistration(Team team, View sheetView) {
-//        try {
-//            // Ambil data dari form
-//            String selectedRole = "";
-//            String motivation = "";
-//
-//            View dropdownView = sheetView.findViewById(R.id.include_dropdown_tim);
-//            if (dropdownView != null) {
-//                Spinner roleSpinner = dropdownView.findViewById(R.id.spinner_role);
-//                if (roleSpinner != null && roleSpinner.getSelectedItemPosition() > 0) {
-//                    selectedRole = roleSpinner.getSelectedItem().toString();
-//                }
-//
-//                EditText motivationInput = dropdownView.findViewById(R.id.edit_motivation);
-//                if (motivationInput != null) {
-//                    motivation = motivationInput.getText().toString().trim();
-//                }
-//            }
-//
-//            // Validasi
-//            if (selectedRole.isEmpty()) {
-//                Toast.makeText(getContext(), "Harap pilih peran yang ingin diambil", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//
-//            if (motivation.isEmpty()) {
-//                Toast.makeText(getContext(), "Harap isi alasan bergabung", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//
-//            // Tampilkan konfirmasi
-//            new AlertDialog.Builder(getContext())
-//                    .setTitle("Konfirmasi Pendaftaran")
-//                    .setMessage("Apakah Anda yakin ingin mendaftar ke tim " + team.getNamaTeam() +
-//                            " sebagai " + selectedRole + "?")
-//                    .setPositiveButton("Ya, Daftar", (dialog, which) -> {
-//                        // Kirim data pendaftaran ke server
-//                        submitTeamRegistration(team, selectedRole, motivation);
-//                    })
-//                    .setNegativeButton("Batal", null)
-//                    .show();
-//
-//        } catch (Exception e) {
-//            Log.e("REGISTRATION", "Error handling team registration", e);
-//            Toast.makeText(getContext(), "Terjadi kesalahan saat mendaftar", Toast.LENGTH_SHORT).show();
-//        }
-    }
-
-    private void submitTeamRegistration(Team team, String selectedRole, String motivation) {
-        // Implementasi pengiriman data ke server
-        Log.d("REGISTRATION", "Mendaftar ke tim: " + team.getNamaTeam());
-        Log.d("REGISTRATION", "Peran: " + selectedRole);
-        Log.d("REGISTRATION", "Motivasi: " + motivation);
-
-        // Contoh: Panggil API service
-    /*
-    ApiService.registerToTeam(
-        team.getTeamId(),
-        selectedRole,
-        motivation,
-        new ApiCallback() {
-            @Override
-            public void onSuccess(String result) {
-                getActivity().runOnUiThread(() -> {
-                    Toast.makeText(getContext(),
-                        "Pendaftaran berhasil dikirim!",
-                        Toast.LENGTH_SHORT).show();
-                });
-            }
-
-            @Override
-            public void onFailure(String error) {
-                getActivity().runOnUiThread(() -> {
-                    Toast.makeText(getContext(),
-                        "Gagal mengirim pendaftaran: " + error,
-                        Toast.LENGTH_SHORT).show();
-                });
-            }
-        }
-    );
-    */
-
-        // Untuk sementara, tampilkan toast
-        Toast.makeText(getContext(),
-                "Pendaftaran ke tim " + team.getNamaTeam() + " berhasil dikirim!",
-                Toast.LENGTH_SHORT).show();
     }
 }

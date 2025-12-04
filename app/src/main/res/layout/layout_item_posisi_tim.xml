@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/template_posisi"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/custom_bbg_transparant_border"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_posisi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Posisi"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/is_sb"/>
+
+        <ImageButton
+            android:id="@+id/btn_delete_posisi"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@null"
+            android:src="@drawable/icon_silang"
+            android:contentDescription="Hapus"/>
+    </LinearLayout>
+
+    <!-- EditText Nama Posisi -->
+    <com.naufal.younifirst.custom.CustomEditText
+        android:id="@+id/et_nama_posisi"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:hint="Nama Posisi/Tugas"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="#66FFFFFF"/>
+
+    <!-- EditText Jumlah Orang -->
+    <com.naufal.younifirst.custom.CustomEditText
+        android:id="@+id/et_jumlah_orang"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:hint="Masukkan jumlah orang"
+        android:inputType="number"
+        android:textColor="@color/white"
+        android:textColorHint="#66FFFFFF"/>
+
+    <!-- Ketentuan -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Ketentuan:"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:fontFamily="@font/is_sb"/>
+
+    <LinearLayout
+        android:id="@+id/container_ketentuan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.naufal.younifirst.custom.CustomEditText
+            android:id="@+id/et_ketentuan_1"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:hint="Ketentuan"
+            android:background="@drawable/custom_bbg_transparant_border"
+            android:drawableStart="@drawable/icon_centang_2"
+            android:drawablePadding="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="#66FFFFFF"
+            android:fontFamily="@font/is_sb"
+            android:textAllCaps="false"
+            android:textAlignment="viewStart"/>
+    </LinearLayout>
+
+    <!-- Button Tambah Ketentuan -->
+    <Button
+        android:id="@+id/btn_tambah_ketentuan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_bbg_transparant_border"
+        android:drawableStart="@drawable/icon_add_kecil"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:text="Tambah Ketentuan"
+        android:textAllCaps="false"
+        android:textColor="#5E8BFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/is_bold"
+        android:textAlignment="textStart"/>
+
+    <!-- Bonus/Nilai Plus -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Bonus/Nilai Plus (Opsional)"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:fontFamily="@font/is_sb"/>
+
+    <com.naufal.younifirst.custom.CustomEditText
+        android:id="@+id/et_bonus_nilai_plus"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:hint="Contoh: punya pengalaman kompetisi"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="#66FFFFFF"/>
+</LinearLayout>

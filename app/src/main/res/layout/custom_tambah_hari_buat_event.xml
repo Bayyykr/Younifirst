@@ -32,7 +32,7 @@
     </LinearLayout>
 
     <com.naufal.younifirst.custom.CustomEditText
-        android:id="@+id/et_tanggalEventHariKe1"
+        android:id="@+id/et_tanggalEvent"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
@@ -47,21 +47,8 @@
 
         <com.naufal.younifirst.custom.CustomEditText
             android:id="@+id/et_waktuMulai"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:textColorHint="#66FFFFFF"
-            android:inputType="textCapSentences"/>
-
-        <com.naufal.younifirst.custom.CustomEditText
-            android:id="@+id/et_waktuSelesai"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
             android:textColor="@color/white"
             android:textColorHint="#66FFFFFF"
             android:inputType="textCapSentences"/>

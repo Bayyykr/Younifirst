@@ -214,7 +214,6 @@
                             android:layout_height="40dp"
                             android:layout_marginTop="10dp"
                             android:layout_weight="1"
-                            android:layout_marginEnd="10dp"
                             android:textColor="@color/white"
                             android:background="@drawable/custom_bbg_transparant_border"
                             android:textColorHint="#66FFFFFF"
@@ -263,7 +262,6 @@
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textColorHint="#66FFFFFF"
@@ -356,7 +354,8 @@
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
                 android:textColorHint="#66FFFFFF"
-                android:inputType="textCapSentences"/>
+                android:inputType="number"
+                android:maxLength="13"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -544,7 +543,6 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_bbg_transparant_border"
-                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/is_sb"/>
 
             <Button
@@ -560,7 +558,6 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_bbg_transparant_border"
-                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/is_sb"/>
 
             <Button
@@ -576,7 +573,6 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_bbg_transparant_border"
-                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/is_sb"/>
 
             <Button
@@ -592,7 +588,6 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_bbg_transparant_border"
-                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/is_sb"/>
 
             <TextView
@@ -728,6 +723,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
+                android:maxLength="15"
                 android:textColorHint="#66FFFFFF"
                 android:inputType="phone"/>
 

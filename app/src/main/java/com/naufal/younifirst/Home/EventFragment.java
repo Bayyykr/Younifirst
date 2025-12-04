@@ -1,13 +1,12 @@
 package com.naufal.younifirst.Home;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,12 +29,12 @@ public class EventFragment extends Fragment {
     private LinearLayout trendingContainer;
     private EventController eventController;
 
-    public EventFragment() {
-    }
+    public EventFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_event, container, false);
 
         Toast.makeText(getContext(), "Memuat data event...", Toast.LENGTH_SHORT).show();
@@ -44,34 +43,18 @@ public class EventFragment extends Fragment {
         if (eventUtamaView != null) {
             containerEvent = eventUtamaView.findViewById(R.id.container_event);
             trendingContainer = eventUtamaView.findViewById(R.id.trending_container);
-
             hideStaticData(eventUtamaView);
         }
 
         if (containerEvent == null) containerEvent = view.findViewById(R.id.container_event);
         if (trendingContainer == null) trendingContainer = view.findViewById(R.id.trending_container);
 
-        if (containerEvent == null) {
-            Log.e(TAG, "container_event masih null!");
-        } else {
-            Log.d(TAG, "container_event ditemukan");
-        }
-
-        if (trendingContainer == null) {
-            Log.e(TAG, "trending_container masih null!");
-        } else {
-            Log.d(TAG, "trending_container ditemukan");
-        }
-
         loadEvents();
-
         return view;
     }
 
     private void hideStaticData(View eventUtamaView) {
         try {
-            Log.d(TAG, "🙈 Menyembunyikan data statis dari XML...");
-
             LinearLayout item1 = eventUtamaView.findViewById(R.id.item1EventMendatang);
             LinearLayout item2 = eventUtamaView.findViewById(R.id.item2EventMendatang);
 
@@ -84,62 +67,45 @@ public class EventFragment extends Fragment {
             if (trendingItem1 != null) trendingItem1.setVisibility(View.GONE);
             if (trendingItem2 != null) trendingItem2.setVisibility(View.GONE);
 
-            if (trendingContainer != null) {
-                for (int i = 0; i < trendingContainer.getChildCount(); i++) {
-                    View child = trendingContainer.getChildAt(i);
-                    if (child instanceof LinearLayout) child.setVisibility(View.GONE);
-                }
-            }
-
-            Log.d(TAG, "✅ Semua data statis berhasil di-hide");
-
         } catch (Exception e) {
-            Log.e(TAG, "❌ Error hiding static data: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     private void loadEvents() {
         eventController = new EventController();
-        Log.d(TAG, "Memulai loadEvents()");
         loadTrendingEvents();
         loadUpcomingEvents();
     }
 
     private void loadTrendingEvents() {
-        Log.d(TAG, "🔥 Memuat ALL trending events...");
 
         eventController.fetchTrendingEvents(new EventController.EventCallback() {
             @Override
             public void onSuccess(List<Event> events) {
-                Log.d(TAG, "✅ ALL Trending events diterima: " + events.size() + " items");
-                if (getActivity() != null) {
+                if (getActivity() != null)
                     getActivity().runOnUiThread(() -> displayTrendingEvents(events));
-                }
             }
 
             @Override
             public void onError(String message) {
-                Log.e(TAG, "❌ Error loading trending events: " + message);
+                Log.e(TAG, "Error trending: " + message);
             }
         });
     }
 
     private void loadUpcomingEvents() {
-        Log.d(TAG, "📅 Memuat upcoming events...");
 
         eventController.fetchUpcomingEvents(new EventController.EventCallback() {
             @Override
             public void onSuccess(List<Event> events) {
-                Log.d(TAG, "✅ Upcoming events diterima: " + events.size() + " items");
-                if (getActivity() != null) {
+                if (getActivity() != null)
                     getActivity().runOnUiThread(() -> displayUpcomingEvents(events));
-                }
             }
 
             @Override
             public void onError(String message) {
-                Log.e(TAG, "❌ Error loading upcoming events: " + message);
+                Log.e(TAG, "Error upcoming: " + message);
             }
         });
     }
@@ -149,27 +115,25 @@ public class EventFragment extends Fragment {
         trendingContainer.removeAllViews();
 
         if (events.isEmpty()) {
-            TextView emptyView = new TextView(getContext());
-            emptyView.setText("Belum ada event trending");
-            emptyView.setTextColor(0x7FFFFFFF);
-            emptyView.setTextSize(14);
-            emptyView.setPadding(0, 32, 0, 32);
-            trendingContainer.addView(emptyView);
+            TextView empty = new TextView(getContext());
+            empty.setText("Belum ada event trending");
+            empty.setTextColor(0x7FFFFFFF);
+            trendingContainer.addView(empty);
             return;
         }
 
         for (int i = 0; i < events.size(); i++) {
-            Event event = events.get(i);
-            View eventView = createTrendingEventView(event);
+            Event e = events.get(i);
+            View item = createTrendingEventView(e);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            if (i < events.size() - 1) params.setMargins(0, 0, 0, 16);
+            if (i < events.size() - 1) p.setMargins(0, 0, 0, 16);
+            item.setLayoutParams(p);
 
-            eventView.setLayoutParams(params);
-            trendingContainer.addView(eventView);
+            trendingContainer.addView(item);
         }
     }
 
@@ -178,116 +142,391 @@ public class EventFragment extends Fragment {
         containerEvent.removeAllViews();
 
         if (events.isEmpty()) {
-            TextView emptyView = new TextView(getContext());
-            emptyView.setText("Belum ada event mendatang");
-            emptyView.setTextColor(0x7FFFFFFF);
-            emptyView.setTextSize(14);
-            emptyView.setPadding(0, 32, 0, 32);
-            containerEvent.addView(emptyView);
+            TextView empty = new TextView(getContext());
+            empty.setText("Belum ada event mendatang");
+            empty.setTextColor(0x7FFFFFFF);
+            containerEvent.addView(empty);
             return;
         }
 
         int count = Math.min(5, events.size());
         for (int i = 0; i < count; i++) {
-            Event event = events.get(i);
-            View eventView = createUpcomingEventView(event);
+            Event e = events.get(i);
+            View item = createUpcomingEventView(e);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            if (i < count - 1) params.setMargins(0, 0, 16, 0);
+            if (i < count - 1) p.setMargins(0, 0, 16, 0);
+            item.setLayoutParams(p);
 
-            eventView.setLayoutParams(params);
-            containerEvent.addView(eventView);
+            containerEvent.addView(item);
         }
     }
 
     private View createTrendingEventView(Event event) {
-        View view = LayoutInflater.from(getContext())
+        View v = LayoutInflater.from(getContext())
                 .inflate(R.layout.fragment_event_list, trendingContainer, false);
 
-        bindEventToView(view, event, true);
-        view.setOnClickListener(v -> openDetailEvent(event));
-        return view;
+        // PERBAIKAN: Gunakan setup yang sama dengan upcoming events
+        setupEventView(v, event, true); // true untuk trending layout
+        return v;
     }
 
     private View createUpcomingEventView(Event event) {
-        View view = LayoutInflater.from(getContext())
+        View v = LayoutInflater.from(getContext())
                 .inflate(R.layout.fragment_event_mendatang, containerEvent, false);
 
-        bindEventToView(view, event, false);
-        view.setOnClickListener(v -> openDetailEvent(event));
-        return view;
+        // PERBAIKAN: Gunakan setup yang sama dengan trending events
+        setupEventView(v, event, false); // false untuk upcoming layout
+        return v;
     }
 
-    private void bindEventToView(View view, Event event, boolean isTrending) {
-        try {
-            TextView textDate = view.findViewById(R.id.text_date);
-            TextView textTitle = view.findViewById(R.id.text_title);
-            TextView textLocation = view.findViewById(R.id.text_location);
-            ImageView imgPoster = view.findViewById(R.id.img_poster);
+    private void setupEventView(View view, Event event, boolean isTrendingLayout) {
+        // Setup data dasar - SAMA untuk kedua layout
+        TextView textTitle = view.findViewById(R.id.text_title);
+        TextView textDate = view.findViewById(R.id.text_date);
+        TextView textLocation = view.findViewById(R.id.text_location);
 
-            // Cari badge yang ada di include
-            TextView badgeStatus = view.findViewById(R.id.badge_status);
+        textTitle.setText(event.getNameEvent());
 
-            if (textDate != null) textDate.setText(event.getFormattedDate());
-            if (textTitle != null) textTitle.setText(event.getNameEvent());
-            if (textLocation != null) textLocation.setText(event.getLokasi());
+        String formattedDate = event.getFormattedDateForCard();
+        textDate.setText(formattedDate);
+        textLocation.setText(event.getLokasi());
 
-            // Set badge konsisten untuk semua Event
-            applyBadgeToView(badgeStatus, event, isTrending);
+        // PERBAIKAN: Setup gambar poster jika ada ImageView di layout
+        setupEventPoster(view, event);
 
-            if (imgPoster != null) {
-                if (event.getPosterEvent() != null && !event.getPosterEvent().isEmpty()
-                        && !"null".equals(event.getPosterEvent())) {
-                    Glide.with(this)
-                            .load(event.getPosterEvent())
-                            .placeholder(R.drawable.tryposter)
-                            .into(imgPoster);
-                } else {
-                    imgPoster.setImageResource(R.drawable.tryposter);
+        // Setup badge kecil (kategori) - SAMA untuk kedua layout
+        setupBadgeKecil(view, event);
+
+        // Setup badge besar (status) - SAMA untuk kedua layout
+        // Hanya tampil jika event hampir berakhir (H-7)
+        setupBadgeBesar(view, event);
+
+        // Setup klik listener - SAMA untuk kedua layout
+        view.setOnClickListener(x -> openDetailEvent(event));
+    }
+
+
+    private void setupBadgeKecil(View view, Event event) {
+        LinearLayout textContainer = view.findViewById(R.id.text_container);
+        if (textContainer == null) return;
+
+        removeExistingBadgeContainer(view);
+
+        String kategori = event.getKategori();
+
+        if (kategori == null || kategori.trim().isEmpty() ||
+                "null".equalsIgnoreCase(kategori.trim())) {
+            return;
+        }
+
+        String[] kategoriList = kategori.split("\\s*,\\s*");
+
+        int validKategoriCount = 0;
+        for (String kat : kategoriList) {
+            if (kat != null && !kat.trim().isEmpty() && !"null".equalsIgnoreCase(kat.trim())) {
+                validKategoriCount++;
+            }
+        }
+
+        if (validKategoriCount == 0) {
+            return;
+        }
+
+        LinearLayout badgeContainer = new LinearLayout(getContext());
+        badgeContainer.setId(R.id.badge_kecil_container);
+        badgeContainer.setOrientation(LinearLayout.HORIZONTAL);
+
+        LinearLayout.LayoutParams containerParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        containerParams.setMargins(0, 0, 0, 8);
+        badgeContainer.setLayoutParams(containerParams);
+
+        int insertPosition = 0;
+        for (int i = 0; i < textContainer.getChildCount(); i++) {
+            View child = textContainer.getChildAt(i);
+            if (child.getId() == R.id.text_date) {
+                insertPosition = i;
+                break;
+            }
+        }
+
+        textContainer.addView(badgeContainer, insertPosition);
+
+        int addedBadges = 0;
+        for (String kat : kategoriList) {
+            if (addedBadges >= 3) break;
+
+            kat = kat != null ? kat.trim() : "";
+            if (!kat.isEmpty() && !"null".equalsIgnoreCase(kat)) {
+                View badgeView = createBadgeKecilView(kat);
+                if (badgeView != null) {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    if (addedBadges > 0) {
+                        params.setMargins(8, 0, 0, 0);
+                    }
+                    badgeView.setLayoutParams(params);
+
+                    badgeContainer.addView(badgeView);
+                    addedBadges++;
                 }
             }
+        }
+    }
 
+    private void removeExistingBadgeContainer(View view) {
+        LinearLayout existingContainer = view.findViewById(R.id.badge_kecil_container);
+        if (existingContainer != null && existingContainer.getParent() != null) {
+            ((ViewGroup) existingContainer.getParent()).removeView(existingContainer);
+        }
+
+        View includeBadge = view.findViewById(R.id.include_badge_kecil);
+        if (includeBadge != null && includeBadge.getParent() != null) {
+            ((ViewGroup) includeBadge.getParent()).removeView(includeBadge);
+        }
+    }
+
+    private View createBadgeKecilView(String kategori) {
+        try {
+            View badgeView = LayoutInflater.from(getContext())
+                    .inflate(R.layout.badge_kecil, null, false);
+
+            TextView badgeText = badgeView.findViewById(R.id.text_badge_kecil);
+            if (badgeText == null) {
+                return null;
+            }
+
+            if (kategori == null || kategori.isEmpty() || "null".equalsIgnoreCase(kategori)) {
+                return null;
+            }
+
+            badgeText.setText(kategori);
+
+            String kategoriLower = kategori.toLowerCase();
+            int bgResource = R.drawable.badge_green;
+
+            if (kategoriLower.contains("seminar")) {
+                bgResource = R.drawable.badge_red;
+            } else if (kategoriLower.contains("music") || kategoriLower.contains("konser")) {
+                bgResource = R.drawable.badge_blue;
+            } else if (kategoriLower.contains("kompetisi")) {
+                bgResource = R.drawable.badge_green;
+            } else if (kategoriLower.contains("sport") || kategoriLower.contains("olahraga")) {
+                bgResource = R.drawable.badge_purple;
+            }
+
+            badgeView.setBackgroundResource(bgResource);
+            badgeText.setTextColor(getResources().getColor(android.R.color.white));
+
+            return badgeView;
         } catch (Exception e) {
-            Log.e(TAG, "Error binding event: " + e.getMessage());
+            return null;
+        }
+    }
+    private void setupEventPoster(View view, Event event) {
+        ImageView imgPoster = view.findViewById(R.id.img_poster);
+        if (imgPoster != null) {
+            // Anda bisa menggunakan Glide/Picasso di sini
+            // Contoh dengan Glide:
+            String imageUrl = event.getSafePosterUrl();
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                Glide.with(getContext())
+                        .load(imageUrl)
+                        .placeholder(R.drawable.tryposter)
+                        .into(imgPoster);
+            } else {
+                imgPoster.setImageResource(R.drawable.tryposter);
+            }
+
+            // Untuk sekarang, log saja
+            Log.d(TAG, "🖼 Event poster: " + event.getNameEvent() +
+                    " - URL: " + event.getSafePosterUrl());
+        }
+    }
+
+    private void setupBadgeBesar(View rootView, Event event) {
+        FrameLayout badgeContainer = rootView.findViewById(R.id.badge_container);
+        if (badgeContainer == null) return;
+
+        // Cari ImageView untuk background
+        ImageView badgeBackground = null;
+        for (int i = 0; i < badgeContainer.getChildCount(); i++) {
+            View child = badgeContainer.getChildAt(i);
+            if (child instanceof ImageView) {
+                badgeBackground = (ImageView) child;
+                break;
+            }
+        }
+
+        TextView badgeStatus = badgeContainer.findViewById(R.id.badge_status);
+
+        if (badgeBackground == null || badgeStatus == null) {
+            badgeContainer.setVisibility(View.GONE);
+            return;
+        }
+
+        // LOGIKA YANG SAMA untuk trending dan upcoming:
+        // Hanya tampilkan badge jika event hampir berakhir (H-7 atau kurang)
+        if (event.isAlmostEnding()) {
+            String badgeText = getBadgeTextForDeadline(event);
+            if (badgeText != null && !badgeText.isEmpty()) {
+                badgeStatus.setText(badgeText);
+                badgeBackground.setImageResource(R.drawable.badge_end);
+                badgeContainer.setVisibility(View.VISIBLE);
+
+                Log.d(TAG, "✅ Menampilkan badge 'Hampir Berakhir' untuk: " +
+                        event.getNameEvent() + " (H-" + event.getDaysUntilDeadline() + ")");
+            } else {
+                badgeContainer.setVisibility(View.GONE);
+            }
+        } else {
+            // Jika tidak hampir berakhir, SEMBUNYIKAN badge
+            badgeContainer.setVisibility(View.GONE);
         }
     }
 
 
-    private void applyBadgeToView(TextView badgeStatus, Event event, boolean isTrending) {
-        if (badgeStatus == null) return;
-
-        String badgeText = event.getBadgeText();
-        int badgeColor = event.getBadgeColor();
-
-        if (badgeText == null || badgeText.trim().isEmpty() || "null".equalsIgnoreCase(badgeText)) {
-            if (isTrending) badgeText = "TRENDING";
-            else badgeText = event.isConfirmed() ? "TERKONFIRMASI" : "PENDING";
+    // Helper method untuk mendapatkan teks badge berdasarkan deadline
+    private String getBadgeTextForDeadline(Event event) {
+        if (!event.isAlmostEnding()) {
+            return null;
         }
 
-        if (badgeColor == 0) badgeColor = Color.parseColor("#2D6A4F");
+        int days = event.getDaysUntilDeadline();
 
-        badgeStatus.setText(badgeText);
-
-        try {
-            badgeStatus.setBackground(null);
-        } catch (Exception e) {
-            badgeStatus.setBackgroundColor(badgeColor);
+        if (days < 0) {
+            return null; // Sudah lewat deadline, tidak perlu badge
+        } else if (days == 0) {
+            return "Hari ini\nBerakhir";
+        } else if (days == 1) {
+            return "Besok\nBerakhir";
+        } else {
+            return "Hampir\nBerakhir";
         }
     }
 
     private void openDetailEvent(Event event) {
-        Intent intent = new Intent(getActivity(), DetailEventActivity.class);
-        intent.putExtra("event_id", event.getEventId());
-        intent.putExtra("event_name", event.getNameEvent());
-        intent.putExtra("event_date", event.getTanggalMulai());
-        intent.putExtra("event_location", event.getLokasi());
-        intent.putExtra("event_organizer", event.getOrganizer());
-        intent.putExtra("event_poster", event.getPosterEvent());
-        intent.putExtra("event_description", event.getDescription());
-        startActivity(intent);
+        try {
+            Intent i = new Intent(getActivity(), DetailEventActivity.class);
+
+            // Debug: Log semua data dari event
+            Log.d(TAG, "📤 Sending event data to DetailEventActivity:");
+            Log.d(TAG, "  - ID: " + event.getEventId());
+            Log.d(TAG, "  - Name: " + event.getNameEvent());
+            Log.d(TAG, "  - Tanggal Mulai: " + event.getTanggalMulai());
+            Log.d(TAG, "  - Tanggal Selesai: " + event.getTanggalSelesai());
+            Log.d(TAG, "  - Waktu Pelaksanaan (RAW): " + event.getWaktu_pelaksanaan());
+            Log.d(TAG, "  - Harga: " + event.getHarga());
+            Log.d(TAG, "  - Deadline Pendaftaran (RAW): " + event.getDlPendaftaran());
+            Log.d(TAG, "  - Kategori: " + event.getKategori());
+            Log.d(TAG, "  - Deskripsi: " + event.getDescription());
+            Log.d(TAG, "  - Lokasi: " + event.getLokasi());
+            Log.d(TAG, "  - Poster: " + event.getPosterEvent());
+            Log.d(TAG, "  - Organizer: " + event.getOrganizer());
+            Log.d(TAG, "  - Kapasitas: " + event.getKapasitas());
+            Log.d(TAG, "  - Status: " + event.getStatus());
+
+            // Data yang dikirim - SEMUA FIELD
+            i.putExtra("event_id", event.getEventId() != null ? event.getEventId() : "");
+            i.putExtra("event_name", event.getNameEvent() != null ? event.getNameEvent() : "Event");
+            i.putExtra("event_date", event.getTanggalMulai() != null ? event.getTanggalMulai() : "");
+            i.putExtra("event_date_end", event.getTanggalSelesai() != null ? event.getTanggalSelesai() : ""); // Tambahkan tanggal selesai
+
+            // PERBAIKAN: Kirim waktu pelaksanaan dengan benar
+            String waktuPelaksanaan = event.getWaktu_pelaksanaan();
+            if (waktuPelaksanaan != null && !waktuPelaksanaan.isEmpty() && !"null".equalsIgnoreCase(waktuPelaksanaan)) {
+                i.putExtra("event_time", waktuPelaksanaan);
+                Log.d(TAG, "  ✅ Waktu Pelaksanaan dikirim: " + waktuPelaksanaan);
+            } else {
+                // Jika waktu pelaksanaan kosong, coba extract dari tanggalMulai
+                String tanggalMulai = event.getTanggalMulai();
+                if (tanggalMulai != null && !tanggalMulai.isEmpty() && !"null".equalsIgnoreCase(tanggalMulai)) {
+                    // Extract waktu dari format "yyyy-MM-dd HH:mm:ss"
+                    String extractedTime = extractTimeFromDateTime(tanggalMulai);
+                    i.putExtra("event_time", extractedTime != null ? extractedTime : "");
+                    Log.d(TAG, "  ⚡ Waktu diekstrak dari tanggal: " + extractedTime);
+                } else {
+                    i.putExtra("event_time", "");
+                }
+            }
+
+            i.putExtra("event_location", event.getLokasi() != null ? event.getLokasi() : "");
+            i.putExtra("event_organizer", event.getOrganizer() != null ? event.getOrganizer() : "");
+            i.putExtra("event_poster", event.getPosterEvent() != null ? event.getPosterEvent() : "");
+            i.putExtra("event_description", event.getDescription() != null ? event.getDescription() : "");
+            i.putExtra("event_kategori", event.getKategori() != null ? event.getKategori() : "");
+            i.putExtra("event_kapasitas", event.getKapasitas()); // Tambahkan kapasitas
+
+            // Handle harga - format yang benar
+            String harga = event.getHarga();
+            if (harga != null && !harga.isEmpty() && !"null".equalsIgnoreCase(harga)) {
+                i.putExtra("event_harga", harga);
+            } else {
+                i.putExtra("event_harga", "0"); // Default gratis
+            }
+
+            // PERBAIKAN: Kirim deadline dengan benar
+            String deadline = event.getDlPendaftaran();
+            if (deadline != null && !deadline.isEmpty() && !"null".equalsIgnoreCase(deadline)) {
+                i.putExtra("event_dl_pendaftaran", deadline);
+                Log.d(TAG, "  ✅ Deadline dikirim: " + deadline);
+            } else {
+                i.putExtra("event_dl_pendaftaran", "");
+                Log.d(TAG, "  ⚠ Deadline kosong atau null");
+            }
+
+            // Tambahkan status
+            i.putExtra("event_status", event.getStatus() != null ? event.getStatus() : "");
+
+            startActivity(i);
+        } catch (Exception e) {
+            Log.e(TAG, "❌ Error opening detail event", e);
+            Toast.makeText(getContext(), "Gagal membuka detail event", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String extractTimeFromDateTime(String dateTimeString) {
+        if (dateTimeString == null || dateTimeString.trim().isEmpty()) {
+            return null;
+        }
+
+        try {
+            // Format dengan waktu: "2025-12-13 12:00:00"
+            if (dateTimeString.contains(" ")) {
+                String[] parts = dateTimeString.split(" ");
+                if (parts.length > 1) {
+                    String timePart = parts[1];
+                    // Ambil HH:mm
+                    if (timePart.length() >= 5) {
+                        return timePart.substring(0, 5);
+                    }
+                }
+            }
+            // Format ISO: "2025-12-13T12:00:00"
+            else if (dateTimeString.contains("T")) {
+                String[] parts = dateTimeString.split("T");
+                if (parts.length > 1) {
+                    String timePart = parts[1];
+                    // Hapus timezone jika ada
+                    timePart = timePart.split("[+-Z]")[0];
+                    // Ambil HH:mm
+                    if (timePart.length() >= 5) {
+                        return timePart.substring(0, 5);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error extracting time from datetime", e);
+        }
+        return null;
     }
 
     @Override

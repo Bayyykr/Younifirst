@@ -83,7 +83,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Member saat ini"
-                                android:textSize="8sp"
+                                android:textSize="12sp"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/is_r"
                                 android:textColor="#ffffff"
@@ -122,7 +122,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Nama tim"
-                                android:textSize="8sp"
+                                android:textSize="12sp"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/is_r"
                                 android:textColor="#ffffff"
@@ -161,7 +161,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Deadline join"
-                                android:textSize="8sp"
+                                android:textSize="12sp"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/is_r"
                                 android:textColor="#ffffff"
@@ -169,6 +169,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/inideadlinejoin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="22 November 2025"
@@ -200,7 +201,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Status"
-                                android:textSize="8sp"
+                                android:textSize="12sp"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/is_r"
                                 android:textColor="#ffffff"

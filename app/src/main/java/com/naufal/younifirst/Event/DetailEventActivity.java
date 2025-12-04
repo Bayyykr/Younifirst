@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +28,11 @@ import com.naufal.younifirst.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class DetailEventActivity extends AppCompatActivity {
 
@@ -42,6 +46,8 @@ public class DetailEventActivity extends AppCompatActivity {
     private ViewGroup originalImageParent;
     private int originalImageHeight;
     private int popupOffsetX;
+
+    private static final String TAG = "DetailEventActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,8 +75,10 @@ public class DetailEventActivity extends AppCompatActivity {
         headerContainer = findViewById(R.id.header_container);
         registerSegment = findViewById(R.id.register_segment);
 
-        originalImageParent = (ViewGroup) imgHeader.getParent();
-        originalImageHeight = imgHeader.getLayoutParams().height;
+        if (imgHeader != null && imgHeader.getParent() != null) {
+            originalImageParent = (ViewGroup) imgHeader.getParent();
+            originalImageHeight = imgHeader.getLayoutParams().height;
+        }
     }
 
     private void setupBackButton() {
@@ -170,6 +178,7 @@ public class DetailEventActivity extends AppCompatActivity {
             }
         });
     }
+
     private void showFlagPopup() {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         int popupLayout = isZoomed ?
@@ -222,6 +231,7 @@ public class DetailEventActivity extends AppCompatActivity {
             });
         }
     }
+
     private void showHapusPopup() {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_hapus_event, null);
@@ -280,146 +290,572 @@ public class DetailEventActivity extends AppCompatActivity {
                 })
                 .start();
     }
+
     private void loadEventDataFromIntent() {
-        String name = getIntent().getStringExtra("event_name");
-        String date = getIntent().getStringExtra("event_date");
-        String time = getIntent().getStringExtra("event_time");
-        String place = getIntent().getStringExtra("event_location"); // organizer
-        String place2 = getIntent().getStringExtra("event_detail_place"); // lokasi
-        String price = getIntent().getStringExtra("event_price");
-        String desc = getIntent().getStringExtra("event_description");
-        String poster = getIntent().getStringExtra("event_poster");
-        String dlPendaftaran = getIntent().getStringExtra("event_dl_pendaftaran");
+        // Log semua data yang diterima
+        Log.d(TAG, "📥 Received Intent Extras:");
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            for (String key : extras.keySet()) {
+                Object value = extras.get(key);
+                Log.d(TAG, "  - " + key + ": " + value);
+            }
+        } else {
+            Log.e(TAG, "❌ No extras found in intent");
+            return;
+        }
 
-        String kategori = getIntent().getStringExtra("event_kategori");
+        String eventId = getSafeStringExtra("event_id", null);
+        String name = getSafeStringExtra("event_name", "Nama Event");
+        String date = getSafeStringExtra("event_date", null);
+        String dateEnd = getSafeStringExtra("event_date_end", null);
+        String time = getSafeStringExtra("event_time", null);
+        String place = getSafeStringExtra("event_location", "Lokasi belum ditentukan");
+        String organizer = getSafeStringExtra("event_organizer", null);
+        String poster = getSafeStringExtra("event_poster", null);
+        String desc = getSafeStringExtra("event_description", "Deskripsi tidak tersedia");
+        String kategori = getSafeStringExtra("event_kategori", null);
+        String harga = getSafeStringExtra("event_harga", null);
+        String dlPendaftaran = getSafeStringExtra("event_dl_pendaftaran", null);
+        String status = getSafeStringExtra("event_status", null);
+        int kapasitas = getIntent().getIntExtra("event_kapasitas", 0);
 
-        ImageView img = findViewById(R.id.img_header);
+        // Log data yang telah diambil
+        Log.d(TAG, "📋 Parsed Data from Intent:");
+        Log.d(TAG, "  - ID: " + eventId);
+        Log.d(TAG, "  - Name: " + name);
+        Log.d(TAG, "  - Date Start: " + date);
+        Log.d(TAG, "  - Date End: " + dateEnd);
+        Log.d(TAG, "  - Time: " + time);
+        Log.d(TAG, "  - Place: " + place);
+        Log.d(TAG, "  - Organizer: " + organizer);
+        Log.d(TAG, "  - Poster: " + poster);
+        Log.d(TAG, "  - Kategori: " + kategori);
+        Log.d(TAG, "  - Harga: " + harga);
+        Log.d(TAG, "  - Deadline: " + dlPendaftaran);
+        Log.d(TAG, "  - Status: " + status);
+        Log.d(TAG, "  - Kapasitas: " + kapasitas);
+
+        // Temukan view di layout
         TextView title = findViewById(R.id.title_event);
         TextView dateText = findViewById(R.id.tanggalEvent);
         TextView timeText = findViewById(R.id.jamEvent);
-        TextView loc = findViewById(R.id.lokasiEvent);
-        TextView loc2 = findViewById(R.id.lokasiDetailEvent);
+        TextView loc2 = findViewById(R.id.lokasiEvent);
+        TextView loc = findViewById(R.id.lokasiDetailEvent);
         TextView priceText = findViewById(R.id.hargaEvent);
         TextView descText = findViewById(R.id.content_event);
         TextView batasWaktuText = findViewById(R.id.BatasWaktuPendaftaran);
 
-        View badgeView = findViewById(R.id.badge_event);
-
-        title.setText(name != null ? name : "Nama Event");
-
-        if (date != null && !date.isEmpty()) {
-            dateText.setText(formatDate(date));
-        } else {
-            dateText.setText("Tanggal belum ditentukan");
+        // Set data ke view dengan null safety yang lebih baik
+        if (title != null) {
+            title.setText(name);
         }
 
-        if (time != null && !time.isEmpty()) {
-            timeText.setText(time);
-        } else {
-            timeText.setText("Waktu akan diumumkan");
-        }
+        if (dateText != null) {
+            if (date != null && !date.trim().isEmpty()) {
+                String formattedDate;
 
-        loc.setText(place != null ? place : "Organizer tidak tersedia");
-        loc2.setText(place2 != null ? place2 : "Lokasi tidak tersedia");
+                if (dateEnd != null && !dateEnd.trim().isEmpty() && !date.equals(dateEnd)) {
+                    // Jika ada tanggal selesai dan berbeda dengan tanggal mulai
+                    String formattedStart = formatDateForDisplay(date, false);
+                    String formattedEnd = formatDateForDisplay(dateEnd, false);
+                    formattedDate = formattedStart + " - " + formattedEnd;
+                } else {
+                    // Hanya tanggal mulai
+                    formattedDate = formatDateTimeForDisplay(date);
+                }
 
-        priceText.setText(price != null ? price : "Gratis");
-
-        descText.setText(desc != null ? desc : "Deskripsi tidak tersedia");
-
-        if (batasWaktuText != null) {
-            if (dlPendaftaran != null && !dlPendaftaran.isEmpty() && !"null".equals(dlPendaftaran)) {
-                batasWaktuText.setText(dlPendaftaran);
+                dateText.setText(formattedDate);
+                Log.d(TAG, "📅 Formatted Date: " + formattedDate);
             } else {
+                dateText.setText("Tanggal akan diumumkan");
+            }
+            dateText.setVisibility(View.VISIBLE);
+        }
+
+        // PERBAIKAN: Waktu pelaksanaan - Format HH:mm saja
+        if (timeText != null) {
+            if (time != null && !time.trim().isEmpty() && !"null".equalsIgnoreCase(time.trim())) {
+                // Format waktu pelaksanaan ke HH:mm saja
+                String formattedTime = formatTimeToHHMM(time);
+                // Tambahkan "WIB" dan "- Selesai"
+                timeText.setText(formattedTime + " WIB - Selesai");
+                timeText.setVisibility(View.VISIBLE);
+                Log.d(TAG, "⏰ Waktu pelaksanaan (formatted): " + formattedTime + " (raw: " + time + ")");
+            } else if (date != null && !date.trim().isEmpty()) {
+                // Coba extract waktu dari tanggal jika ada format waktu
+                String extractedTime = extractTimeFromDate(date);
+                if (extractedTime != null) {
+                    timeText.setText(extractedTime + " WIB - Selesai");
+                } else {
+                    timeText.setText("Waktu akan diumumkan");
+                }
+                timeText.setVisibility(View.VISIBLE);
+            } else {
+                timeText.setText("Waktu akan diumumkan");
+                timeText.setVisibility(View.VISIBLE);
             }
         }
 
-        setBadgeWithCategory(badgeView, kategori);
+        if (loc != null) {
+            loc.setText(place);
+        }
 
-        Glide.with(this)
-                .load(poster)
-                .placeholder(R.drawable.tryposter)
-                .into(imgHeader);
+        // Organizer
+        if (loc2 != null) {
+            if (organizer != null && !organizer.trim().isEmpty()) {
+                loc2.setText(organizer);
+                loc2.setVisibility(View.VISIBLE);
+            } else {
+                loc2.setText("Organizer: Informasi belum tersedia");
+                loc2.setVisibility(View.VISIBLE);
+            }
+        }
+
+        // Harga
+        if (priceText != null) {
+            if (harga != null && !harga.trim().isEmpty() && !"null".equalsIgnoreCase(harga.trim())) {
+                if (harga.equalsIgnoreCase("Gratis") ||
+                        harga.equals("0") ||
+                        harga.equals("0.0") ||
+                        harga.equals("0.00")) {
+                    priceText.setText("Gratis");
+                } else {
+                    try {
+                        double nominal = Double.parseDouble(harga);
+                        java.text.DecimalFormat formatter = new java.text.DecimalFormat("###,###,###");
+                        priceText.setText("Rp. " + formatter.format(nominal));
+                    } catch (NumberFormatException e) {
+                        priceText.setText(harga);
+                    }
+                }
+            } else {
+                priceText.setText("Gratis");
+            }
+            priceText.setVisibility(View.VISIBLE);
+            Log.d(TAG, "💰 Harga: " + priceText.getText());
+        }
+
+        if (descText != null) {
+            descText.setText(desc);
+        }
+
+        // Batas waktu pendaftaran
+        if (batasWaktuText != null) {
+            if (dlPendaftaran != null && !dlPendaftaran.trim().isEmpty() && !"null".equalsIgnoreCase(dlPendaftaran.trim())) {
+                String formattedDeadline = formatDateTimeForDisplay(dlPendaftaran);
+                batasWaktuText.setText(formattedDeadline);
+                batasWaktuText.setVisibility(View.VISIBLE);
+            } else {
+                batasWaktuText.setText("Batas Pendaftaran: Tidak ditentukan");
+                batasWaktuText.setVisibility(View.VISIBLE);
+            }
+            Log.d(TAG, "⏳ Batas waktu: " + batasWaktuText.getText());
+        }
+
+        // PERBAIKAN: Setup badge-badge (kategori + deadline jika perlu)
+        setupBadges(kategori, name, dlPendaftaran);
+
+        // Load gambar poster
+        if (poster != null && !poster.trim().isEmpty() && !"null".equalsIgnoreCase(poster.trim())) {
+            String fullPosterUrl = ensureFullUrl(poster);
+            Log.d(TAG, "🖼 Loading poster from: " + fullPosterUrl);
+
+            Glide.with(this)
+                    .load(fullPosterUrl)
+                    .placeholder(R.drawable.tryposter)
+                    .error(R.drawable.tryposter)
+                    .into(imgHeader);
+        } else {
+            imgHeader.setImageResource(R.drawable.tryposter);
+            Log.d(TAG, "🖼 Using placeholder poster");
+        }
     }
 
-    private String formatDate(String dateString) {
-        try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            SimpleDateFormat outputFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID"));
-            Date date = inputFormat.parse(dateString);
-            return outputFormat.format(date);
-        } catch (ParseException e) {
-            return dateString;
+    // ==================== PERBAIKAN: SETUP MULTIPLE BADGES ====================
+    private void setupBadges(String kategori, String eventName, String dlPendaftaran) {
+        LinearLayout containerFilter = findViewById(R.id.container_filter);
+        if (containerFilter == null) return;
+
+        // Hapus badge yang sudah ada (jika ada)
+        View existingBadgeEvent = findViewById(R.id.badge_event);
+        if (existingBadgeEvent != null && existingBadgeEvent.getParent() != null) {
+            ((ViewGroup) existingBadgeEvent.getParent()).removeView(existingBadgeEvent);
         }
+
+        // Cari posisi untuk memasukkan badges (sebelum title)
+        int titleIndex = -1;
+        for (int i = 0; i < containerFilter.getChildCount(); i++) {
+            if (containerFilter.getChildAt(i).getId() == R.id.title_event) {
+                titleIndex = i;
+                break;
+            }
+        }
+
+        if (titleIndex == -1) {
+            titleIndex = 0; // Fallback ke index 0
+        }
+
+        // Buat container horizontal untuk badges
+        LinearLayout badgesContainer = new LinearLayout(this);
+        badgesContainer.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout.LayoutParams containerParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        containerParams.setMargins(0, 0, 0, 10);
+        badgesContainer.setLayoutParams(containerParams);
+
+        // Masukkan container badges sebelum title
+        containerFilter.addView(badgesContainer, titleIndex);
+
+        // ===== BADGE KATEGORI =====
+        // Split kategori jika ada koma
+        List<String> kategoriList = parseKategoriList(kategori);
+
+        // Tampilkan maksimal 3 badge kategori
+        int maxKategoriBadges = Math.min(3, kategoriList.size());
+        for (int i = 0; i < maxKategoriBadges; i++) {
+            String kat = kategoriList.get(i);
+            if (kat != null && !kat.trim().isEmpty() && !"null".equalsIgnoreCase(kat.trim())) {
+                View kategoriBadge = createKategoriBadge(kat.trim());
+                if (kategoriBadge != null) {
+                    // Tambahkan margin kanan kecuali untuk badge terakhir
+                    LinearLayout.LayoutParams badgeParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    if (i < maxKategoriBadges - 1) {
+                        badgeParams.setMargins(0, 0, 8, 0);
+                    }
+                    kategoriBadge.setLayoutParams(badgeParams);
+
+                    badgesContainer.addView(kategoriBadge);
+                }
+            }
+        }
+
+        // ===== BADGE DEADLINE =====
+        // Cek apakah perlu badge deadline
+        if (dlPendaftaran != null && !dlPendaftaran.trim().isEmpty() && !"null".equalsIgnoreCase(dlPendaftaran.trim())) {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                Date deadline = format.parse(dlPendaftaran);
+                Date now = new Date();
+
+                long diffInMillis = deadline.getTime() - now.getTime();
+                long diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+
+                // Jika H-7 atau kurang, tambahkan badge deadline
+                if (diffInDays >= 0 && diffInDays <= 7) {
+                    View deadlineBadge = createDeadlineBadge(diffInDays);
+                    if (deadlineBadge != null) {
+                        // Tambahkan margin kiri untuk memisahkan dari badge kategori
+                        LinearLayout.LayoutParams deadlineParams = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        );
+                        deadlineParams.setMargins(8, 0, 0, 0);
+                        deadlineBadge.setLayoutParams(deadlineParams);
+
+                        badgesContainer.addView(deadlineBadge);
+
+                        Log.d(TAG, "⏳ Badge deadline ditambahkan: H-" + diffInDays);
+                    }
+                }
+            } catch (ParseException e) {
+                Log.e(TAG, "Error parsing deadline for badge", e);
+            }
+        }
+
+        Log.d(TAG, "🏷 Total badges ditambahkan: " + badgesContainer.getChildCount());
+    }
+
+    // Method untuk parse kategori dari string dengan koma
+    private List<String> parseKategoriList(String kategori) {
+        List<String> result = new ArrayList<>();
+
+        if (kategori == null || kategori.trim().isEmpty() || "null".equalsIgnoreCase(kategori.trim())) {
+            // Jika kategori kosong, tambahkan badge default
+            result.add("EVENT");
+            return result;
+        }
+
+        // Split berdasarkan koma
+        String[] parts = kategori.split(",");
+        for (String part : parts) {
+            String trimmed = part.trim();
+            if (!trimmed.isEmpty() && !"null".equalsIgnoreCase(trimmed)) {
+                result.add(trimmed);
+            }
+        }
+
+        // Jika setelah split masih kosong, tambahkan badge default
+        if (result.isEmpty()) {
+            result.add("EVENT");
+        }
+
+        return result;
+    }
+
+    // Method untuk membuat badge kategori
+    private View createKategoriBadge(String kategori) {
+        try {
+            // Inflate layout badge_kecil
+            View badgeView = getLayoutInflater().inflate(R.layout.badge_kecil, null, false);
+            TextView badgeText = badgeView.findViewById(R.id.text_badge_kecil);
+
+            if (badgeText == null) {
+                return null;
+            }
+
+            // Set teks badge (singkatkan jika terlalu panjang)
+            String badgeTextStr = kategori;
+            if (kategori.length() > 12) {
+                badgeTextStr = kategori.substring(0, 12) + "..";
+            }
+            badgeText.setText(badgeTextStr.toUpperCase());
+
+            // Set warna berdasarkan kategori
+            String kategoriLower = kategori.toLowerCase();
+            int bgResource = R.drawable.badge_green; // Default
+
+            if (kategoriLower.contains("seminar") || kategoriLower.contains("konser")) {
+                bgResource = R.drawable.badge_red;
+            } else if (kategoriLower.contains("music") || kategoriLower.contains("workshop") ||
+                    kategoriLower.contains("festival")) {
+                bgResource = R.drawable.badge_blue;
+            } else if (kategoriLower.contains("kompetisi") || kategoriLower.contains("lomba") ||
+                    kategoriLower.contains("competition")) {
+                bgResource = R.drawable.badge_green;
+            } else if (kategoriLower.contains("sport") || kategoriLower.contains("olahraga") ||
+                    kategoriLower.contains("olah raga")) {
+                bgResource = R.drawable.badge_purple;
+            }
+
+            badgeView.setBackgroundResource(bgResource);
+            badgeText.setTextColor(Color.WHITE);
+
+            return badgeView;
+        } catch (Exception e) {
+            Log.e(TAG, "Error creating kategori badge: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // Method untuk membuat badge deadline
+    private View createDeadlineBadge(long daysUntilDeadline) {
+        try {
+            // Inflate layout badge_kecil
+            View badgeView = getLayoutInflater().inflate(R.layout.badge_kecil, null, false);
+            TextView badgeText = badgeView.findViewById(R.id.text_badge_kecil);
+
+            if (badgeText == null) {
+                return null;
+            }
+
+            // Set teks berdasarkan hari
+            String badgeTextStr;
+            if (daysUntilDeadline == 0) {
+                badgeTextStr = "HARI INI\nBERAKHIR";
+            } else if (daysUntilDeadline == 1) {
+                badgeTextStr = "BESOK\nBERAKHIR";
+            } else {
+                badgeTextStr = "HAMIIR\nBERAKHIR";
+            }
+
+            badgeText.setText(badgeTextStr);
+            badgeText.setLineSpacing(0, 0.8f);
+            badgeText.setGravity(Gravity.CENTER);
+
+            // Gunakan background merah untuk deadline
+            badgeView.setBackgroundResource(R.drawable.badge_red);
+            badgeText.setTextColor(Color.WHITE);
+
+            return badgeView;
+        } catch (Exception e) {
+            Log.e(TAG, "Error creating deadline badge: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // ==================== HELPER METHODS ====================
+    private String formatTimeToHHMM(String timeString) {
+        if (timeString == null || timeString.trim().isEmpty()) {
+            return "Waktu akan diumumkan";
+        }
+
+        try {
+            timeString = timeString.trim();
+
+            // Jika sudah format HH:mm:ss -> ambil HH:mm
+            if (timeString.matches("\\d{2}:\\d{2}:\\d{2}")) {
+                return timeString.substring(0, 5);
+            }
+            // Jika format HH:mm
+            else if (timeString.matches("\\d{2}:\\d{2}")) {
+                return timeString;
+            }
+            // Jika format lain, coba parse dengan SimpleDateFormat
+            else {
+                SimpleDateFormat[] possibleFormats = {
+                        new SimpleDateFormat("HH:mm:ss", Locale.getDefault()),
+                        new SimpleDateFormat("HH:mm", Locale.getDefault()),
+                        new SimpleDateFormat("hh:mm a", Locale.US),
+                        new SimpleDateFormat("hh:mm:ss a", Locale.US)
+                };
+
+                for (SimpleDateFormat format : possibleFormats) {
+                    try {
+                        Date timeDate = format.parse(timeString);
+                        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                        return outputFormat.format(timeDate);
+                    } catch (ParseException e) {
+                        // Continue to next format
+                    }
+                }
+
+                // Jika tidak bisa di-parse, return as-is
+                return timeString;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error formatting time: " + timeString, e);
+            return timeString;
+        }
+    }
+
+    private String extractTimeFromDate(String dateTimeString) {
+        if (dateTimeString == null || dateTimeString.trim().isEmpty()) {
+            return null;
+        }
+
+        try {
+            // Coba format ISO dengan timezone
+            if (dateTimeString.contains("T")) {
+                String[] parts = dateTimeString.split("T");
+                if (parts.length > 1) {
+                    String timePart = parts[1];
+                    timePart = timePart.split("[+-Z]")[0];
+                    if (timePart.length() >= 8) {
+                        return timePart.substring(0, 5);
+                    } else if (timePart.length() >= 5) {
+                        return timePart.substring(0, 5);
+                    }
+                }
+            } else if (dateTimeString.contains(" ")) {
+                String[] parts = dateTimeString.split(" ");
+                if (parts.length > 1) {
+                    String timePart = parts[1];
+                    if (timePart.length() >= 8) {
+                        return timePart.substring(0, 5);
+                    } else if (timePart.length() >= 5) {
+                        return timePart.substring(0, 5);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error extracting time from date: " + dateTimeString, e);
+        }
+        return null;
+    }
+
+    private String getSafeStringExtra(String key, String defaultValue) {
+        if (getIntent().hasExtra(key)) {
+            String value = getIntent().getStringExtra(key);
+            if (value != null && !value.trim().isEmpty() && !"null".equalsIgnoreCase(value.trim())) {
+                return value.trim();
+            }
+        }
+        return defaultValue;
     }
 
     private String formatDateTimeForDisplay(String dateTimeString) {
+        if (dateTimeString == null || dateTimeString.trim().isEmpty() || "null".equalsIgnoreCase(dateTimeString.trim())) {
+            return "Tanggal belum ditentukan";
+        }
+
         try {
             SimpleDateFormat inputFormat;
+            SimpleDateFormat outputFormat;
 
-            // Cek format input
-            if (dateTimeString.contains(" ")) {
-                // Format dengan waktu: "2025-12-13 12:00:00"
+            if (dateTimeString.contains("T")) {
+                inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                outputFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy | HH:mm", new Locale("id", "ID"));
+            } else if (dateTimeString.contains(" ")) {
                 inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                outputFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy | HH:mm", new Locale("id", "ID"));
             } else {
-                // Format tanpa waktu: "2025-12-13"
                 inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                outputFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID"));
             }
 
-            SimpleDateFormat outputFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy | HH:mm", new Locale("id", "ID"));
             Date date = inputFormat.parse(dateTimeString);
             return outputFormat.format(date);
         } catch (ParseException e) {
-            // Jika parsing gagal, return original string
+            Log.e(TAG, "Error parsing date: " + dateTimeString, e);
             return dateTimeString;
         }
     }
 
-    // PERBAIKAN: Method baru untuk set badge berdasarkan kategori
-    private void setBadgeWithCategory(View badgeView, String kategori) {
-        if (badgeView == null) return;
+    private String formatDateForDisplay(String dateTimeString, boolean includeTime) {
+        if (dateTimeString == null || dateTimeString.trim().isEmpty() || "null".equalsIgnoreCase(dateTimeString.trim())) {
+            return "Tanggal belum ditentukan";
+        }
 
-        TextView badgeTextView = badgeView.findViewById(R.id.badge_status);
-        if (badgeTextView != null) {
-            // PERBAIKAN: Generate warna berdasarkan kategori (jika ada) atau nama event
-            String baseString = (kategori != null && !kategori.isEmpty()) ? kategori : "DefaultEvent";
-            int color = generateColorFromString(baseString);
+        try {
+            SimpleDateFormat inputFormat;
+            SimpleDateFormat outputFormat;
 
-            // Set warna background badge
-            GradientDrawable drawable = new GradientDrawable();
-            drawable.setShape(GradientDrawable.RECTANGLE);
-            drawable.setCornerRadius(20); // radius sesuai dengan XML
-            badgeTextView.setBackground(null);
-
-            // Set teks badge
-            if (kategori != null && !kategori.isEmpty()) {
-                // Ambil kata pertama jika kategori berupa multiple (contoh: "Webinar, Seminar")
-                String[] kategoriParts = kategori.split(",");
-                String firstKategori = kategoriParts[0].trim().toUpperCase();
-                badgeTextView.setText(firstKategori);
+            if (includeTime) {
+                if (dateTimeString.contains("T")) {
+                    inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                    outputFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy | HH:mm", new Locale("id", "ID"));
+                } else if (dateTimeString.contains(" ")) {
+                    inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                    outputFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy | HH:mm", new Locale("id", "ID"));
+                } else {
+                    inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    outputFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID"));
+                }
             } else {
-                badgeTextView.setText("EVENT");
+                if (dateTimeString.contains("T")) {
+                    inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                } else if (dateTimeString.contains(" ")) {
+                    inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                } else {
+                    inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                }
+                outputFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("id", "ID"));
             }
+
+            Date date = inputFormat.parse(dateTimeString);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            Log.e(TAG, "Error parsing date: " + dateTimeString, e);
+            return dateTimeString;
         }
     }
 
-    private int generateColorFromString(String input) {
-        int[] badgeColors = {
-                Color.parseColor("#FF6B6B"),  // Merah muda
-                Color.parseColor("#4ECDC4"),  // Turquoise
-                Color.parseColor("#FFD166"),  // Kuning
-                Color.parseColor("#06D6A0"),  // Hijau mint
-                Color.parseColor("#118AB2"),  // Biru
-                Color.parseColor("#EF476F"),  // Pink
-                Color.parseColor("#7209B7"),  // Ungu
-                Color.parseColor("#3A86FF"),  // Biru cerah
-                Color.parseColor("#FB5607"),  // Orange
-                Color.parseColor("#8338EC")   // Ungu tua
-        };
+    private String ensureFullUrl(String posterPath) {
+        if (posterPath == null || posterPath.trim().isEmpty()) {
+            return null;
+        }
 
-        // Hash string untuk mendapatkan index yang konsisten
-        int hash = Math.abs(input.hashCode());
-        int index = hash % badgeColors.length;
+        String path = posterPath.trim();
 
-        return badgeColors[index];
+        if (path.startsWith("http://") || path.startsWith("https://")) {
+            return path;
+        }
+
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        }
+
+        String BASE_URL = "http://192.168.1.21:8000";
+        if (BASE_URL.endsWith("/")) {
+            BASE_URL = BASE_URL.substring(0, BASE_URL.length() - 1);
+        }
+
+        return BASE_URL + "/" + path;
     }
 }

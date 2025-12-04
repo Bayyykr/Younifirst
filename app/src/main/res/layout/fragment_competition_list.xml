@@ -10,6 +10,7 @@
     android:padding="5dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_kompetisi_item"
         android:layout_width="match_parent"
         android:layout_height="116dp"
         app:cardCornerRadius="16dp"
@@ -20,6 +21,7 @@
         app:cardBackgroundColor="#121A2C">
 
         <LinearLayout
+            android:id="@+id/containerlistitem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"

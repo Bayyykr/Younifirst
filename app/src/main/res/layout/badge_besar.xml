@@ -9,7 +9,7 @@
     android:paddingVertical="4dp"
     android:layout_marginEnd="10dp"
     android:orientation="vertical"
-    android:id="@+id/container_badge">
+    android:id="@+id/container_badge_besar">
 
     <TextView
         android:id="@+id/badge_status"

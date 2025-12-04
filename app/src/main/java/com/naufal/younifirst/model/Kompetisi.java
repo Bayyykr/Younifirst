@@ -19,7 +19,9 @@ public class Kompetisi {
     private String user_id;
     private String lomba_type;
     private String biaya;
-    private static final String BASE_URL = "http://192.168.1.12:8000";
+    private String penyelenggara;
+    private String harga_lomba;
+    private static final String BASE_URL = "http://10.131.218.36:8000";
 
     public Kompetisi() {}
 
@@ -35,6 +37,8 @@ public class Kompetisi {
         this.lomba_type = jsonObject.optString("lomba_type", "");
         this.biaya = jsonObject.optString("biaya", "");
         this.scope = jsonObject.optString("scope", "");
+        this.penyelenggara = jsonObject.optString("penyelenggara", "");
+        this.harga_lomba = jsonObject.optString("harga_lomba", "0");
 
         // AMBIL POSTER DARI BERBAGAI SUMBER
         if (jsonObject.has("poster")) {
@@ -50,6 +54,8 @@ public class Kompetisi {
             this.poster = "";
         }
 
+        Log.d("KOMPETISI_MODEL", "Penyelenggara: " + this.penyelenggara);
+        Log.d("KOMPETISI_MODEL", "Harga Lomba: " + this.harga_lomba);
         Log.d("KOMPETISI_MODEL", "Poster set to: " + this.poster);
     }
 
@@ -118,6 +124,22 @@ public class Kompetisi {
         this.biaya = biaya;
     }
 
+    public String getPenyelenggara() {
+        return penyelenggara;
+    }
+
+    public void setPenyelenggara(String penyelenggara) {
+        this.penyelenggara = penyelenggara;
+    }
+
+    public String getHargaLomba() {
+        return harga_lomba;
+    }
+
+    public void setHargaLomba(String harga_lomba) {
+        this.harga_lomba = harga_lomba;
+    }
+
     public String getFullPosterUrl() {
         if (poster == null || poster.isEmpty()) {
             Log.d("POSTER_URL", "Poster is null or empty");
@@ -133,7 +155,7 @@ public class Kompetisi {
         }
 
         // Base URL - SESUAIKAN DENGAN SERVER ANDA
-        String baseUrl = "http://192.168.1.12:8000";
+        String baseUrl = "http://10.10.4.249:8000";
 
         // Pastikan path tidak kosong dan memiliki nilai yang valid
         String path = poster.trim();

@@ -33,6 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
+                android:id="@+id/badge_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/badge_end"
@@ -54,6 +55,7 @@
         </FrameLayout>
 
         <LinearLayout
+            android:id="@+id/text_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="10dp"
@@ -62,8 +64,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
-
-            <include layout="@layout/badge_kecil"/>
 
             <TextView
                 android:id="@+id/text_date"
