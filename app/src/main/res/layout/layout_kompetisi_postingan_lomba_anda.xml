@@ -131,18 +131,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <LinearLayout
-            android:id="@+id/containerPostinganLomba"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/containerPostinganLomba"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <include
-                android:id="@+id/includePostinganLomba"
-                layout="@layout/fragment_item_postinganlomba" />
+                <include
+                    android:id="@+id/includePostinganLomba"
+                    layout="@layout/fragment_item_postinganlomba" />
 
-        </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <TextView
             android:id="@+id/emptyPostinganText"

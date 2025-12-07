@@ -121,10 +121,6 @@ public class Detail_Kompetisi extends AppCompatActivity {
         hargaText = findViewById(R.id.iniHargaLomba);
         hadiahText = findViewById(R.id.iniHadiah);
         deskripsiText = findViewById(R.id.content_event);
-
-        // User info
-        usernameText = findViewById(R.id.username);
-        createdAtText = findViewById(R.id.inicreatedat);
     }
 
     private void loadKompetisiData(Intent intent) {
@@ -182,18 +178,20 @@ public class Detail_Kompetisi extends AppCompatActivity {
                 lokasiText.setText(lokasi != null ? lokasi : "-");
             }
 
-            // Harga lomba (hanya jika berbayar)
             if (hargaText != null) {
-                if (hargaLomba != null && !hargaLomba.isEmpty()) {
-                    try {
-                        int harga = Integer.parseInt(hargaLomba);
-                        hargaText.setText(formatRupiah(harga));
-                    } catch (NumberFormatException e) {
-                        hargaText.setText("Rp. " + hargaLomba);
-                    }
+                if (hargaLomba != null && !hargaLomba.trim().isEmpty() && !"null".equalsIgnoreCase(hargaLomba.trim())) {
+                    String hargaDisplay = formatHargaFromDatabase(hargaLomba);
+                    hargaText.setText(hargaDisplay);
+                    Log.d("HARGA_DEBUG", "Harga ditampilkan (dari DB): " + hargaDisplay);
+                } else if (biaya != null && !biaya.trim().isEmpty()) {
+                    String hargaDisplay = formatHargaFromDatabase(biaya);
+                    hargaText.setText(hargaDisplay);
+                    Log.d("HARGA_DEBUG", "Harga ditampilkan (dari biaya): " + hargaDisplay);
                 } else {
-                    hargaText.setText(biayaText.getText().toString().equals("Gratis") ? "Gratis" : "-");
+                    hargaText.setText("Gratis");
+                    Log.d("HARGA_DEBUG", "Harga ditampilkan (default): Gratis");
                 }
+                hargaText.setVisibility(View.VISIBLE);
             }
 
             // Hadiah
@@ -207,8 +205,8 @@ public class Detail_Kompetisi extends AppCompatActivity {
             }
 
             // Nama penyelenggara
-            if (usernameText != null) {
-                usernameText.setText(penyelenggara != null ? penyelenggara : "-");
+            if (titleEventCard != null) {
+                titleEventCard.setText(penyelenggara != null ? penyelenggara : "-");
             }
 
             // Created at
@@ -237,6 +235,69 @@ public class Detail_Kompetisi extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("DETAIL_KOMPETISI", "Error loading kompetisi data", e);
             Toast.makeText(this, "Gagal memuat data kompetisi", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // ✅ TAMBAHKAN METHOD BARU UNTUK FORMAT HARGA DARI DATABASE
+    private String formatHargaFromDatabase(String hargaData) {
+        if (hargaData == null || hargaData.trim().isEmpty() || "null".equalsIgnoreCase(hargaData.trim())) {
+            return "Gratis";
+        }
+
+        try {
+            // Cek apakah "gratis" (case insensitive)
+            if (hargaData.equalsIgnoreCase("gratis") ||
+                    hargaData.equalsIgnoreCase("free") ||
+                    hargaData.equalsIgnoreCase("0") ||
+                    hargaData.equalsIgnoreCase("0.0") ||
+                    hargaData.equalsIgnoreCase("0.00")) {
+                return "Gratis";
+            }
+
+            // Coba parse sebagai angka
+            String cleanHarga = hargaData.replace(".", "").replace(",", "").trim();
+
+            try {
+                int hargaInt = Integer.parseInt(cleanHarga);
+                if (hargaInt == 0) {
+                    return "Gratis";
+                }
+                // Format dengan titik pemisah ribuan
+                java.text.DecimalFormat formatter = new java.text.DecimalFormat("#,###");
+                return "Rp " + formatter.format(hargaInt);
+            } catch (NumberFormatException e1) {
+                // Coba parse sebagai double
+                try {
+                    double hargaDouble = Double.parseDouble(cleanHarga);
+                    if (hargaDouble == 0) {
+                        return "Gratis";
+                    }
+                    java.text.DecimalFormat formatter = new java.text.DecimalFormat("#,###");
+                    return "Rp " + formatter.format(hargaDouble);
+                } catch (NumberFormatException e2) {
+                    // Jika bukan angka, tampilkan apa adanya
+                    return hargaData;
+                }
+            }
+        } catch (Exception e) {
+            Log.e("FORMAT_HARGA", "Error formatting harga: " + hargaData, e);
+            return hargaData;
+        }
+    }
+
+    // ✅ PERBAIKAN: Method formatRupiah yang lebih baik
+    private String formatRupiah(int amount) {
+        try {
+            if (amount == 0) {
+                return "Gratis";
+            }
+
+            // Format dengan titik pemisah ribuan
+            java.text.DecimalFormat formatter = new java.text.DecimalFormat("#,###");
+            return "Rp " + formatter.format(amount);
+        } catch (Exception e) {
+            Log.e("FORMAT_RUPIAH", "Error formatting rupiah: " + amount, e);
+            return "Rp " + amount;
         }
     }
 
@@ -270,14 +331,6 @@ public class Detail_Kompetisi extends AppCompatActivity {
         return tanggal;
     }
 
-    private String formatRupiah(int amount) {
-        try {
-            java.text.NumberFormat format = java.text.NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-            return format.format(amount).replace(",00", "");
-        } catch (Exception e) {
-            return "Rp. " + amount;
-        }
-    }
 
     private String getFullPosterUrl(String posterPath) {
         if (posterPath == null || posterPath.isEmpty()) {
@@ -288,7 +341,7 @@ public class Detail_Kompetisi extends AppCompatActivity {
             return posterPath;
         }
 
-        String baseUrl = "http://10.143.116.36:8000";
+        String baseUrl = "http://10.10.182.83:8000";
 
         if (posterPath.startsWith("/")) {
             posterPath = posterPath.substring(1);

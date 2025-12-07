@@ -2,13 +2,17 @@ package com.naufal.younifirst.opening;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.naufal.younifirst.Home.MainActivity;
 import com.naufal.younifirst.LognReg.login;
 import com.naufal.younifirst.R;
+import com.naufal.younifirst.api.ApiHelper;
 
 public class opening extends AppCompatActivity {
 
@@ -20,6 +24,16 @@ public class opening extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showLayoutOne();
+        checkAutoLogin();
+    }
+
+    private void checkAutoLogin() {
+        if (ApiHelper.isLoggedIn()) {
+            Log.d("opening", "🔍 Already logged in, redirecting to MainActivity...");
+            Toast.makeText(this, "Auto-login...", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
     }
 
     private void showLayoutOne() {

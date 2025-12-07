@@ -25,7 +25,9 @@
     import com.naufal.younifirst.Event.BuatEvent;
     import com.naufal.younifirst.Forum.BuatForumActivity;
     import com.naufal.younifirst.Event.BuatEvent;
+    import com.naufal.younifirst.Kompetisi.BuatTim;
     import com.naufal.younifirst.Kompetisi.PostingLomba;
+    import com.naufal.younifirst.Kompetisi.TimAnda;
     import com.naufal.younifirst.R;
     import com.naufal.younifirst.databinding.ActivityMainBinding;
 
@@ -41,7 +43,7 @@
         private View btnAddContainer;
         private int colorAddDefault;
         private int colorAddActive;
-        private FloatingActionButton btnMenemukanFab, btnAddForumFab, btnKehilanganFab, btnPostingEvent, btnPostingLomba;
+        private FloatingActionButton btnMenemukanFab, btnAddForumFab, btnKehilanganFab, btnPostingEvent, btnPostingLomba, btnRekrutTim;
 
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,6 +141,12 @@
             btnPostingLomba.setOnClickListener(v -> {
                 hideMenu();
                 startActivity(new Intent(MainActivity.this, PostingLomba.class));
+            });
+
+            btnRekrutTim = fabMenuKompetisi.findViewById(R.id.btnAddTeam);
+            btnRekrutTim.setOnClickListener(v -> {
+                hideMenu();
+                startActivity(new Intent(MainActivity.this, TimAnda.class));
             });
 
             btnAddForumFab = fabMenuForum.findViewById(R.id.btnPostingForum);

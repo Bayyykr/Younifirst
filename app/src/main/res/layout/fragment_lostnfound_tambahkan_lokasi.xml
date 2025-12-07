@@ -32,7 +32,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
-
             <View
                 android:layout_width="0dp"
                 android:layout_height="2dp"
@@ -49,151 +48,36 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:gravity="center_vertical"
                 android:paddingVertical="6dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Masukkan lokasi penemuan"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/is_m"
+                    android:layout_marginTop="10dp"/>
                 <EditText
+                    android:id="@+id/et_lokasi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Cari lokasi di sekitar Gedung TI..."
+                    android:hint="Contoh: Lt. 3 Gedung TI, Ruang 301"
                     android:textColorHint="#80ffffff"
+                    android:inputType="text"
                     android:textColor="@color/white"
                     android:textSize="14dp"
                     android:fontFamily="@font/is_r"
                     android:padding="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/custom_button_rounded_border"
-                    android:drawableEnd="@drawable/icon_search"
-                    />
+                    android:drawableStart="@drawable/icon_lokasi"
+                    android:drawablePadding="10dp" />
             </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gunakan lokasi saat ini"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:fontFamily="@font/is_m"
-                android:layout_marginTop="10dp"
-                android:drawableStart="@drawable/icon_lokasi_saat_ini"
-                android:drawablePadding="10dp"/>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Akhir ini"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:fontFamily="@font/is_m"
-            android:layout_marginTop="20dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="8dp">
-
-            <LinearLayout
-                android:id="@+id/item_lokasi_lt3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingVertical="6dp">
-
-                <ImageView
-                    android:id="@+id/icon_lokasi_lt3"
-                    android:layout_width="11dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/icon_lokasi"
-                    android:layout_marginEnd="12dp" />
-
-                <TextView
-                    android:id="@+id/text_lokasi_lt3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Lt. 3 Gedung TI"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/is_m" />
-                <ImageView
-                    android:id="@+id/check_lt3"
-                    android:layout_width="20dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/icon_checklist_biru"
-                    android:visibility="gone"
-                    android:layout_marginEnd="12dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/item_lokasi_lt4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingVertical="6dp">
-
-                <ImageView
-                    android:id="@+id/icon_lokasi_lt4"
-                    android:layout_width="11dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/icon_lokasi"
-                    android:layout_marginEnd="12dp" />
-
-                <TextView
-                    android:id="@+id/text_lokasi_lt4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Lt. 4 Gedung TI"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/is_m" />
-                <ImageView
-                    android:id="@+id/check_lt4"
-                    android:layout_width="20dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/icon_checklist_biru"
-                    android:visibility="gone"
-                    android:layout_marginEnd="12dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/item_lokasi_parkiran"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingVertical="6dp">
-
-                <ImageView
-                    android:id="@+id/icon_lokasi_parkiran"
-                    android:layout_width="11dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/icon_lokasi"
-                    android:layout_marginEnd="12dp" />
-
-                <TextView
-                    android:id="@+id/text_lokasi_parkiran"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Parkiran Gedung TI"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/is_m" />
-                <ImageView
-                    android:id="@+id/check_parkiran"
-                    android:layout_width="20dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/icon_checklist_biru"
-                    android:visibility="gone"
-                    android:layout_marginEnd="12dp" />
-            </LinearLayout>
-
         </LinearLayout>
         <Button
-            android:id="@+id/btnTerapkan"
+            android:id="@+id/ButtonTambahkanLokasi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tambahkan Lokasi"
@@ -202,7 +86,7 @@
             android:textSize="18sp"
             android:padding="20sp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/custom_button_rounded_border"
+            android:background="@drawable/custom_button_rounded"
             android:textAllCaps="false"
             />
     </LinearLayout>

@@ -181,6 +181,7 @@
                     android:textSize="18sp" />
 
                 <LinearLayout
+                    android:id="@+id/badgeContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -336,7 +337,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Harga Lomba"
+                            android:text="Biaya Pendaftaran Lomba"
                             android:textColor="#80FFFFFF"
                             android:textSize="14sp"
                             android:fontFamily="@font/is_sb" />
@@ -405,74 +406,23 @@
 
                 </LinearLayout>
 
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Deskripsi Tambahan"
+                    android:textColor="#80FFFFFF"
+                    android:textSize="16sp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/is_sb" />
                 <TextView
                     android:id="@+id/content_event"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:text="@string/aom_description"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:fontFamily="@font/is_r" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#40FFFFFF" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="8dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/profile_coba" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/username"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="qiuqiu"
-                                android:textColor="@color/white"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/is_r" />
-
-                            <TextView
-                                android:id="@+id/inicreatedat"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="23 September 2025"
-                                android:textColor="#7FFFFFFF"
-                                android:textSize="10sp"
-                                android:fontFamily="@font/is_r" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#40FFFFFF" />
-
-                </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
 
@@ -499,6 +449,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ButtonDaftarSekarang"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/custom_button_rounded"

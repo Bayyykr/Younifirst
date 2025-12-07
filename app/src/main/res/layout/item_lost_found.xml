@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/asset_background_list_item"
+    android:padding="12dp"
+    android:layout_margin="10dp">
+
+    <!-- User Info -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/iv_user_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/profile_coba"
+            android:contentDescription="Foto profil"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp">
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Elliot"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:fontFamily="@font/is_m" />
+
+            <TextView
+                android:id="@+id/tv_time_ago"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 hari lalu"
+                android:textColor="#858891"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_status"
+            android:layout_width="85dp"
+            android:layout_height="25dp"
+            android:text="Menemukan"
+            android:fontFamily="@font/is_r"
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:textAllCaps="false"
+            android:textSize="12dp"
+            android:background="@drawable/custom_button_rounded_corner_putih"/>
+
+        <ImageButton
+            android:id="@+id/btn_more"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icon_lainnya"
+            android:contentDescription="Menu lainnya" />
+    </LinearLayout>
+
+    <!-- Item Image -->
+    <ImageView
+        android:id="@+id/iv_item_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/gambar_lostandfound"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Gambar barang"/>
+
+    <!-- Location -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lokasi:"
+            android:textColor="#80FFFFFF"
+            android:textSize="14sp"
+            android:drawableStart="@drawable/icon_lokasi"
+            android:drawablePadding="5dp"/>
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ruang 3.3 JTI"
+            android:textColor="#5E8BFF"
+            android:layout_marginStart="5dp"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <!-- Description dengan ellipsis seperti Instagram -->
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp"
+        android:fontFamily="@font/is_sb"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:linksClickable="true"/>
+
+    <!-- Likes, Comments, Share -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical">
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Share -->
+        <ImageView
+            android:id="@+id/btn_share"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/icon_share"
+            android:contentDescription="Bagikan"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
+</LinearLayout>

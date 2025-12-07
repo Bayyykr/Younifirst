@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#0A1124"
     android:fillViewport="true"
-    tools:context=".Home.HomeFragment"
     android:id="@+id/kompetisi_utama">
 
     <LinearLayout
@@ -28,26 +27,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp">
-                    <include layout="@layout/fragment_competition_mendatang" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp">
-                    <include layout="@layout/fragment_competition_mendatang" />
-                </LinearLayout>
-
             </LinearLayout>
-
         </HorizontalScrollView>
 
-        <!-- TEXT TRENDING -->
         <TextView
             android:id="@+id/text_sedang_trend"
             android:layout_width="match_parent"
@@ -60,19 +42,11 @@
             android:layout_marginHorizontal="18dp" />
 
         <LinearLayout
+            android:id="@+id/listitemkompetisitrending"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="start"
-            android:paddingHorizontal="15dp">
-
-            <LinearLayout
-                android:id="@+id/listitemkompetisitrending"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <include layout="@layout/fragment_competition_list"/>
-            </LinearLayout>
-
+            android:orientation="vertical">
         </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

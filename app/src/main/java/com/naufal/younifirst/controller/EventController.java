@@ -13,6 +13,7 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -82,10 +83,9 @@ public class EventController {
         String hargaFinal = "0";
         if (harga != null && !harga.isEmpty()) {
             try {
-                // Konversi ke integer
                 double hargaDouble = Double.parseDouble(harga);
                 int hargaInt = (int) Math.round(hargaDouble);
-                hargaFinal = String.valueOf(Math.max(0, hargaInt)); // Pastikan tidak negatif
+                hargaFinal = String.valueOf(Math.max(0, hargaInt));
             } catch (NumberFormatException e) {
                 Log.w(TAG, "⚠ Format harga tidak valid, menggunakan default 0");
                 hargaFinal = "0";
@@ -176,7 +176,7 @@ public class EventController {
         );
     }
 
-    // ==================== CREATE EVENT - SIMPLIFIED (FOR BACKWARD COMPATIBILITY) ====================
+    // ==================== CREATE EVENT - SIMPLIFIED ====================
     public void createEvent(String namaEvent, String deskripsi, String tanggalMulai, String lokasi, String organizer,
                             int kapasitas, String kategori, String harga,
                             String posterEvent, String waktuPelaksanaan,
@@ -184,7 +184,6 @@ public class EventController {
 
         Log.d(TAG, "🎯 Membuat event baru (simplified)...");
 
-        // Validasi input dasar
         if (namaEvent == null || namaEvent.isEmpty()) {
             callback.onError("Nama event harus diisi");
             return;
@@ -230,7 +229,6 @@ public class EventController {
             eventData.put("kapasitas", kapasitas);
             eventData.put("kategori", kategori);
 
-            // Parse harga ke integer (default 0 jika kosong/invalid)
             int hargaInt = 0;
             if (harga != null && !harga.isEmpty()) {
                 try {
@@ -247,24 +245,19 @@ public class EventController {
             }
             eventData.put("harga", hargaInt);
 
-            // Tambahkan poster_event (bisa kosong)
             eventData.put("poster_event", posterEvent != null ? posterEvent : "");
 
-            // Tambahkan waktu_pelaksanaan jika ada
             if (waktuPelaksanaan != null && !waktuPelaksanaan.isEmpty()) {
                 eventData.put("waktu_pelaksanaan", waktuPelaksanaan);
             }
 
-            // Tambahkan dl_pendaftaran jika ada
             if (deadlinePendaftaran != null && !deadlinePendaftaran.isEmpty()) {
                 eventData.put("dl_pendaftaran", deadlinePendaftaran);
             }
 
-            // Tambahkan contact_person dan url_instagram (default empty string)
             eventData.put("contact_person", "");
             eventData.put("url_instagram", "");
 
-            // Tambahkan user_id (WAJIB)
             String userId = ApiHelper.getSavedUserId();
             if (userId != null && !userId.isEmpty()) {
                 eventData.put("user_id", userId);
@@ -278,7 +271,6 @@ public class EventController {
             String jsonData = eventData.toString();
             Log.d(TAG, "📦 JSON data yang akan dikirim: " + jsonData);
 
-            // Panggil API untuk create event
             ApiHelper.createEvent(jsonData, new ApiHelper.ApiCallback() {
                 @Override
                 public void onSuccess(String result) {
@@ -352,7 +344,6 @@ public class EventController {
 
         Log.d(TAG, "🎯 Membuat event dengan form data...");
 
-        // Validasi input
         if (namaEvent == null || namaEvent.isEmpty()) {
             callback.onError("Nama event harus diisi");
             return;
@@ -388,7 +379,6 @@ public class EventController {
             return;
         }
 
-        // Harga default 0 jika kosong/invalid
         String hargaFinal = "0";
         if (harga != null && !harga.isEmpty()) {
             try {
@@ -401,7 +391,6 @@ public class EventController {
             }
         }
 
-        // Pastikan contact fields tidak null
         if (whatsapp == null) whatsapp = "";
         if (instagram == null) instagram = "";
 
@@ -437,7 +426,7 @@ public class EventController {
         );
     }
 
-    // ==================== FETCH EVENT METHODS ====================
+    // ==================== FETCH ALL EVENTS ====================
     public void fetchEvent(EventCallback callback) {
         Log.d(TAG, "🎯 Mengambil events dari API...");
 
@@ -450,6 +439,7 @@ public class EventController {
                     callback.onSuccess(events);
                 } catch (JSONException e) {
                     Log.e(TAG, "❌ Gagal parsing JSON: " + e.getMessage());
+                    Log.d(TAG, "Raw response: " + result);
                     callback.onError("Format data tidak valid: " + e.getMessage());
                 }
             }
@@ -462,6 +452,7 @@ public class EventController {
         });
     }
 
+    // ==================== FETCH UPCOMING EVENTS (DIPERBAIKI) ====================
     public void fetchUpcomingEvents(EventCallback callback) {
         Log.d(TAG, "📅 Mengambil upcoming events...");
 
@@ -469,23 +460,33 @@ public class EventController {
             @Override
             public void onSuccess(List<Event> events) {
                 try {
-                    List<Event> upcomingEvents = filterUpcomingEvents(events);
-                    Log.d(TAG, "📊 Total upcoming events: " + upcomingEvents.size());
+                    Log.d(TAG, "📊 Total events ditemukan: " + events.size());
 
-                    // Sort by date
-                    upcomingEvents.sort(Comparator.comparing(Event::getTanggalMulai));
-
-                    // Limit to 5 events for upcoming
-                    int count = Math.min(5, upcomingEvents.size());
-                    List<Event> limitedUpcoming = new ArrayList<>();
-                    if (count > 0) {
-                        limitedUpcoming = upcomingEvents.subList(0, count);
+                    // Debug: tampilkan semua event yang diterima
+                    for (Event event : events) {
+                        Log.d(TAG, "📝 Event: " + event.getNameEvent() +
+                                " | Tanggal: " + event.getTanggalMulai() +
+                                " | Status: " + event.getStatus() +
+                                " | Confirmed: " + event.isConfirmed());
                     }
 
-                    Log.d(TAG, "✅ Final upcoming events: " + limitedUpcoming.size());
+                    List<Event> upcomingEvents = filterUpcomingEvents(events);
+
+                    // Batasi maksimal 5 event
+                    int limit = Math.min(5, upcomingEvents.size());
+                    List<Event> limitedUpcoming = upcomingEvents.subList(0, limit);
+
+                    Log.d(TAG, "✅ Final upcoming events: " + limitedUpcoming.size() + " events");
+                    for (int i = 0; i < limitedUpcoming.size(); i++) {
+                        Event e = limitedUpcoming.get(i);
+                        Log.d(TAG, "📅 Upcoming #" + (i + 1) + ": " + e.getNameEvent() + " | " + e.getTanggalMulai());
+                    }
+
                     callback.onSuccess(limitedUpcoming);
+
                 } catch (Exception e) {
                     Log.e(TAG, "❌ Error dalam fetchUpcomingEvents: " + e.getMessage());
+                    e.printStackTrace();
                     callback.onError("Terjadi kesalahan saat memfilter events");
                 }
             }
@@ -497,6 +498,7 @@ public class EventController {
         });
     }
 
+    // ==================== FETCH TRENDING EVENTS ====================
     public void fetchTrendingEvents(EventCallback callback) {
         Log.d(TAG, "🔥 Mengambil trending events...");
 
@@ -505,10 +507,11 @@ public class EventController {
             public void onSuccess(List<Event> events) {
                 try {
                     List<Event> trendingEvents = filterTrendingEvents(events);
-                    Log.d(TAG, "✅ Ditemukan " + trendingEvents.size() + " trending events");
+                    Log.d(TAG, "✅ Ditemukan " + trendingEvents.size() + " trending events dari total " + events.size() + " events");
                     callback.onSuccess(trendingEvents);
                 } catch (Exception e) {
                     Log.e(TAG, "❌ Error dalam fetchTrendingEvents: " + e.getMessage());
+                    e.printStackTrace();
                     callback.onError("Terjadi kesalahan saat memfilter trending events");
                 }
             }
@@ -520,110 +523,268 @@ public class EventController {
         });
     }
 
-    // ==================== HELPER METHODS ====================
+    // ==================== PARSE EVENT DATA ====================
     private List<Event> parseEventData(String jsonString) throws JSONException {
         List<Event> events = new ArrayList<>();
 
         try {
+            Log.d(TAG, "📦 Parsing JSON response...");
+
             JSONObject jsonResponse = new JSONObject(jsonString);
-            boolean success = jsonResponse.optBoolean("success", false);
+            JSONArray jsonArray = null;
 
-            if (!success) {
-                Log.e(TAG, "API mengembalikan success: false");
+            if (jsonResponse.has("data")) {
+                Object dataObj = jsonResponse.get("data");
+                if (dataObj instanceof JSONArray) {
+                    jsonArray = (JSONArray) dataObj;
+                    Log.d(TAG, "📊 Data adalah JSONArray dengan " + jsonArray.length() + " items");
+                } else if (dataObj instanceof JSONObject) {
+                    JSONObject dataObjJson = (JSONObject) dataObj;
+                    if (dataObjJson.has("events")) {
+                        jsonArray = dataObjJson.getJSONArray("events");
+                        Log.d(TAG, "📊 Data adalah JSONObject dengan events array: " + jsonArray.length() + " items");
+                    } else if (dataObjJson.has("event")) {
+                        // Jika hanya satu event
+                        jsonArray = new JSONArray();
+                        jsonArray.put(dataObjJson.getJSONObject("event"));
+                        Log.d(TAG, "📊 Data adalah JSONObject dengan single event");
+                    }
+                }
+            } else if (jsonResponse.has("events")) {
+                jsonArray = jsonResponse.getJSONArray("events");
+                Log.d(TAG, "📊 Events array langsung ditemukan: " + jsonArray.length() + " items");
+            }
+
+            if (jsonArray == null || jsonArray.length() == 0) {
+                Log.d(TAG, "ℹ Tidak ada data events ditemukan");
                 return events;
             }
 
-            JSONArray jsonArray = jsonResponse.optJSONArray("data");
-
-            if (jsonArray == null) {
-                Log.e(TAG, "Data array null");
-                return events;
-            }
-
-            Log.d(TAG, "📦 Ditemukan " + jsonArray.length() + " events di data array");
+            Log.d(TAG, "📦 Mulai parsing " + jsonArray.length() + " events");
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 try {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     Event event = new Event(jsonObject);
+                    events.add(event);
 
-                    if (event.isConfirmed()) {
-                        events.add(event);
-                    } else {
-                        Log.d(TAG, "❌ Melewati event yang belum dikonfirmasi: " + event.getNameEvent());
-                    }
+                    Log.d(TAG, "✅ Parsed event #" + (i+1) + ": " + event.getNameEvent() +
+                            " | Date: " + event.getTanggalMulai() +
+                            " | Status: " + event.getStatus());
 
                 } catch (JSONException e) {
                     Log.w(TAG, "⚠ Gagal parsing event #" + i + ": " + e.getMessage());
-                } catch (Exception e) {
-                    Log.w(TAG, "⚠ Error tak terduga saat parsing event #" + i + ": " + e.getMessage());
                 }
             }
 
         } catch (JSONException e) {
+            Log.e(TAG, "❌ JSON parsing error: " + e.getMessage());
             throw e;
-        } catch (Exception e) {
-            Log.e(TAG, "❌ Error tak terduga dalam parseEventData: " + e.getMessage());
         }
 
-        Log.d(TAG, "✅ Total confirmed events yang diparsing: " + events.size());
+        Log.d(TAG, "✅ Total events yang berhasil diparsing: " + events.size());
         return events;
     }
 
+    // ==================== FILTER UPCOMING EVENTS (DIPERBAIKI) ====================
     private List<Event> filterUpcomingEvents(List<Event> events) {
         List<Event> upcoming = new ArrayList<>();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        Date now = new Date();
+        Date today = removeTime(new Date());
+
+        Log.d(TAG, "🔍 Memfilter upcoming events dari " + events.size() + " total events");
+        Log.d(TAG, "📅 Tanggal sekarang (tanpa waktu): " + formatDateForLog(today));
 
         for (Event event : events) {
             try {
-                Date eventDate = dateFormat.parse(event.getTanggalMulai());
-                if (eventDate != null && eventDate.after(now)) {
-                    upcoming.add(event);
+                String tanggalMulai = event.getTanggalMulai();
+
+                // Debug detail
+                Log.d(TAG, "🔍 Checking event: " + event.getNameEvent() +
+                        " | Date String: " + tanggalMulai +
+                        " | Status: " + event.getStatus() +
+                        " | Confirmed: " + event.isConfirmed());
+
+                // 1. Cek apakah event sudah dikonfirmasi
+                if (!event.isConfirmed()) {
+                    Log.d(TAG, "  ⏭ Lewati - belum dikonfirmasi");
+                    continue;
                 }
-            } catch (ParseException e) {
-                Log.w(TAG, "⚠ Gagal parsing tanggal event: " + event.getTanggalMulai());
+
+                // 2. Parse tanggal mulai
+                Date eventDate = parseDate(tanggalMulai);
+                if (eventDate == null) {
+                    Log.d(TAG, "  ⚠ Lewati - tanggal tidak valid: " + tanggalMulai);
+                    continue;
+                }
+
+                // Hapus waktu dari event date untuk perbandingan yang akurat
+                Date eventDateWithoutTime = removeTime(eventDate);
+                Log.d(TAG, "  📅 Event date (parsed): " + formatDateForLog(eventDateWithoutTime));
+
+                // 3. PERBAIKAN: Tambahkan event jika tanggalnya >= hari ini
+                if (eventDateWithoutTime.after(today) || isSameDay(eventDateWithoutTime, today)) {
+                    upcoming.add(event);
+                    Log.d(TAG, "  ✅ Ditambahkan sebagai upcoming");
+                } else {
+                    Log.d(TAG, "  ⏭ Lewati - tanggal sudah lewat");
+                }
+
             } catch (Exception e) {
-                Log.w(TAG, "⚠ Error tak terduga saat filtering event: " + e.getMessage());
+                Log.w(TAG, "⚠ Error filtering event '" + event.getNameEvent() + "': " + e.getMessage());
             }
         }
 
         Log.d(TAG, "📅 Upcoming events yang difilter: " + upcoming.size());
+
+        // Sort by date ascending (terdekat di depan)
+        upcoming.sort(new Comparator<Event>() {
+            @Override
+            public int compare(Event e1, Event e2) {
+                try {
+                    Date date1 = parseDate(e1.getTanggalMulai());
+                    Date date2 = parseDate(e2.getTanggalMulai());
+
+                    if (date1 == null || date2 == null) return 0;
+
+                    // Terdekat di depan
+                    return date1.compareTo(date2);
+                } catch (Exception e) {
+                    return 0;
+                }
+            }
+        });
+
         return upcoming;
     }
 
+    // ==================== FILTER TRENDING EVENTS ====================
     private List<Event> filterTrendingEvents(List<Event> events) {
         List<Event> trending = new ArrayList<>();
 
         Log.d(TAG, "🔥 Memfilter trending events dari " + events.size() + " total events");
 
         try {
-            events.sort(new Comparator<Event>() {
+            // Ambil semua events yang confirmed
+            List<Event> validEvents = new ArrayList<>();
+            for (Event event : events) {
+                if (event.isConfirmed()) {
+                    validEvents.add(event);
+                }
+            }
+
+            Log.d(TAG, "🔥 Valid events untuk trending: " + validEvents.size());
+
+            // Sort by date descending (terbaru di depan) dan kapasitas (terbesar di depan)
+            validEvents.sort(new Comparator<Event>() {
                 @Override
                 public int compare(Event e1, Event e2) {
                     try {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                        Date date1 = dateFormat.parse(e1.getTanggalMulai());
-                        Date date2 = dateFormat.parse(e2.getTanggalMulai());
-                        return date2.compareTo(date1); // Terbaru di depan
-                    } catch (ParseException e) {
-                        return 0;
+                        Date date1 = parseDate(e1.getTanggalMulai());
+                        Date date2 = parseDate(e2.getTanggalMulai());
+
+                        if (date1 == null || date2 == null) {
+                            return 0;
+                        }
+
+                        // Terbaru di depan
+                        int dateCompare = date2.compareTo(date1);
+
+                        // Jika tanggal sama, sort by kapasitas (terbesar di depan)
+                        if (dateCompare == 0) {
+                            return Integer.compare(e2.getKapasitas(), e1.getKapasitas());
+                        }
+
+                        return dateCompare;
                     } catch (Exception e) {
-                        Log.e(TAG, "Error comparing dates: " + e.getMessage());
+                        Log.e(TAG, "Error comparing dates for trending: " + e.getMessage());
                         return 0;
                     }
                 }
             });
 
-            int maxTrending = Math.min(10, events.size());
-            trending = new ArrayList<>(events.subList(0, maxTrending));
+            // Ambil maksimal 10 event terbaru
+            int maxTrending = Math.min(10, validEvents.size());
+            trending = new ArrayList<>(validEvents.subList(0, maxTrending));
+
+            // Debug: tampilkan trending events
+            for (int i = 0; i < trending.size(); i++) {
+                Event e = trending.get(i);
+                Log.d(TAG, "🔥 Trending #" + (i+1) + ": " + e.getNameEvent() +
+                        " | Date: " + e.getTanggalMulai() +
+                        " | Capacity: " + e.getKapasitas());
+            }
 
         } catch (Exception e) {
             Log.e(TAG, "❌ Error dalam filterTrendingEvents: " + e.getMessage());
+            e.printStackTrace();
         }
 
         Log.d(TAG, "✅ Trending events yang dipilih: " + trending.size());
         return trending;
+    }
+
+    // ==================== UTILITY METHODS ====================
+    private Date removeTime(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
+    private String formatDateForLog(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return sdf.format(date);
+    }
+
+    private Date parseDate(String dateString) {
+        if (dateString == null || dateString.isEmpty() || "null".equals(dateString)) {
+            return null;
+        }
+
+        // Coba berbagai format tanggal
+        String[] dateFormats = {
+                "yyyy-MM-dd HH:mm:ss",      // Format MySQL datetime
+                "yyyy-MM-dd'T'HH:mm:ss",    // Format ISO
+                "yyyy-MM-dd",               // Format tanggal saja
+                "dd-MM-yyyy HH:mm:ss",      // Format Indonesia dengan waktu
+                "dd-MM-yyyy",               // Format Indonesia tanpa waktu
+                "dd/MM/yyyy HH:mm:ss",      // Format Indonesia dengan slash
+                "dd/MM/yyyy"                // Format Indonesia dengan slash tanpa waktu
+        };
+
+        for (String format : dateFormats) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
+                sdf.setLenient(false);
+                Date parsedDate = sdf.parse(dateString);
+
+                // Jika berhasil parse, coba format ulang untuk debug
+                if (parsedDate != null) {
+                    Log.d(TAG, "✅ Berhasil parse tanggal '" + dateString +
+                            "' dengan format '" + format + "' -> " +
+                            new SimpleDateFormat("yyyy-MM-dd").format(parsedDate));
+                }
+
+                return parsedDate;
+            } catch (ParseException e) {
+                // Continue to next format
+            }
+        }
+
+        Log.w(TAG, "⚠ Gagal parse tanggal dengan semua format: " + dateString);
+        return null;
+    }
+
+    private boolean isSameDay(Date date1, Date date2) {
+        if (date1 == null || date2 == null) {
+            return false;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return sdf.format(date1).equals(sdf.format(date2));
     }
 
     // ==================== VALIDATE USER LOGIN ====================

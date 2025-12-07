@@ -15,4 +15,7 @@
     <color name="blue_37B">#3A7BFF</color>
     <color name="white_80">#80FFFFFF</color>
     <color name="bg_ungu_tipis">#121A2C</color>
+    <color name="orange">#FFA500</color>
+    <color name="green">#4CAF50</color>
+    <color name="red">#F44336</color>
 </resources>

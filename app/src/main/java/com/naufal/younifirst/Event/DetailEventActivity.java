@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.naufal.younifirst.R;
+import com.naufal.younifirst.model.Event;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,6 +48,11 @@ public class DetailEventActivity extends AppCompatActivity {
     private int originalImageHeight;
     private int popupOffsetX;
 
+    // Variabel untuk data event
+    private Event currentEvent;
+    private String contactPerson;
+    private String urlInstagram;
+
     private static final String TAG = "DetailEventActivity";
 
     @Override
@@ -60,6 +66,7 @@ public class DetailEventActivity extends AppCompatActivity {
         setupBackButton();
         setupZoomButton();
         setupBackPressedHandler();
+        setupDaftarButton();
 
         btnFlag.setOnClickListener(v -> showFlagPopup());
         loadEventDataFromIntent();
@@ -177,6 +184,88 @@ public class DetailEventActivity extends AppCompatActivity {
                 else finish();
             }
         });
+    }
+
+    private void setupDaftarButton() {
+        RelativeLayout btnDaftar = findViewById(R.id.text_daftar) != null ?
+                (RelativeLayout) findViewById(R.id.text_daftar).getParent() : null;
+
+        if (btnDaftar != null) {
+            btnDaftar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Navigasi ke halaman DaftarEvent dengan membawa data event
+                    Intent intent = new Intent(DetailEventActivity.this, DaftarEvent.class);
+
+                    // PERBAIKAN: Kirim data secara eksplisit dari currentEvent
+                    if (currentEvent != null) {
+                        intent.putExtra("event_id", currentEvent.getEventId());
+                        intent.putExtra("event_name", currentEvent.getNameEvent());
+
+                        // PERBAIKAN PENTING: Kirim data WhatsApp dan Instagram dari currentEvent
+                        String whatsapp = currentEvent.getContact_person();
+                        String instagram = currentEvent.getUrl_instagram();
+
+                        Log.d(TAG, "📤 Mengirim data ke DaftarEvent:");
+                        Log.d(TAG, "   WhatsApp: " + whatsapp);
+                        Log.d(TAG, "   Instagram: " + instagram);
+
+                        intent.putExtra("event_contact_person", whatsapp);
+                        intent.putExtra("event_url_instagram", instagram);
+                        intent.putExtra("event_organizer", currentEvent.getOrganizer());
+                        intent.putExtra("event_location", currentEvent.getLokasi());
+                    } else {
+                        // Jika currentEvent null, ambil dari intent tapi pastikan data WhatsApp dan Instagram ada
+                        String whatsapp = getIntent().getStringExtra("event_contact_person");
+                        String instagram = getIntent().getStringExtra("event_url_instagram");
+
+                        intent.putExtras(getIntent());
+
+                        // Tambahkan jika belum ada di intent asli
+                        if (whatsapp != null && !intent.hasExtra("event_contact_person")) {
+                            intent.putExtra("event_contact_person", whatsapp);
+                        }
+                        if (instagram != null && !intent.hasExtra("event_url_instagram")) {
+                            intent.putExtra("event_url_instagram", instagram);
+                        }
+                    }
+
+                    startActivity(intent);
+                }
+            });
+
+            // Juga bisa setup arrow icon jika diperlukan
+            ImageView arrowIcon = findViewById(R.id.arrow_icon);
+            if (arrowIcon != null) {
+                arrowIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Navigasi ke DaftarEvent
+                        Intent intent = new Intent(DetailEventActivity.this, DaftarEvent.class);
+                        if (currentEvent != null) {
+                            intent.putExtra("event_id", currentEvent.getEventId());
+                            intent.putExtra("event_name", currentEvent.getNameEvent());
+
+                            // PERBAIKAN: Kirim data WhatsApp dan Instagram
+                            String whatsapp = currentEvent.getContact_person();
+                            String instagram = currentEvent.getUrl_instagram();
+
+                            Log.d(TAG, "📤 Arrow klik - Mengirim data ke DaftarEvent:");
+                            Log.d(TAG, "   WhatsApp: " + whatsapp);
+                            Log.d(TAG, "   Instagram: " + instagram);
+
+                            intent.putExtra("event_contact_person", whatsapp);
+                            intent.putExtra("event_url_instagram", instagram);
+                            intent.putExtra("event_organizer", currentEvent.getOrganizer());
+                            intent.putExtra("event_location", currentEvent.getLokasi());
+                        } else {
+                            intent.putExtras(getIntent());
+                        }
+                        startActivity(intent);
+                    }
+                });
+            }
+        }
     }
 
     private void showFlagPopup() {
@@ -320,10 +409,16 @@ public class DetailEventActivity extends AppCompatActivity {
         String status = getSafeStringExtra("event_status", null);
         int kapasitas = getIntent().getIntExtra("event_kapasitas", 0);
 
-        // Log data yang telah diambil
+        // PERBAIKAN PENTING: Ambil data WhatsApp dan Instagram dari intent
+        contactPerson = getIntent().getStringExtra("event_contact_person");
+        urlInstagram = getIntent().getStringExtra("event_url_instagram");
+
+        // Debug data yang diterima
         Log.d(TAG, "📋 Parsed Data from Intent:");
         Log.d(TAG, "  - ID: " + eventId);
         Log.d(TAG, "  - Name: " + name);
+        Log.d(TAG, "  - Contact Person (intent): '" + contactPerson + "'");
+        Log.d(TAG, "  - Instagram URL (intent): '" + urlInstagram + "'");
         Log.d(TAG, "  - Date Start: " + date);
         Log.d(TAG, "  - Date End: " + dateEnd);
         Log.d(TAG, "  - Time: " + time);
@@ -336,6 +431,30 @@ public class DetailEventActivity extends AppCompatActivity {
         Log.d(TAG, "  - Status: " + status);
         Log.d(TAG, "  - Kapasitas: " + kapasitas);
 
+        // SIMPAN DATA KE OBJEK EVENT dengan data WhatsApp dan Instagram
+        currentEvent = new Event();
+        currentEvent.setEventId(eventId);
+        currentEvent.setNameEvent(name);
+        currentEvent.setTanggalMulai(date);
+        currentEvent.setTanggalSelesai(dateEnd);
+        currentEvent.setLokasi(place);
+        currentEvent.setOrganizer(organizer);
+        currentEvent.setKapasitas(kapasitas);
+        currentEvent.setStatus(status);
+        currentEvent.setPosterEvent(poster);
+        currentEvent.setDescription(desc);
+        currentEvent.setKategori(kategori);
+        currentEvent.setHarga(harga);
+        currentEvent.setDlPendaftaran(dlPendaftaran);
+        currentEvent.setWaktu_pelaksanaan(time);
+
+        // PERBAIKAN: Set data WhatsApp dan Instagram ke currentEvent
+        currentEvent.setContact_person(contactPerson);
+        currentEvent.setUrl_instagram(urlInstagram);
+
+        Log.d(TAG, "✅ Data di currentEvent:");
+        Log.d(TAG, "  - Contact Person (currentEvent): " + currentEvent.getContact_person());
+        Log.d(TAG, "  - Instagram URL (currentEvent): " + currentEvent.getUrl_instagram());
         // Temukan view di layout
         TextView title = findViewById(R.id.title_event);
         TextView dateText = findViewById(R.id.tanggalEvent);
@@ -851,7 +970,7 @@ public class DetailEventActivity extends AppCompatActivity {
             path = path.substring(1);
         }
 
-        String BASE_URL = "http://192.168.1.21:8000";
+        String BASE_URL = "http://10.10.182.112:8000";
         if (BASE_URL.endsWith("/")) {
             BASE_URL = BASE_URL.substring(0, BASE_URL.length() - 1);
         }

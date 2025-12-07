@@ -45,6 +45,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -226,51 +228,203 @@ public class CompetitionTeamFragment extends Fragment {
         // Setup horizontal upcoming competitions
         setupUpcomingCompetitions(kompetisiView, competitions);
 
+        // Setup trending section secara dinamis
+        setupTrendingSection(kompetisiView, competitions);
+
         // Setup vertical competition list
         setupCompetitionList(kompetisiView, competitions);
-
-        // ===== TAMBAHKAN KODE INI =====
-        // Setup trending section click listeners
-        setupTrendingSectionClickListeners(kompetisiView, competitions);
-        // ==============================
     }
 
-    private void setupTrendingSectionClickListeners(View kompetisiView, List<Kompetisi> competitions) {
+    private void setupTrendingSection(View parentView, List<Kompetisi> competitions) {
+        LinearLayout trendingContainer = parentView.findViewById(R.id.listitemkompetisitrending);
+        if (trendingContainer == null) {
+            Log.e("TRENDING_SETUP", "Trending container not found");
+            return;
+        }
+
+        // Clear existing static content
+        trendingContainer.removeAllViews();
+
+        // Filter kompetisi untuk trending (misalnya 3 teratas atau berdasarkan kriteria tertentu)
+        List<Kompetisi> trendingCompetitions = getTrendingCompetitions(competitions, 3);
+
+        if (trendingCompetitions.isEmpty()) {
+            // Tampilkan pesan jika tidak ada trending
+            TextView emptyText = new TextView(getContext());
+            emptyText.setText("Belum ada kompetisi trending");
+            emptyText.setTextColor(Color.WHITE);
+            emptyText.setGravity(Gravity.CENTER);
+            emptyText.setPadding(0, 20, 0, 20);
+            trendingContainer.addView(emptyText);
+            return;
+        }
+
+        Log.d("TRENDING_SETUP", "Setting up " + trendingCompetitions.size() + " trending competitions");
+
+        // Tambahkan setiap item trending
+        for (int i = 0; i < trendingCompetitions.size(); i++) {
+            Kompetisi competition = trendingCompetitions.get(i);
+
+            // Inflate layout untuk setiap item
+            View itemView = LayoutInflater.from(getContext())
+                    .inflate(R.layout.fragment_competition_list, trendingContainer, false);
+
+            // Setup data kompetisi
+            setupTrendingItem(itemView, competition);
+
+            // Setup click listener dengan data kompetisi yang spesifik
+            itemView.setOnClickListener(v -> {
+                onCompetitionItemClicked(competition);
+            });
+
+            // Tambahkan ke container
+            trendingContainer.addView(itemView);
+
+            // Tambahkan margin bottom kecuali untuk item terakhir
+            if (i < trendingCompetitions.size() - 1) {
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) itemView.getLayoutParams();
+                params.bottomMargin = (int) (16 * getResources().getDisplayMetrics().density);
+                itemView.setLayoutParams(params);
+            }
+        }
+    }
+
+    // Method untuk mendapatkan kompetisi trending (misalnya 3 terbaru)
+    private List<Kompetisi> getTrendingCompetitions(List<Kompetisi> allCompetitions, int limit) {
+        List<Kompetisi> trending = new ArrayList<>();
+
+        // Filter: hanya yang confirmed
+        List<Kompetisi> confirmed = new ArrayList<>();
+        for (Kompetisi k : allCompetitions) {
+            if (k.isConfirmed()) {
+                confirmed.add(k);
+            }
+        }
+
+        // Sort by date descending (terbaru di depan)
+        confirmed.sort(new Comparator<Kompetisi>() {
+            @Override
+            public int compare(Kompetisi k1, Kompetisi k2) {
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    Date date1 = sdf.parse(k1.getTanggalLomba());
+                    Date date2 = sdf.parse(k2.getTanggalLomba());
+                    return date2.compareTo(date1); // Terbaru di depan
+                } catch (Exception e) {
+                    return 0;
+                }
+            }
+        });
+
+        // Ambil sebanyak limit
+        for (int i = 0; i < Math.min(limit, confirmed.size()); i++) {
+            trending.add(confirmed.get(i));
+        }
+
+        return trending;
+    }
+
+    // Method untuk setup data trending item
+    private void setupTrendingItem(View itemView, Kompetisi competition) {
         try {
-            // Cari LinearLayout yang mengandung item trending
-            LinearLayout containerTrending = kompetisiView.findViewById(R.id.listitemkompetisitrending);
+            // Judul
+            TextView title = itemView.findViewById(R.id.text_judul_list);
+            if (title != null) {
+                title.setText(competition.getNamaLomba());
+            }
 
-            if (containerTrending != null) {
-                containerTrending.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Ambil kompetisi pertama dari list untuk trending
-                        if (competitions != null && !competitions.isEmpty()) {
-                            Kompetisi trendingKompetisi = competitions.get(0); // Atau sesuaikan logika trending Anda
-                            onCompetitionItemClicked(trendingKompetisi);
-                        } else {
-                            Toast.makeText(getContext(), "Tidak ada data kompetisi trending", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+            // Tanggal
+            TextView tanggal = itemView.findViewById(R.id.text_tanggal_list);
+            if (tanggal != null) {
+                tanggal.setText(formatDate(competition.getTanggalLomba()));
+            }
 
-                // Juga tambahkan ke CardView di dalamnya jika ada
-                CardView cardView = containerTrending.findViewById(R.id.container_competition_list);
-                if (cardView != null) {
-                    cardView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (competitions != null && !competitions.isEmpty()) {
-                                Kompetisi trendingKompetisi = competitions.get(0);
-                                onCompetitionItemClicked(trendingKompetisi);
-                            }
-                        }
-                    });
+            // Lokasi
+            TextView lokasi = itemView.findViewById(R.id.text_lokasi_list);
+            if (lokasi != null) {
+                lokasi.setText(competition.getLokasi());
+            }
+
+            // Poster
+            ImageView poster = itemView.findViewById(R.id.poster_lomba);
+            if (poster != null && getContext() != null) {
+                String posterUrl = competition.getPoster();
+                if (posterUrl != null && !posterUrl.isEmpty()) {
+                    Glide.with(this)
+                            .load(posterUrl)
+                            .placeholder(R.drawable.tryposter)
+                            .error(R.drawable.tryposter)
+                            .into(poster);
+                } else {
+                    poster.setImageResource(R.drawable.tryposter);
                 }
             }
 
+            // Biaya
+            TextView biaya = itemView.findViewById(R.id.text_biaya);
+            if (biaya != null) {
+                String biayaText = competition.getBiaya();
+                if (biayaText != null && !biayaText.isEmpty()) {
+                    if (biayaText.equalsIgnoreCase("0") ||
+                            biayaText.equalsIgnoreCase("gratis") ||
+                            biayaText.equalsIgnoreCase("free")) {
+                        biaya.setText("Gratis");
+                    } else {
+                        biaya.setText("Berbayar");
+                    }
+                } else {
+                    biaya.setText("Tidak Ada");
+                }
+            }
+
+            // Scope
+            TextView scope = itemView.findViewById(R.id.text_scope);
+            if (scope != null) {
+                scope.setText(competition.getScope());
+            }
+
+            // Tipe Lomba
+            LinearLayout layoutParticipant = itemView.findViewById(R.id.layout_participant_list);
+            ImageView iconKelompok = itemView.findViewById(R.id.icon_lomba_type_kelompok);
+            ImageView iconIndividu = itemView.findViewById(R.id.icon_lomba_type_individu);
+            TextView lombaType = itemView.findViewById(R.id.text_lomba_type);
+
+            if (layoutParticipant != null && lombaType != null) {
+                String type = competition.getLomba_type();
+
+                // Set default visibility
+                if (iconKelompok != null) iconKelompok.setVisibility(View.GONE);
+                if (iconIndividu != null) iconIndividu.setVisibility(View.GONE);
+
+                if (type != null && !type.isEmpty()) {
+                    lombaType.setText(type);
+
+                    // Tampilkan ikon sesuai tipe
+                    if (type.equalsIgnoreCase("Kelompok") || type.equalsIgnoreCase("Team")) {
+                        if (iconKelompok != null) {
+                            iconKelompok.setVisibility(View.VISIBLE);
+                            iconKelompok.setImageResource(R.drawable.icon_people);
+                        }
+                    } else if (type.equalsIgnoreCase("Individu") || type.equalsIgnoreCase("Individual")) {
+                        if (iconIndividu != null) {
+                            iconIndividu.setVisibility(View.VISIBLE);
+                            iconIndividu.setImageResource(R.drawable.icon_orang);
+                        }
+                    }
+                } else {
+                    lombaType.setText("Individu");
+                    if (iconIndividu != null) {
+                        iconIndividu.setVisibility(View.VISIBLE);
+                        iconIndividu.setImageResource(R.drawable.icon_orang);
+                    }
+                }
+            }
+
+            // Setup badges
+            setupBadges(itemView, competition.getKategori(), R.id.badge_container_list);
+
         } catch (Exception e) {
-            Log.e("TRENDING_CLICK", "Error setting up trending click listeners", e);
+            Log.e("TRENDING_ITEM", "Error setting up trending item: " + competition.getNamaLomba(), e);
         }
     }
 
@@ -284,6 +438,12 @@ public class CompetitionTeamFragment extends Fragment {
                 View itemView = LayoutInflater.from(getContext())
                         .inflate(R.layout.fragment_competition_mendatang, containerUpcoming, false);
                 setupCompetitionMendatangItem(itemView, competition);
+
+                // Tambahkan click listener dengan data spesifik
+                itemView.setOnClickListener(v -> {
+                    onCompetitionItemClicked(competition);
+                });
+
                 containerUpcoming.addView(itemView);
             }
         }
@@ -338,8 +498,19 @@ public class CompetitionTeamFragment extends Fragment {
                     params.setMargins(0, 0, 0, margin);
                     itemView.setLayoutParams(params);
 
-                    // Setup data
+                    // Setup data dengan objek kompetisi spesifik
                     setupCompetitionListItem(itemView, competition);
+
+                    // Set tag dengan kompetisi untuk identifikasi
+                    itemView.setTag(competition);
+
+                    // Add click listener dengan data spesifik
+                    itemView.setOnClickListener(v -> {
+                        Kompetisi clickedCompetition = (Kompetisi) v.getTag();
+                        if (clickedCompetition != null) {
+                            onCompetitionItemClicked(clickedCompetition);
+                        }
+                    });
 
                     // Add to container
                     finalContainerList.addView(itemView);
@@ -420,6 +591,9 @@ public class CompetitionTeamFragment extends Fragment {
                     // Setup data team
                     setupTeamItem(itemView, team);
 
+                    // Set tag dengan objek team
+                    itemView.setTag(team);
+
                     // Add to container
                     container.addView(itemView);
                     Log.d("TEAM_FRAGMENT", "Added item " + i + " to container");
@@ -468,11 +642,13 @@ public class CompetitionTeamFragment extends Fragment {
                 lokasi.setText(competition.getLokasi());
             }
 
-            // Poster - PERBAIKAN: ID yang benar
             ImageView poster = itemView.findViewById(R.id.poster_lomba);
             if (poster != null && getContext() != null) {
-                String posterUrl = competition.getPoster();
-                if (posterUrl != null && !posterUrl.isEmpty()) {
+                String posterUrl = competition.getPoster(); // Ini sudah full URL dari model
+                Log.d("COMPETITION_ITEM", "Loading poster for " + competition.getNamaLomba() +
+                        " | URL: " + posterUrl);
+
+                if (posterUrl != null && !posterUrl.isEmpty() && !"null".equals(posterUrl)) {
                     Glide.with(this)
                             .load(posterUrl)
                             .placeholder(R.drawable.tryposter)
@@ -480,9 +656,8 @@ public class CompetitionTeamFragment extends Fragment {
                             .into(poster);
                 } else {
                     poster.setImageResource(R.drawable.tryposter);
+                    Log.d("COMPETITION_ITEM", "Using default poster");
                 }
-            } else {
-                Log.e("COMPETITION_ITEM", "Poster view is null or context is null");
             }
 
             // Biaya (Berbayar/Gratis) - TAMBAHKAN
@@ -548,16 +723,8 @@ public class CompetitionTeamFragment extends Fragment {
             // Setup badges
             setupBadges(itemView, competition.getKategori(), R.id.badge_container_list);
 
-            // ===== TAMBAHKAN ON CLICK LISTENER =====
-            CardView cardView = itemView.findViewById(R.id.container_competition_list);
-            if (cardView == null) {
-                // Jika tidak ada CardView, gunakan root view
-                cardView = (CardView) itemView;
-            }
-
-            cardView.setOnClickListener(v -> {
-                onCompetitionItemClicked(competition);
-            });
+            // Set tag dengan objek kompetisi
+            itemView.setTag(competition);
 
         } catch (Exception e) {
             Log.e("COMPETITION_ITEM", "Error setting up competition list item: " + competition.getNamaLomba(), e);
@@ -667,17 +834,8 @@ public class CompetitionTeamFragment extends Fragment {
             // Setup badges berdasarkan kategori
             setupBadges(itemView, competition.getKategori(), R.id.badge_container_mendatang);
 
-            // ===== TAMBAHKAN ON CLICK LISTENER =====
-            CardView cardView = itemView.findViewById(R.id.card_mendatang);
-            if (cardView == null) {
-                // Jika tidak ada CardView, gunakan root view
-                cardView = (CardView) itemView;
-            }
-
-            cardView.setOnClickListener(v -> {
-                onCompetitionItemClicked(competition);
-            });
-
+            // Set tag dengan objek kompetisi
+            itemView.setTag(competition);
 
         } catch (Exception e) {
             Log.e("COMPETITION_MENDATANG", "Error setting up competition mendatang item", e);
@@ -685,29 +843,55 @@ public class CompetitionTeamFragment extends Fragment {
     }
 
     private void onCompetitionItemClicked(Kompetisi kompetisi) {
-        Log.d("COMPETITION_CLICK", "Clicked on: " + kompetisi.getNamaLomba());
+        if (kompetisi == null) {
+            Toast.makeText(getContext(), "Data kompetisi tidak valid", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Buat Intent untuk membuka Detail_Kompetisi
-        Intent intent = new Intent(getActivity(), Detail_Kompetisi.class);
+        Log.d("COMPETITION_CLICK", "=== OPENING DETAIL ===");
+        Log.d("COMPETITION_CLICK", "Nama: " + kompetisi.getNamaLomba());
+        Log.d("COMPETITION_CLICK", "ID: " + kompetisi.getId());
+        Log.d("COMPETITION_CLICK", "Poster: " + kompetisi.getPoster());
+        Log.d("COMPETITION_CLICK", "Harga: " + kompetisi.getHargaLomba());
 
-        // Pass data kompetisi ke activity detail
-        intent.putExtra("KOMPETISI_ID", kompetisi.getId());
-        intent.putExtra("NAMA_LOMBA", kompetisi.getNamaLomba());
-        intent.putExtra("TANGGAL_LOMBA", kompetisi.getTanggalLomba());
-        intent.putExtra("LOKASI", kompetisi.getLokasi());
-        intent.putExtra("KATEGORI", kompetisi.getKategori());
-        intent.putExtra("POSTER", kompetisi.getPoster());
-        intent.putExtra("SCOPE", kompetisi.getScope());
-        intent.putExtra("DESKRIPSI", kompetisi.getDeskripsi());
-        intent.putExtra("HADIAH", kompetisi.getHadiah());
-        intent.putExtra("LOMBA_TYPE", kompetisi.getLomba_type());
-        intent.putExtra("BIAYA", kompetisi.getBiaya());
-        intent.putExtra("STATUS", kompetisi.getStatus());
-        intent.putExtra("NAMA_PENYELENGGARA", kompetisi.getPenyelenggara()); // Pastikan ada di model
-        intent.putExtra("HARGA_LOMBA", kompetisi.getHargaLomba()); // Pastikan ada di model
+        try {
+            Intent intent = new Intent(getActivity(), Detail_Kompetisi.class);
 
-        // Start activity
-        startActivity(intent);
+            // Pass data dengan validasi
+            intent.putExtra("NAMA_LOMBA", kompetisi.getNamaLomba() != null ? kompetisi.getNamaLomba() : "");
+            intent.putExtra("TANGGAL_LOMBA", kompetisi.getTanggalLomba() != null ? kompetisi.getTanggalLomba() : "");
+            intent.putExtra("LOKASI", kompetisi.getLokasi() != null ? kompetisi.getLokasi() : "");
+            intent.putExtra("KATEGORI", kompetisi.getKategori() != null ? kompetisi.getKategori() : "");
+            intent.putExtra("POSTER", kompetisi.getPoster() != null ? kompetisi.getPoster() : "");
+            intent.putExtra("SCOPE", kompetisi.getScope() != null ? kompetisi.getScope() : "");
+            intent.putExtra("DESKRIPSI", kompetisi.getDeskripsi() != null ? kompetisi.getDeskripsi() : "");
+            intent.putExtra("HADIAH", kompetisi.getHadiah() != null ? kompetisi.getHadiah() : "");
+            intent.putExtra("LOMBA_TYPE", kompetisi.getLomba_type() != null ? kompetisi.getLomba_type() : "");
+            intent.putExtra("BIAYA", kompetisi.getBiaya() != null ? kompetisi.getBiaya() : "");
+            intent.putExtra("STATUS", kompetisi.getStatus() != null ? kompetisi.getStatus() : "");
+            intent.putExtra("NAMA_PENYELENGGARA", kompetisi.getPenyelenggara() != null ? kompetisi.getPenyelenggara() : "");
+
+            // PERHATIAN KHUSUS: Pastikan harga dikirim dengan benar
+            String harga = kompetisi.getHargaLomba();
+            if (harga != null && !harga.isEmpty() && !"null".equalsIgnoreCase(harga.trim())) {
+                intent.putExtra("HARGA_LOMBA", harga);
+                Log.d("COMPETITION_CLICK", "Harga dikirim: " + harga);
+            } else {
+                intent.putExtra("HARGA_LOMBA", "0");
+                Log.d("COMPETITION_CLICK", "Harga kosong, dikirim default: 0");
+            }
+
+            // Tambahkan ID jika ada
+            if (kompetisi.getId() != null) {
+                intent.putExtra("KOMPETISI_ID", kompetisi.getId());
+            }
+
+            startActivity(intent);
+
+        } catch (Exception e) {
+            Log.e("COMPETITION_CLICK", "Error opening detail", e);
+            Toast.makeText(getContext(), "Gagal membuka detail kompetisi", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setupTeamItem(View itemView, Team team) {
@@ -823,7 +1007,6 @@ public class CompetitionTeamFragment extends Fragment {
             TextView textCommentCount = itemView.findViewById(R.id.text_comment_count);
             TextView textShareCount = itemView.findViewById(R.id.text_share_count);
 
-
             if (textLikeCount != null) {
                 textLikeCount.setText(formatCount(team.getJumlahLike()));
             }
@@ -841,8 +1024,21 @@ public class CompetitionTeamFragment extends Fragment {
             // =============================
             Button joinButton = itemView.findViewById(R.id.ikuttim);
             if (joinButton != null) {
-                joinButton.setOnClickListener(v -> onJoinTeamClicked(team));
+                // Set tag dengan objek team
+                joinButton.setTag(team);
+                joinButton.setOnClickListener(v -> {
+                    Team clickedTeam = (Team) v.getTag();
+                    if (clickedTeam != null) {
+                        onJoinTeamClicked(clickedTeam);
+                    }
+                });
             }
+
+            // Set click listener untuk seluruh item team jika perlu
+            itemView.setOnClickListener(v -> {
+                // Anda bisa menambahkan aksi ketika seluruh item team diklik
+                Toast.makeText(getContext(), "Team: " + team.getNamaTeam(), Toast.LENGTH_SHORT).show();
+            });
 
             Log.d("TEAM_ITEM", "Setup team: " + team.getNamaTeam() +
                     " | Members: " + team.getMemberSaatIni() + "/" + team.getMaxAnggota() +
@@ -883,31 +1079,6 @@ public class CompetitionTeamFragment extends Fragment {
         return fullUrl;
     }
 
-
-    // Method untuk menampilkan badge status
-    private void setupStatusBadge(View itemView, String status) {
-//        TextView statusBadge = itemView.findViewById(R.id.status_badge); // Tambahkan TextView di layout
-//        if (statusBadge != null && status != null) {
-//            statusBadge.setVisibility(View.VISIBLE);
-//            statusBadge.setText(status);
-//
-//            // Atur warna berdasarkan status
-//            switch (status.toLowerCase()) {
-//                case "active":
-//                    statusBadge.setBackgroundResource(R.drawable.badge_green);
-//                    break;
-//                case "pending":
-//                    statusBadge.setBackgroundResource(R.drawable.badge_purple);
-//                    break;
-//                case "closed":
-//                    statusBadge.setBackgroundResource(R.drawable.badge_red);
-//                    break;
-//                default:
-//                    statusBadge.setVisibility(View.GONE);
-//            }
-//        }
-    }
-
     // Helper method untuk format angka (like, comment, share count)
     private String formatCount(String count) {
         if (count == null || count.isEmpty()) {
@@ -924,12 +1095,6 @@ public class CompetitionTeamFragment extends Fragment {
         } catch (NumberFormatException e) {
             return count;
         }
-    }
-
-    // Method untuk show options menu
-    private void showTeamOptionsMenu(Team team) {
-        // Implementasi menu options untuk team
-        Toast.makeText(getContext(), "Menu options untuk: " + team.getNamaTeam(), Toast.LENGTH_SHORT).show();
     }
 
     private void setupBadges(View itemView, String kategori, int badgeContainerId) {
@@ -954,7 +1119,7 @@ public class CompetitionTeamFragment extends Fragment {
                             TextView badgeText = null;
 
                             // Coba beberapa kemungkinan ID
-                            badgeText = badge.findViewById(R.id.badge_text); // Coba ID ini
+//                            badgeText = badge.findViewById(R.id.badge_text); // Coba ID ini
                             if (badgeText == null) {
                                 // Jika tidak ada ID khusus, cari TextView pertama
                                 if (badge instanceof ViewGroup) {
@@ -1061,8 +1226,14 @@ public class CompetitionTeamFragment extends Fragment {
         // Setup button daftar
         Button btnDaftar = sheetView.findViewById(R.id.btnDaftar);
         if (btnDaftar != null) {
+            // Set tag dengan team
+            btnDaftar.setTag(team);
             btnDaftar.setOnClickListener(v -> {
-                // Handle pendaftaran ke tim
+                Team clickedTeam = (Team) v.getTag();
+                if (clickedTeam != null) {
+                    // Handle pendaftaran ke tim spesifik
+                    handleTeamRegistration(clickedTeam);
+                }
                 bottomSheetDialog.dismiss();
             });
         }
@@ -1084,6 +1255,21 @@ public class CompetitionTeamFragment extends Fragment {
         }
 
         bottomSheetDialog.show();
+    }
+
+    private void handleTeamRegistration(Team team) {
+        // Implementasi pendaftaran ke tim
+        Toast.makeText(getContext(),
+                "Mendaftar ke tim: " + team.getNamaTeam(),
+                Toast.LENGTH_SHORT).show();
+
+        // Log detail tim
+        Log.d("TEAM_REGISTRATION", "Mendaftar ke tim:");
+        Log.d("TEAM_REGISTRATION", "Nama: " + team.getNamaTeam());
+        Log.d("TEAM_REGISTRATION", "Role: " + team.getRoleRequired());
+        Log.d("TEAM_REGISTRATION", "Member: " + team.getMemberSaatIni() + "/" + team.getMaxAnggota());
+
+        // Di sini Anda bisa menambahkan logika untuk mengirim data pendaftaran ke backend
     }
 
     private void setupBottomSheetData(View sheetView, Team team) {
@@ -1587,13 +1773,6 @@ public class CompetitionTeamFragment extends Fragment {
         startActivity(browserIntent);
         */
         });
-    }
-
-    private void setupHadiah(TextView hadiahTextView, Team team) {
-        // Setup teks hadiah
-        // Anda bisa menambahkan field hadiah di model Team
-        String hadiah = "Hadiah menarik + Sertifikat + Pengalaman berharga";
-        hadiahTextView.setText(hadiah);
     }
 
     private void setupDropdownListeners(View dropdownView) {

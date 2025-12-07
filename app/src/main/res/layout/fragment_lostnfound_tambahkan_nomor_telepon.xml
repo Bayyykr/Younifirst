@@ -32,7 +32,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
-
             <View
                 android:layout_width="0dp"
                 android:layout_height="2dp"
@@ -61,6 +60,7 @@
                     android:fontFamily="@font/is_m"
                     android:layout_marginTop="10dp"/>
                 <EditText
+                    android:id="@+id/et_telepons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Masukkan nomor anda"
@@ -73,10 +73,11 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_button_rounded_border"
                     android:drawableStart="@drawable/icon_telepon_biru"
-                    android:drawablePadding="10dp"
-                    />
+                    android:drawablePadding="10dp" />
 
+                <!-- RIIWAYAT (TIDAK DIPAKAI, AKAN DISEMBUNYIKAN) -->
                 <TextView
+                    android:id="@+id/tv_riwayat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Riwayat"

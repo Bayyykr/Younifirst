@@ -75,16 +75,6 @@
             android:drawablePadding="12dp">
         </EditText>
 
-        <TextView
-            android:id="@+id/lupa_sandi"
-            android:layout_width="390dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:gravity="right"
-            android:fontFamily="@font/is_sb"
-            android:text="Lupa Kata Sandi?"
-            android:textColor="#407BFF"/>
     </LinearLayout>
 
     <LinearLayout

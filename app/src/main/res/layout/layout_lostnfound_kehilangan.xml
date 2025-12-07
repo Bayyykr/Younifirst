@@ -55,10 +55,11 @@
                 android:layout_margin="10dp">
 
                 <EditText
+                    android:id="@+id/et_deskripsi"
                     style="@style/EditTextLowerUnderline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Apa yang anda temukan?"
+                    android:hint="Apa yang anda kehilangan?"
                     android:textColorHint="#80ffffff"
                     android:textColor="@color/white"
                     android:textSize="14sp"
@@ -66,28 +67,106 @@
                     android:fontFamily="@font/is_r"
                     android:background="?android:attr/editTextBackground" />
 
-                <TextView
+                <!-- Container untuk foto preview -->
+                <LinearLayout
+                    android:id="@+id/photo_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Foto/Video"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    android:layout_marginTop="10dp"
-                    android:drawableStart="@drawable/icon_camera"
-                    android:drawableEnd="@drawable/icon_panah_kanan"
-                    android:drawablePadding="10dp" />
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
+
+                    <!-- TextView untuk memilih foto -->
+                    <TextView
+                        android:id="@+id/tv_select_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Foto/Video"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:drawableStart="@drawable/icon_camera"
+                        android:drawableEnd="@drawable/icon_panah_kanan"
+                        android:drawablePadding="10dp"
+                        android:paddingVertical="12dp" />
+
+                    <!-- Preview gambar yang dipilih -->
+                    <LinearLayout
+                        android:id="@+id/photo_preview_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:padding="8dp"
+                        android:background="@drawable/image_preview_bg">
+
+                        <ImageView
+                            android:id="@+id/iv_photo_preview"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:scaleType="centerCrop"
+                            android:layout_marginEnd="12dp"
+                            android:background="@drawable/image_placeholder_border" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Foto terpilih"
+                                android:textColor="#FFFFFF"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/is_m" />
+
+                            <TextView
+                                android:id="@+id/tv_photo_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="foto_barang.jpg"
+                                android:textColor="#80FFFFFF"
+                                android:textSize="11sp"
+                                android:fontFamily="@font/is_r"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btn_change_photo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ganti"
+                            android:textSize="12sp"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="6dp"
+                            android:background="@drawable/button_outline_small"
+                            android:textColor="@color/btn_fabmenu"
+                            android:fontFamily="@font/is_m" />
+
+                        <ImageView
+                            android:id="@+id/btn_remove_photo"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/icon_silang_kecil"
+                            android:layout_marginStart="8dp"
+                            app:tint="#FF6B6B" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tambah_lokasi_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tambahkan Lokasi Menemukan"
+                    android:text="Tambahkan Lokasi Kehilangan"
                     android:drawableEnd="@drawable/icon_panah_kanan"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:layout_marginTop="20dp"
                     android:drawableStart="@drawable/icon_lokasi"
-                    android:drawablePadding="10dp" />
+                    android:drawablePadding="10dp"
+                    android:paddingVertical="12dp" />
 
                 <TextView
                     android:id="@+id/tambah_telepon_textview"
@@ -99,7 +178,8 @@
                     android:layout_marginTop="20dp"
                     android:drawableStart="@drawable/icon_telepon"
                     android:drawableEnd="@drawable/icon_panah_kanan"
-                    android:drawablePadding="10dp" />
+                    android:drawablePadding="10dp"
+                    android:paddingVertical="12dp" />
 
                 <TextView
                     android:id="@+id/tambah_email_textview"
@@ -111,7 +191,8 @@
                     android:layout_marginTop="20dp"
                     android:drawableStart="@drawable/icon_email"
                     android:drawableEnd="@drawable/icon_panah_kanan"
-                    android:drawablePadding="10dp" />
+                    android:drawablePadding="10dp"
+                    android:paddingVertical="12dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

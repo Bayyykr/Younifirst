@@ -421,6 +421,8 @@ public class EventFragment extends Fragment {
             Log.d(TAG, "📤 Sending event data to DetailEventActivity:");
             Log.d(TAG, "  - ID: " + event.getEventId());
             Log.d(TAG, "  - Name: " + event.getNameEvent());
+            Log.d(TAG, "  - Contact Person: " + event.getContact_person());
+            Log.d(TAG, "  - Instagram URL: " + event.getUrl_instagram());
             Log.d(TAG, "  - Tanggal Mulai: " + event.getTanggalMulai());
             Log.d(TAG, "  - Tanggal Selesai: " + event.getTanggalSelesai());
             Log.d(TAG, "  - Waktu Pelaksanaan (RAW): " + event.getWaktu_pelaksanaan());
@@ -434,11 +436,22 @@ public class EventFragment extends Fragment {
             Log.d(TAG, "  - Kapasitas: " + event.getKapasitas());
             Log.d(TAG, "  - Status: " + event.getStatus());
 
-            // Data yang dikirim - SEMUA FIELD
+            // Data yang dikirim - SEMUA FIELD termasuk contact_person dan url_instagram
             i.putExtra("event_id", event.getEventId() != null ? event.getEventId() : "");
             i.putExtra("event_name", event.getNameEvent() != null ? event.getNameEvent() : "Event");
+
+            // PERBAIKAN PENTING: Kirim data WhatsApp dan Instagram
+            String contactPerson = event.getContact_person();
+            String instagramUrl = event.getUrl_instagram();
+
+            Log.d(TAG, "  ✅ Contact Person dari event object: " + contactPerson);
+            Log.d(TAG, "  ✅ Instagram URL dari event object: " + instagramUrl);
+
+            i.putExtra("event_contact_person", contactPerson != null ? contactPerson : "");
+            i.putExtra("event_url_instagram", instagramUrl != null ? instagramUrl : "");
+
             i.putExtra("event_date", event.getTanggalMulai() != null ? event.getTanggalMulai() : "");
-            i.putExtra("event_date_end", event.getTanggalSelesai() != null ? event.getTanggalSelesai() : ""); // Tambahkan tanggal selesai
+            i.putExtra("event_date_end", event.getTanggalSelesai() != null ? event.getTanggalSelesai() : "");
 
             // PERBAIKAN: Kirim waktu pelaksanaan dengan benar
             String waktuPelaksanaan = event.getWaktu_pelaksanaan();
@@ -463,14 +476,14 @@ public class EventFragment extends Fragment {
             i.putExtra("event_poster", event.getPosterEvent() != null ? event.getPosterEvent() : "");
             i.putExtra("event_description", event.getDescription() != null ? event.getDescription() : "");
             i.putExtra("event_kategori", event.getKategori() != null ? event.getKategori() : "");
-            i.putExtra("event_kapasitas", event.getKapasitas()); // Tambahkan kapasitas
+            i.putExtra("event_kapasitas", event.getKapasitas());
 
             // Handle harga - format yang benar
             String harga = event.getHarga();
             if (harga != null && !harga.isEmpty() && !"null".equalsIgnoreCase(harga)) {
                 i.putExtra("event_harga", harga);
             } else {
-                i.putExtra("event_harga", "0"); // Default gratis
+                i.putExtra("event_harga", "0");
             }
 
             // PERBAIKAN: Kirim deadline dengan benar

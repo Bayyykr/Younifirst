@@ -35,14 +35,12 @@ public class login extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.pwlogin);
         btnMulai = findViewById(R.id.btn_mulai);
-        tvLupaSandi = findViewById(R.id.lupa_sandi);
 
         // Setup password toggle
         ShownHidePwKt.setupPasswordToggle(etPassword, R.drawable.open_eye, R.drawable.close_eye);
 
         // Setup listeners
         btnMulai.setOnClickListener(v -> handleLogin());
-        tvLupaSandi.setOnClickListener(v -> openForgotPassword());
 
         // Cek auto-login
         checkAutoLogin();
@@ -152,4 +150,5 @@ public class login extends AppCompatActivity {
             ApiHelper.initialize(getApplicationContext());
         }
     }
+
 }

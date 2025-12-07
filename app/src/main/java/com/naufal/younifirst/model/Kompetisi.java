@@ -21,7 +21,7 @@ public class Kompetisi {
     private String biaya;
     private String penyelenggara;
     private String harga_lomba;
-    private static final String BASE_URL = "http://10.131.218.36:8000";
+    private static final String BASE_URL = "http://192.168.0.104:8000";
 
     public Kompetisi() {}
 
@@ -40,19 +40,20 @@ public class Kompetisi {
         this.penyelenggara = jsonObject.optString("penyelenggara", "");
         this.harga_lomba = jsonObject.optString("harga_lomba", "0");
 
-        // AMBIL POSTER DARI BERBAGAI SUMBER
-        if (jsonObject.has("poster")) {
-            this.poster = jsonObject.optString("poster", "");
+        String posterPath = "";
+        if (jsonObject.has("poster_lomba")) {
+            posterPath = jsonObject.optString("poster_lomba", "");
         }
-        else if (jsonObject.has("poster_lomba")) {
-            this.poster = jsonObject.optString("poster_lomba", "");
+        else if (jsonObject.has("poster")) {
+            posterPath = jsonObject.optString("poster", "");
         }
         else if (jsonObject.has("8")) { // Index array
-            this.poster = jsonObject.optString("8", "");
+            posterPath = jsonObject.optString("8", "");
         }
-        else {
-            this.poster = "";
-        }
+
+        // Konversi ke URL lengkap
+        this.poster = getFullPosterUrl(posterPath);
+
 
         Log.d("KOMPETISI_MODEL", "Penyelenggara: " + this.penyelenggara);
         Log.d("KOMPETISI_MODEL", "Harga Lomba: " + this.harga_lomba);
@@ -140,35 +141,59 @@ public class Kompetisi {
         this.harga_lomba = harga_lomba;
     }
 
-    public String getFullPosterUrl() {
-        if (poster == null || poster.isEmpty()) {
-            Log.d("POSTER_URL", "Poster is null or empty");
+    public static String getFullPosterUrl(String posterPath) {
+        if (posterPath == null || posterPath.isEmpty() || "null".equals(posterPath)) {
+            Log.d("KOMPETISI_POSTER", "❌ Poster path kosong atau null");
             return null;
         }
 
-        Log.d("POSTER_URL", "Original poster path: " + poster);
+        Log.d("KOMPETISI_POSTER", "🖼 Original poster path: " + posterPath);
 
-        // Jika sudah full URL, return langsung
-        if (poster.startsWith("http://") || poster.startsWith("https://")) {
-            Log.d("POSTER_URL", "Already full URL: " + poster);
-            return poster;
+        // Jika sudah URL langsung
+        if (posterPath.startsWith("http://") || posterPath.startsWith("https://")) {
+            Log.d("KOMPETISI_POSTER", "✅ Already a full URL");
+            return posterPath;
         }
 
-        // Base URL - SESUAIKAN DENGAN SERVER ANDA
-        String baseUrl = "http://10.10.4.249:8000";
-
-        // Pastikan path tidak kosong dan memiliki nilai yang valid
-        String path = poster.trim();
+        // Hapus awalan 'storage/' jika ada (format Laravel)
+        if (posterPath.startsWith("storage/")) {
+            posterPath = posterPath.substring(8); // Hapus "storage/"
+            Log.d("KOMPETISI_POSTER", "🔄 Removed 'storage/' prefix: " + posterPath);
+        }
 
         // Hapus slash di awal jika ada
-        if (path.startsWith("/")) {
-            path = path.substring(1);
+        if (posterPath.startsWith("/")) {
+            posterPath = posterPath.substring(1);
+            Log.d("KOMPETISI_POSTER", "🔄 Removed leading slash: " + posterPath);
         }
 
-        // Bangun full URL
-        String fullUrl = baseUrl + "/" + path;
-        Log.d("POSTER_URL", "Constructed full URL: " + fullUrl);
+        // Pastikan BASE_URL tidak berakhir dengan slash ganda
+        String baseUrl = BASE_URL;
+        if (baseUrl.endsWith("/")) {
+            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
+        }
 
+        String fullUrl;
+
+        // Handle berbagai format path
+        if (posterPath.startsWith("uploads/kompetisi/")) {
+            // Format: "uploads/kompetisi/e-sport competition.jpg"
+            fullUrl = baseUrl + "/" + posterPath;
+        } else if (posterPath.startsWith("kompetisi/")) {
+            // Format: "kompetisi/e-sport competition.jpg"
+            fullUrl = baseUrl + "/uploads/" + posterPath;
+        } else if (posterPath.contains("/")) {
+            // Format dengan path lainnya
+            fullUrl = baseUrl + "/" + posterPath;
+        } else {
+            // Hanya nama file: "e-sport competition.jpg"
+            fullUrl = baseUrl + "/uploads/kompetisi/" + posterPath;
+        }
+
+        // Encode spasi dan karakter khusus
+        fullUrl = fullUrl.replace(" ", "%20");
+
+        Log.d("KOMPETISI_POSTER", "🔗 Converted to full URL: " + fullUrl);
         return fullUrl;
     }
 

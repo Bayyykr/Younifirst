@@ -27,6 +27,9 @@ public class Team {
     private String status;
 
     // Field tambahan
+    private String penyelenggara;
+    private String linkPostingan;
+    private String namaLomba;
     private String avatarPemilik;
     private String poster;
     private Date waktuPost;
@@ -40,7 +43,79 @@ public class Team {
     private String keteranganTambahan;
     private String hadiah;
 
-    public Team() {}
+    public Team(String namaTeam, String namaKegiatan, String maxAnggota,
+                String roleRequired, String keteranganTambahan, Date tenggatJoin,
+                String penyelenggara, String linkPostingan) {
+        this.namaTeam = namaTeam;
+        this.namaKegiatan = namaKegiatan;
+        this.maxAnggota = maxAnggota;
+        this.roleRequired = roleRequired;
+        this.keteranganTambahan = keteranganTambahan;
+        this.tenggatJoin = tenggatJoin;
+        this.penyelenggara = penyelenggara;
+        this.linkPostingan = linkPostingan;
+        this.status = "waiting";
+        this.role = "ketua";
+    }
+
+    // Getter & Setter tambahan
+    public String getPenyelenggara() {
+        return penyelenggara != null ? penyelenggara : "";
+    }
+
+    public void setPenyelenggara(String penyelenggara) {
+        this.penyelenggara = penyelenggara;
+    }
+
+    public String getLinkPostingan() {
+        return linkPostingan != null ? linkPostingan : "";
+    }
+
+    public void setLinkPostingan(String linkPostingan) {
+        this.linkPostingan = linkPostingan;
+    }
+
+    public String getNamaLomba() {
+        return namaLomba != null ? namaLomba : "";
+    }
+
+    public void setNamaLomba(String namaLomba) {
+        this.namaLomba = namaLomba;
+    }
+
+    // Method untuk mengonversi ke JSONObject untuk API
+    public JSONObject toJsonForCreate() throws JSONException {
+        JSONObject json = new JSONObject();
+
+        // Data dasar dari layout
+        json.put("nama_team", namaTeam);
+        json.put("nama_kegiatan", namaKegiatan);
+        json.put("max_anggota", maxAnggota);
+        json.put("role_required", roleRequired);
+        json.put("keterangan_tambahan", keteranganTambahan);
+        json.put("tenggat_join", new SimpleDateFormat("yyyy-MM-dd").format(tenggatJoin));
+
+        // Data tambahan untuk kompetisi
+        if (penyelenggara != null && !penyelenggara.isEmpty()) {
+            json.put("penyelenggara", penyelenggara);
+        }
+
+        if (linkPostingan != null && !linkPostingan.isEmpty()) {
+            json.put("link_postingan", linkPostingan);
+        }
+
+        // Data default
+        json.put("status", "waiting");
+        json.put("role", "ketua");
+        json.put("deskripsi_anggota", deskripsiAnggota != null ? deskripsiAnggota : "");
+
+        // Data posisi dan ketentuan (akan diolah terpisah)
+        if (ketentuan != null && !ketentuan.isEmpty()) {
+            json.put("ketentuan", ketentuan);
+        }
+
+        return json;
+    }
 
     public Team(JSONObject jsonObject) throws JSONException {
         try {

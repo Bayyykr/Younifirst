@@ -36,7 +36,7 @@ public class Event implements Parcelable {
     private String url_instagram;     // WAJIB untuk API (bisa kosong)
     // ===============================================
 
-    private static final String BASE_URL = "http://10.131.218.36:8000";
+    private static final String BASE_URL = "http://192.168.0.104:8000";
 
     public Event() {
         // Constructor kosong untuk parsing manual

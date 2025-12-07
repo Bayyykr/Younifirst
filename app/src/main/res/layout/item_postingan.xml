@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/asset_background_list_item"
+    android:padding="16dp">
+
+    <!-- Header Post -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Hapus shapeAppearanceOverlay atau ganti dengan ImageView biasa -->
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/profile_coba"
+            android:scaleType="centerCrop"
+            android:contentDescription="Foto profil"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:id="@+id/tv_nama_poster"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test0206"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:fontFamily="@font/is_sb"/>
+
+            <TextView
+                android:id="@+id/tv_tanggal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2 jam yang lalu"
+                android:textColor="#858891"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/is_r"/>
+        </LinearLayout>
+
+        <!-- Ganti icon_more dengan icon_settings atau buat drawable sederhana -->
+        <ImageView
+            android:id="@+id/icon_more"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_settings"
+            android:contentDescription="Menu lainnya"/>
+    </LinearLayout>
+
+    <!-- Badge Kategori -->
+    <TextView
+        android:id="@+id/badge_kategori"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp"
+        android:text="Lost&amp;Found"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:background="@drawable/badge_green"
+        android:fontFamily="@font/is_sb"/>
+
+    <!-- Judul Post -->
+    <TextView
+        android:id="@+id/tv_judul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Kunci Motor Hilang di Area Kampus"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:fontFamily="@font/is_sb"/>
+
+    <!-- Deskripsi Post -->
+    <TextView
+        android:id="@+id/tv_deskripsi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Hilang kunci motor Honda Beat warna hitam di parkiran gedung TI..."
+        android:textColor="#B0B3B8"
+        android:textSize="14sp"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:fontFamily="@font/is_r"/>
+
+    <!-- Gambar Post (jika ada) -->
+    <ImageView
+        android:id="@+id/image_post"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="12dp"
+        android:scaleType="centerCrop"
+        android:background="#2D3748"
+        android:visibility="gone"
+        android:contentDescription="Gambar postingan"/>
+
+    <!-- Stats Post -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_like"
+                android:contentDescription="Suka"/>
+
+            <TextView
+                android:id="@+id/tv_likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="24"
+                android:textColor="#858891"
+                android:textSize="12sp"
+                android:fontFamily="@font/is_r"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_comment"
+                android:contentDescription="Komentar"/>
+
+            <TextView
+                android:id="@+id/tv_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="8"
+                android:textColor="#858891"
+                android:textSize="12sp"
+                android:fontFamily="@font/is_r"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_share"
+                android:contentDescription="Bagikan"/>
+
+            <TextView
+                android:id="@+id/tv_shares"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="3"
+                android:textColor="#858891"
+                android:textSize="12sp"
+                android:fontFamily="@font/is_r"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

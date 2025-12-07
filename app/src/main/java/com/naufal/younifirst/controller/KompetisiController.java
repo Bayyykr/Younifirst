@@ -31,41 +31,49 @@ public class KompetisiController {
                 try {
                     Log.d(TAG, "Raw API Response: " + result);
 
-                    JSONObject response = new JSONObject(result);
-
-                    // 🔥 CEK STRUKTUR RESPONSE
-                    Log.d(TAG, "Response keys: " + response.toString());
-
                     List<Kompetisi> confirmedCompetitions = new ArrayList<>();
 
-                    // Kemungkinan 1: Response langsung array
-                    if (response.has("competitions")) {
-                        JSONArray competitionsArray = response.getJSONArray("competitions");
-                        Log.d(TAG, "Found 'competitions' array, size: " + competitionsArray.length());
-                        processCompetitionsArray(competitionsArray, confirmedCompetitions);
-                    }
-                    // Kemungkinan 2: Response ada "data" field
-                    else if (response.has("data")) {
-                        JSONArray dataArray = response.getJSONArray("data");
-                        Log.d(TAG, "Found 'data' array, size: " + dataArray.length());
-                        processCompetitionsArray(dataArray, confirmedCompetitions);
-                    }
-                    // Kemungkinan 3: Response langsung array tanpa wrapper
-                    else {
-                        try {
-                            // Coba parse langsung sebagai array
-                            JSONArray jsonArray = new JSONArray(result);
-                            Log.d(TAG, "Response is direct array, size: " + jsonArray.length());
-                            processCompetitionsArray(jsonArray, confirmedCompetitions);
-                        } catch (JSONException e) {
-                            Log.e(TAG, "Response is not an array", e);
+                    // Coba berbagai format response
+                    JSONArray competitionsArray = null;
+
+                    try {
+                        JSONObject response = new JSONObject(result);
+
+                        // Kemungkinan 1: Response ada "data" field
+                        if (response.has("data")) {
+                            competitionsArray = response.getJSONArray("data");
+                            Log.d(TAG, "Found 'data' array, size: " + competitionsArray.length());
                         }
+                        // Kemungkinan 2: Response ada "competitions" field
+                        else if (response.has("competitions")) {
+                            competitionsArray = response.getJSONArray("competitions");
+                            Log.d(TAG, "Found 'competitions' array, size: " + competitionsArray.length());
+                        }
+                        // Kemungkinan 3: Response langsung array
+                        else if (response.has("kompetisi")) {
+                            competitionsArray = response.getJSONArray("kompetisi");
+                            Log.d(TAG, "Found 'kompetisi' array, size: " + competitionsArray.length());
+                        }
+                    } catch (JSONException e1) {
+                        // Coba parse langsung sebagai array
+                        try {
+                            competitionsArray = new JSONArray(result);
+                            Log.d(TAG, "Response is direct array, size: " + competitionsArray.length());
+                        } catch (JSONException e2) {
+                            Log.e(TAG, "Response is not a valid JSON object or array", e2);
+                        }
+                    }
+
+                    if (competitionsArray != null && competitionsArray.length() > 0) {
+                        processCompetitionsArray(competitionsArray, confirmedCompetitions);
+                    } else {
+                        Log.w(TAG, "No competitions data found in response");
                     }
 
                     Log.d(TAG, "Total confirmed competitions: " + confirmedCompetitions.size());
                     callback.onSuccess(confirmedCompetitions);
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     Log.e(TAG, "Error parsing JSON", e);
                     callback.onFailure("Error parsing data: " + e.getMessage());
                 }
@@ -85,31 +93,87 @@ public class KompetisiController {
                 JSONObject compJson = competitionsArray.getJSONObject(i);
 
                 // 🔥 LOG SEMUA DATA UNTUK DEBUG
-                logAllData(compJson, i);
+                logCompetitionData(compJson, i);
 
-                // 🔥 PASTIKAN KOLOM PENYELENGGARA DAN HARGA_LOMBA ADA
+                // Pastikan field penting ada
                 ensureRequiredFields(compJson);
 
-                // 🔥 FIX POSTER URL JIKA PERLU
-                fixPosterUrl(compJson);
+                try {
+                    // Buat objek Kompetisi
+                    Kompetisi competition = new Kompetisi(compJson);
 
-                // Buat objek Kompetisi
-                Kompetisi competition = new Kompetisi(compJson);
+                    // Log data setelah parsing
+                    Log.d(TAG, "Parsed competition " + i + ":");
+                    Log.d(TAG, "  - Nama: " + competition.getNamaLomba());
+                    Log.d(TAG, "  - Poster URL: " + competition.getPoster());
+                    Log.d(TAG, "  - Status: " + competition.getStatus());
 
-                // Log data setelah parsing
-                Log.d(TAG, "Parsed competition " + i + ":");
-                Log.d(TAG, "  - Nama: " + competition.getNamaLomba());
-                Log.d(TAG, "  - Penyelenggara: " + competition.getPenyelenggara());
-                Log.d(TAG, "  - Harga: " + competition.getHargaLomba());
-                Log.d(TAG, "  - Status: " + competition.getStatus());
+                    // Filter hanya yang status "confirm"
+                    if (competition.isConfirmed()) {
+                        confirmedCompetitions.add(competition);
+                        Log.d(TAG, "  ✅ Ditambahkan ke confirmed competitions");
+                    } else {
+                        Log.d(TAG, "  ⏭ Lewati - status: " + competition.getStatus());
+                    }
 
-                // Filter hanya yang status "confirm"
-                if ("confirm".equalsIgnoreCase(competition.getStatus())) {
-                    confirmedCompetitions.add(competition);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error creating Kompetisi object for index " + i, e);
                 }
             }
         } catch (JSONException e) {
             Log.e(TAG, "Error processing competitions array", e);
+        }
+    }
+
+    private void logCompetitionData(JSONObject compJson, int index) {
+        try {
+            Log.d(TAG, "=== Competition Data [" + index + "] ===");
+            for (String key : new String[]{
+                    "lomba_id",
+                    "nama_lomba",
+                    "tanggal_lomba",
+                    "lokasi",
+                    "kategori",
+                    "poster",
+                    "poster_lomba",
+                    "status",
+                    "scope",
+                    "deskripsi",
+                    "hadiah",
+                    "lomba_type",
+                    "biaya",
+                    "penyelenggara",
+                    "harga_lomba"
+            }) {
+                if (compJson.has(key)) {
+                    String value = compJson.optString(key, "NULL");
+                    Log.d(TAG, key + ": " + value);
+                }
+            }
+            Log.d(TAG, "=== END Competition Data ===");
+        } catch (Exception e) {
+            Log.e(TAG, "Error logging competition data", e);
+        }
+    }
+
+    private void ensureRequiredFields(JSONObject compJson) throws JSONException {
+        // Tambahkan field jika tidak ada
+        if (!compJson.has("penyelenggara")) {
+            compJson.put("penyelenggara", "Tidak diketahui");
+        }
+
+        if (!compJson.has("harga_lomba")) {
+            // Coba ambil dari biaya jika ada
+            String biaya = compJson.optString("biaya", "0");
+            compJson.put("harga_lomba", biaya);
+        }
+
+        if (!compJson.has("scope")) {
+            compJson.put("scope", "Nasional");
+        }
+
+        if (!compJson.has("lomba_type")) {
+            compJson.put("lomba_type", "Individu");
         }
     }
 
@@ -142,21 +206,6 @@ public class KompetisiController {
             }
         } catch (Exception e) {
             Log.e(TAG, "Error logging data", e);
-        }
-    }
-
-    private void ensureRequiredFields(JSONObject compJson) throws JSONException {
-        // 🔥 TAMBAHKAN FIELD JIKA TIDAK ADA
-        if (!compJson.has("penyelenggara")) {
-            compJson.put("penyelenggara", "Tidak diketahui");
-            Log.d(TAG, "Added missing 'penyelenggara' field");
-        }
-
-        if (!compJson.has("harga_lomba")) {
-            // Coba ambil dari biaya jika ada
-            String biaya = compJson.optString("biaya", "0");
-            compJson.put("harga_lomba", biaya);
-            Log.d(TAG, "Added missing 'harga_lomba' field with value: " + biaya);
         }
     }
 

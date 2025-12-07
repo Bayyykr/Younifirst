@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -76,7 +77,6 @@ public class TambahPostingLomba extends AppCompatActivity {
         setupHintTexts();
         setupListeners();
         setupImagePicker();
-        setupProfileImagePicker();
         setupDatePicker();
         setupCategorySelection();
         setupTagSelection();
@@ -91,7 +91,7 @@ public class TambahPostingLomba extends AppCompatActivity {
         etLinkPanduanatauGuidebookLomba = findViewById(R.id.et_linkPanduanatauGuidebookLomba);
         etMasukkanHadiahPerlombaan = findViewById(R.id.et_masukkanhadiahperlombaan);
         etNamaPenyelenggara = findViewById(R.id.et_namaPenyelenggara);
-        etLinkProfilePenyelenggara = findViewById(R.id.et_linkProfilePenyelenggara);
+//        etLinkProfilePenyelenggara = findViewById(R.id.et_linkProfilePenyelenggara);
         etMasukkanNoWhatsApp = findViewById(R.id.et_masukkanNoWhatsApp);
         etMasukkanUsernameIG = findViewById(R.id.et_masukkanusernameig);
         etKeterangan = findViewById(R.id.et_keterangan);
@@ -207,38 +207,6 @@ public class TambahPostingLomba extends AppCompatActivity {
         imgProfile.setOnClickListener(v -> pickImageLauncher.launch("image/*"));
     }
 
-    private void setupProfileImagePicker() {
-        pickProfileImageLauncher = registerForActivityResult(
-                new ActivityResultContracts.GetContent(),
-                uri -> {
-                    if (uri != null) {
-                        selectedProfileUri = uri;
-                        ImageView profileImage = findViewById(R.id.profile);
-                        if (profileImage != null) {
-                            profileImage.setImageURI(uri);
-                            Log.d("PROFILE_IMAGE", "Profile image selected: " + uri.toString());
-                        }
-                    }
-                }
-        );
-
-        Button btnTambahHari = findViewById(R.id.btnTambahHari);
-        if (btnTambahHari != null) {
-            btnTambahHari.setOnClickListener(v -> {
-                Log.d("PROFILE_IMAGE", "Opening gallery for profile image");
-                pickProfileImageLauncher.launch("image/*");
-            });
-        }
-
-        ImageView profileImageView = findViewById(R.id.profile);
-        if (profileImageView != null) {
-            profileImageView.setOnClickListener(v -> {
-                Log.d("PROFILE_IMAGE", "Profile image clicked, opening gallery");
-                pickProfileImageLauncher.launch("image/*");
-            });
-        }
-    }
-
     private void setupDatePicker() {
         tglbataspendaftaran.setFocusable(false);
         tglbataspendaftaran.setOnCustomClickListener(v -> showDatePicker());
@@ -326,21 +294,25 @@ public class TambahPostingLomba extends AppCompatActivity {
         // Validasi input
         if (TextUtils.isEmpty(etNamaLomba.getText().toString().trim())) {
             etNamaLomba.setError("Nama lomba harus diisi");
+            etNamaLomba.requestFocus();
             return;
         }
 
         if (TextUtils.isEmpty(etLokasiLomba.getText().toString().trim())) {
             etLokasiLomba.setError("Lokasi lomba harus diisi");
+            etLokasiLomba.requestFocus();
             return;
         }
 
         if (TextUtils.isEmpty(tglbataspendaftaran.getText().toString().trim())) {
             tglbataspendaftaran.setError("Tanggal batas pendaftaran harus diisi");
+            tglbataspendaftaran.requestFocus();
             return;
         }
 
         if (TextUtils.isEmpty(etNamaPenyelenggara.getText().toString().trim())) {
             etNamaPenyelenggara.setError("Nama penyelenggara harus diisi");
+            etNamaPenyelenggara.requestFocus();
             return;
         }
 
@@ -349,8 +321,15 @@ public class TambahPostingLomba extends AppCompatActivity {
             return;
         }
 
-        // Tampilkan loading
-        Toast.makeText(this, "Mengunggah data...", Toast.LENGTH_SHORT).show();
+        // Validasi tambahan untuk link pendaftaran
+        if (TextUtils.isEmpty(etLinkPendaftaran.getText().toString().trim())) {
+            etLinkPendaftaran.setError("Link pendaftaran harus diisi");
+            etLinkPendaftaran.requestFocus();
+            return;
+        }
+
+        // Tampilkan loading dialog
+        showLoadingDialog("Mengunggah data lomba...");
 
         // Konversi tag menjadi string
         String kategori = TextUtils.join(", ", selectedTags);
@@ -388,22 +367,44 @@ public class TambahPostingLomba extends AppCompatActivity {
         if (selectedBiayaType.equals("berbayar") &&
                 !TextUtils.isEmpty(etBiayaPendaftaran.getText().toString().trim())) {
             harga_lomba = etBiayaPendaftaran.getText().toString().trim();
+
+            // Validasi format harga jika berbayar
+            try {
+                String cleanHarga = harga_lomba.replace(".", "").replace(",", "").trim();
+                Integer.parseInt(cleanHarga);
+            } catch (NumberFormatException e) {
+                hideLoadingDialog();
+                etBiayaPendaftaran.setError("Format harga tidak valid");
+                etBiayaPendaftaran.requestFocus();
+                return;
+            }
         }
 
         // Dapatkan user_id dari ApiHelper
         String userId = ApiHelper.getSavedUserId();
+
         if (TextUtils.isEmpty(userId)) {
-            userId = "A00847458";
+            hideLoadingDialog();
+            Toast.makeText(this, "Silakan login terlebih dahulu", Toast.LENGTH_LONG).show();
+            finish();
+            return;
         }
 
         try {
             // Konversi URI ke File untuk poster lomba
-            File posterFile = createFileFromUri(selectedImageUri, "poster_lomba.jpg");
+            File posterFile = createFileFromUri(selectedImageUri, "poster_lomba_" + System.currentTimeMillis() + ".jpg");
+
+            if (posterFile == null || !posterFile.exists()) {
+                hideLoadingDialog();
+                Toast.makeText(this, "Gagal membuat file poster", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             // Kirim data ke API menggunakan metode yang sudah ada di ApiHelper
             sendKompetisiData(posterFile, kategori, hadiah, biaya, harga_lomba, userId);
 
         } catch (Exception e) {
+            hideLoadingDialog();
             Log.e("VALIDATION", "Error creating file", e);
             Toast.makeText(this, "Terjadi kesalahan: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -413,18 +414,25 @@ public class TambahPostingLomba extends AppCompatActivity {
                                    String biaya, String harga_lomba, String userId) {
 
         // Debug log
+        Log.d("KOMPETISI_DATA", "=== DATA YANG AKAN DIKIRIM ===");
         Log.d("KOMPETISI_DATA", "User ID: " + userId);
+        Log.d("KOMPETISI_DATA", "Nama Lomba: " + etNamaLomba.getText().toString().trim());
         Log.d("KOMPETISI_DATA", "Lomba Type: " + selectedLombaType);
         Log.d("KOMPETISI_DATA", "Scope: " + selectedScope);
         Log.d("KOMPETISI_DATA", "Biaya: " + selectedBiayaType);
         Log.d("KOMPETISI_DATA", "Kategori: " + kategori);
+        Log.d("KOMPETISI_DATA", "Hadiah: " + hadiah);
+        Log.d("KOMPETISI_DATA", "Harga: " + harga_lomba);
+        Log.d("KOMPETISI_DATA", "Poster File: " + (posterFile != null ? posterFile.getAbsolutePath() : "null"));
+        Log.d("KOMPETISI_DATA", "File exists: " + (posterFile != null && posterFile.exists()));
+        Log.d("KOMPETISI_DATA", "File size: " + (posterFile != null ? posterFile.length() + " bytes" : "0"));
 
         // Hitung harga sebagai integer
         int hargaInt = 0;
         if (!TextUtils.isEmpty(harga_lomba)) {
             try {
                 // Hapus titik jika ada (misal: 100.000)
-                String cleanHarga = harga_lomba.replace(".", "").replace(",", "");
+                String cleanHarga = harga_lomba.replace(".", "").replace(",", "").trim();
                 hargaInt = Integer.parseInt(cleanHarga);
                 Log.d("KOMPETISI_DATA", "Harga parsed: " + hargaInt);
             } catch (NumberFormatException e) {
@@ -435,7 +443,9 @@ public class TambahPostingLomba extends AppCompatActivity {
 
         // Validasi user_id
         if (TextUtils.isEmpty(userId)) {
+            hideLoadingDialog();
             Toast.makeText(this, "Silakan login terlebih dahulu", Toast.LENGTH_LONG).show();
+            finish();
             return;
         }
 
@@ -462,7 +472,9 @@ public class TambahPostingLomba extends AppCompatActivity {
                     @Override
                     public void onSuccess(String result) {
                         runOnUiThread(() -> {
+                            hideLoadingDialog();
                             Log.d("API_SUCCESS", "Response: " + result);
+
                             try {
                                 JSONObject response = new JSONObject(result);
                                 boolean success = response.optBoolean("success", false);
@@ -478,23 +490,43 @@ public class TambahPostingLomba extends AppCompatActivity {
                                     setResult(RESULT_OK, resultIntent);
 
                                     // Tunggu sebentar sebelum close
-                                    new Handler().postDelayed(() -> finish(), 1500);
+                                    new Handler().postDelayed(() -> {
+                                        finish();
+                                    }, 1500);
                                 } else {
+                                    // Coba parse error detail
+                                    String errorDetail = "";
+                                    if (response.has("errors")) {
+                                        JSONObject errors = response.getJSONObject("errors");
+                                        errorDetail = errors.toString();
+                                    }
+
                                     Toast.makeText(TambahPostingLomba.this,
-                                            "❌ Gagal memposting: " + message,
+                                            "❌ Gagal memposting: " + message +
+                                                    (errorDetail.isEmpty() ? "" : "\n" + errorDetail),
                                             Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {
                                 Log.e("API_RESPONSE", "Error parsing JSON", e);
-                                // Jika response bukan JSON, anggap berhasil
-                                Toast.makeText(TambahPostingLomba.this,
-                                        "✅ Berhasil diposting!",
-                                        Toast.LENGTH_SHORT).show();
 
-                                Intent resultIntent = new Intent();
-                                resultIntent.putExtra("posted", true);
-                                setResult(RESULT_OK, resultIntent);
-                                finish();
+                                // Cek jika response mengandung pesan sukses meski bukan JSON
+                                if (result.contains("success") || result.contains("berhasil")) {
+                                    Toast.makeText(TambahPostingLomba.this,
+                                            "✅ Berhasil diposting!",
+                                            Toast.LENGTH_SHORT).show();
+
+                                    Intent resultIntent = new Intent();
+                                    resultIntent.putExtra("posted", true);
+                                    setResult(RESULT_OK, resultIntent);
+
+                                    new Handler().postDelayed(() -> {
+                                        finish();
+                                    }, 1500);
+                                } else {
+                                    Toast.makeText(TambahPostingLomba.this,
+                                            "❌ Respons tidak valid dari server",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
@@ -502,9 +534,23 @@ public class TambahPostingLomba extends AppCompatActivity {
                     @Override
                     public void onFailure(String error) {
                         runOnUiThread(() -> {
+                            hideLoadingDialog();
                             Log.e("API_ERROR", "Upload failed: " + error);
+
+                            // Handle specific errors
+                            String errorMessage = "❌ Gagal mengunggah: ";
+                            if (error.contains("Network") || error.contains("timeout")) {
+                                errorMessage += "Koneksi internet bermasalah";
+                            } else if (error.contains("404") || error.contains("Not Found")) {
+                                errorMessage += "Endpoint tidak ditemukan";
+                            } else if (error.contains("500") || error.contains("Internal Server")) {
+                                errorMessage += "Server sedang bermasalah";
+                            } else {
+                                errorMessage += error;
+                            }
+
                             Toast.makeText(TambahPostingLomba.this,
-                                    "❌ Gagal mengunggah: " + error,
+                                    errorMessage,
                                     Toast.LENGTH_LONG).show();
                         });
                     }
@@ -512,23 +558,85 @@ public class TambahPostingLomba extends AppCompatActivity {
         );
     }
 
-    private File createFileFromUri(Uri uri, String fileName) throws Exception {
-        InputStream inputStream = getContentResolver().openInputStream(uri);
-        File file = new File(getCacheDir(), fileName);
-        FileOutputStream outputStream = new FileOutputStream(file);
+    // Helper method untuk loading dialog
+    private void showLoadingDialog(String message) {
+        runOnUiThread(() -> {
+            // Anda bisa menggunakan ProgressDialog atau ProgressBar
+            // Contoh sederhana dengan Toast
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = inputStream.read(buffer)) > 0) {
-            outputStream.write(buffer, 0, length);
+            // Atau jika ingin menggunakan ProgressDialog (deprecated tapi masih bisa dipakai)
+        /*
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage(message);
+            progressDialog.setCancelable(false);
         }
+        progressDialog.show();
+        */
+        });
+    }
 
-        outputStream.close();
-        inputStream.close();
+    private void hideLoadingDialog() {
+        runOnUiThread(() -> {
+            // Hilangkan loading
+        /*
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        */
+        });
+    }
 
-        Log.d("FILE_CREATION", "File created: " + file.getAbsolutePath() +
-                ", size: " + file.length() + " bytes");
+    // Perbaiki method createFileFromUri
+    private File createFileFromUri(Uri uri, String fileName) throws Exception {
+        InputStream inputStream = null;
+        FileOutputStream outputStream = null;
 
-        return file;
+        try {
+            inputStream = getContentResolver().openInputStream(uri);
+            if (inputStream == null) {
+                throw new Exception("Tidak dapat membuka file dari URI");
+            }
+
+            File file = new File(getCacheDir(), fileName);
+            outputStream = new FileOutputStream(file);
+
+            byte[] buffer = new byte[4096];
+            int length;
+            long totalBytes = 0;
+
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+                totalBytes += length;
+
+                // Batasi ukuran file jika perlu (misal max 5MB)
+                if (totalBytes > 5 * 1024 * 1024) {
+                    throw new Exception("File terlalu besar (max 5MB)");
+                }
+            }
+
+            outputStream.flush();
+
+            Log.d("FILE_CREATION", "File created: " + file.getAbsolutePath() +
+                    ", size: " + file.length() + " bytes");
+
+            return file;
+
+        } catch (Exception e) {
+            Log.e("FILE_CREATION", "Error creating file: " + e.getMessage());
+            throw e;
+        } finally {
+            try {
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                Log.e("FILE_CREATION", "Error closing streams: " + e.getMessage());
+            }
+        }
     }
 }

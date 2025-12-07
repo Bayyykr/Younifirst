@@ -86,103 +86,100 @@
                 android:src="@drawable/tryposter" />
         </androidx.cardview.widget.CardView>
 
-        <!-- Role & Member Info Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="12dp"
-            android:gravity="center_horizontal">
+            android:gravity="center">
 
+            <!-- ROLE SECTION -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <!-- Role Section -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
 
-                    <LinearLayout
+                    <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="35dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/icon_role" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Dibutuhkan"
-                            android:textColor="#7FFFFFFF"
-                            android:textSize="12sp"/>
-                    </LinearLayout>
+                        android:layout_height="35dp"
+                        android:src="@drawable/icon_role" />
 
                     <TextView
-                        android:id="@+id/text_role"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="UI/UX Designer"
-                        android:gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:textColor="#FFFFFFFF"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/is_m"/>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="#FFFFFF" />
+                        android:layout_height="wrap_content"
+                        android:text="Dibutuhkan"
+                        android:textColor="#7FFFFFFF"
+                        android:textSize="12sp"/>
                 </LinearLayout>
 
-                <!-- Member Section -->
-                <LinearLayout
+                <TextView
+                    android:id="@+id/text_role"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="10dp"
+                    android:text="UI/UX Designer"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/is_m"/>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="35dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/icon_team" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Member saat ini"
-                            android:textColor="#7FFFFFFF"
-                            android:textSize="12sp"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/text_member"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="3/4"
-                        android:gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:textColor="#FFFFFFFF"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/is_m"/>
-                </LinearLayout>
             </LinearLayout>
+
+            <!-- DIVIDER -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="#40FFFFFF" />
+
+            <!-- MEMBER SECTION -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:src="@drawable/icon_team" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Member saat ini"
+                        android:textColor="#7FFFFFFF"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_member"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="3/4"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/is_m"/>
+            </LinearLayout>
+
         </LinearLayout>
 
         <!-- Join Button -->

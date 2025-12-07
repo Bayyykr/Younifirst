@@ -1,28 +1,49 @@
 package com.naufal.younifirst.Home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.naufal.younifirst.Kompetisi.BuatTim;
 import com.naufal.younifirst.R;
+import com.naufal.younifirst.api.ApiHelper;
 import com.naufal.younifirst.custom.CustomEditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class PengaturanActivity extends AppCompatActivity {
+    private static final String TAG = "PengaturanActivity";
+
+    // UI untuk pengaturan
     private SwitchCompat switchtema, switchnotifikasi;
     private ImageButton btnSettingProfile;
     private CustomEditText etDeskripsiMasukan;
@@ -31,35 +52,523 @@ public class PengaturanActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_GALLERY = 101;
     private ArrayList<Uri> imageUris = new ArrayList<>();
 
+    // UI untuk postingan
+    private RecyclerView recyclerViewPostingan;
+    private ProgressBar progressBar;
+    private LinearLayout layoutEmpty;
+    private TextView tabLostFound, tabTim;
+    private String currentKategori = "Lost&Found";
+
+    // Data
+    private List<PostinganItem> postinganList = new ArrayList<>();
+    private PostinganAdapter adapter;
+
+    // User info
+    private String currentUserId = "";
+    private String currentUserName = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize ApiHelper
+        ApiHelper.initialize(getApplicationContext());
+
+        // Get current user info
+        currentUserId = ApiHelper.getSavedUserId();
+        currentUserName = ApiHelper.getSavedUserName();
+
+        Log.d(TAG, "👤 Current User - ID: " + currentUserId + ", Name: " + currentUserName);
+
+        if (currentUserId.isEmpty()) {
+            Toast.makeText(this, "Silakan login terlebih dahulu", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         showPengaturanLayout();
     }
 
+    // ==================== PENGATURAN LAYOUT ====================
     private void showPengaturanLayout() {
         setContentView(R.layout.layout_pengaturan);
 
+        // Inisialisasi komponen pengaturan
         switchtema = findViewById(R.id.switch_tema);
         switchnotifikasi = findViewById(R.id.switch_notifikasi);
         btnSettingProfile = findViewById(R.id.btn_setting_profile);
         ImageView backButtonMain = findViewById(R.id.back_to_mainactivity);
         LinearLayout bantuanDanMasukkan = findViewById(R.id.bantuandanmasukkan);
+        LinearLayout layoutPostingan = findViewById(R.id.layout_postingan);
 
-        int[][] states = new int[][]{
-                new int[]{android.R.attr.state_checked},
-                new int[]{}
-        };
+        // Warna switch
+        int[][] states = new int[][]{new int[]{android.R.attr.state_checked}, new int[]{}};
         int[] trackColors = new int[]{Color.WHITE, Color.WHITE};
-        ColorStateList customTrackTint = new ColorStateList(states, trackColors);
-        switchtema.setTrackTintList(customTrackTint);
-        switchnotifikasi.setTrackTintList(customTrackTint);
+        switchtema.setTrackTintList(new ColorStateList(states, trackColors));
+        switchnotifikasi.setTrackTintList(new ColorStateList(states, trackColors));
 
+        // Click listeners
         btnSettingProfile.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
         backButtonMain.setOnClickListener(v -> finish());
         bantuanDanMasukkan.setOnClickListener(v -> showBantuanLayout());
+
+        // Navigasi ke postingan Anda
+        if (layoutPostingan != null) {
+            layoutPostingan.setOnClickListener(v -> showPostinganLayout());
+        }
     }
 
+    // ==================== POSTINGAN LAYOUT ====================
+    private void showPostinganLayout() {
+        setContentView(R.layout.layout_postingan_anda);
+
+        Log.d(TAG, "🎯 Show Postingan Layout for user: " + currentUserName);
+
+        // Inisialisasi view
+        ImageView backButton = findViewById(R.id.back_to_mainactivity);
+        progressBar = findViewById(R.id.progress_bar);
+        layoutEmpty = findViewById(R.id.layout_empty);
+        recyclerViewPostingan = findViewById(R.id.recyclerView_postingan);
+        tabLostFound = findViewById(R.id.tab_lostfound);
+        tabTim = findViewById(R.id.tab_tim);
+        Button btnBuatPostingan = findViewById(R.id.btn_buat_postingan);
+
+        // Setup recyclerview
+        recyclerViewPostingan.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new PostinganAdapter(this, postinganList);
+        recyclerViewPostingan.setAdapter(adapter);
+
+        // Setup tabs
+        setupTabNavigation();
+        setActiveTab(tabLostFound);
+
+        // Click listeners
+        backButton.setOnClickListener(v -> showPengaturanLayout());
+
+        if (btnBuatPostingan != null) {
+            btnBuatPostingan.setOnClickListener(v -> {
+                Intent intent = new Intent(PengaturanActivity.this, BuatTim.class);
+                startActivity(intent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            });
+        }
+
+        // Load data
+        loadPostinganData();
+    }
+
+    private void setupTabNavigation() {
+        tabLostFound.setOnClickListener(v -> {
+            if (!"Lost&Found".equals(currentKategori)) {
+                currentKategori = "Lost&Found";
+                setActiveTab(tabLostFound);
+                loadPostinganData();
+            }
+        });
+
+        tabTim.setOnClickListener(v -> {
+            if (!"Tim".equals(currentKategori)) {
+                currentKategori = "Tim";
+                setActiveTab(tabTim);
+                loadPostinganData();
+            }
+        });
+    }
+
+    private void setActiveTab(TextView activeTab) {
+        // Reset semua tab
+        tabLostFound.setTextColor(Color.parseColor("#858891"));
+        tabTim.setTextColor(Color.parseColor("#858891"));
+        tabLostFound.setBackgroundColor(Color.parseColor("#1A2340"));
+        tabTim.setBackgroundColor(Color.parseColor("#1A2340"));
+
+        // Set tab aktif
+        if (activeTab.getId() == R.id.tab_lostfound) {
+            tabLostFound.setTextColor(Color.WHITE);
+            tabLostFound.setBackgroundColor(Color.parseColor("#2D3748"));
+        } else {
+            tabTim.setTextColor(Color.WHITE);
+            tabTim.setBackgroundColor(Color.parseColor("#2D3748"));
+        }
+    }
+
+    // ==================== LOAD DATA - SIMPLE & WORKING ====================
+    private void loadPostinganData() {
+        Log.d(TAG, "🔄 Loading data for kategori: " + currentKategori);
+
+        if (currentUserId.isEmpty()) {
+            Toast.makeText(this, "Silakan login terlebih dahulu", Toast.LENGTH_SHORT).show();
+            showEmptyState("Silakan login untuk melihat postingan Anda");
+            return;
+        }
+
+        showLoading(true);
+
+        // Gunakan method fetchPostinganSimple dari ApiHelper
+        ApiHelper.fetchPostinganSimple(currentKategori, new ApiHelper.ApiCallback() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d(TAG, "✅ API Success, processing data...");
+                processData(result);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.e(TAG, "❌ API Error: " + error);
+                runOnUiThread(() -> {
+                    showLoading(false);
+                    loadDummyData();
+                    Toast.makeText(PengaturanActivity.this,
+                            "Menggunakan data contoh", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+    private void processData(String result) {
+        runOnUiThread(() -> {
+            try {
+                JSONObject json = new JSONObject(result);
+                boolean success = json.optBoolean("success", false);
+
+                if (success) {
+                    JSONArray dataArray = json.optJSONArray("data");
+
+                    if (dataArray != null && dataArray.length() > 0) {
+                        List<PostinganItem> userPosts = new ArrayList<>();
+                        int totalPosts = dataArray.length();
+                        int userPostCount = 0;
+                        int kategoriMatchCount = 0;
+
+                        Log.d(TAG, "📊 Found " + totalPosts + " total posts");
+
+                        for (int i = 0; i < dataArray.length(); i++) {
+                            JSONObject item = dataArray.getJSONObject(i);
+
+                            // Cari user_id dengan berbagai kemungkinan key
+                            String itemUserId = "";
+                            if (item.has("user_id")) {
+                                itemUserId = item.optString("user_id", "");
+                            } else if (item.has("userId")) {
+                                itemUserId = item.optString("userId", "");
+                            } else if (item.has("userid")) {
+                                itemUserId = item.optString("userid", "");
+                            } else if (item.has("user")) {
+                                itemUserId = item.optString("user", "");
+                            }
+
+                            String kategori = item.optString("kategori", "");
+                            String judul = item.optString("nama_barang", "No Title");
+
+                            Log.d(TAG, "\n🔍 Post #" + (i+1) + " - Judul: " + judul);
+                            Log.d(TAG, "   👤 User ID: '" + itemUserId + "' vs Current: '" + currentUserId + "'");
+                            Log.d(TAG, "   🏷 Kategori: '" + kategori + "'");
+
+                            // Hanya ambil jika milik user yang login
+                            if (currentUserId.equals(itemUserId)) {
+                                userPostCount++;
+                                Log.d(TAG, "   ✅ IS USER'S POST!");
+
+                                // Filter berdasarkan tab
+                                if (shouldShowInTab(kategori, currentKategori)) {
+                                    kategoriMatchCount++;
+
+                                    PostinganItem post = new PostinganItem();
+                                    post.id = item.optString("id", "");
+                                    post.userId = itemUserId;
+                                    post.nama = item.optString("nama", currentUserName);
+                                    post.kategori = kategori;
+                                    post.judul = judul;
+                                    post.deskripsi = item.optString("deskripsi", "");
+                                    post.tanggal = formatDate(item.optString("created_at", ""));
+                                    post.likes = item.optInt("likes", 0);
+                                    post.comments = item.optInt("comments", 0);
+                                    post.shares = item.optInt("shares", 0);
+
+                                    userPosts.add(post);
+                                    Log.d(TAG, "   ✅ ADDED to list");
+                                } else {
+                                    Log.d(TAG, "   ❌ Kategori mismatch for current tab");
+                                }
+                            } else {
+                                Log.d(TAG, "   ❌ NOT user's post");
+                            }
+                        }
+
+                        Log.d(TAG, "\n📊 SUMMARY:");
+                        Log.d(TAG, "   Total posts: " + totalPosts);
+                        Log.d(TAG, "   User's posts: " + userPostCount);
+                        Log.d(TAG, "   Matching kategori for '" + currentKategori + "': " + kategoriMatchCount);
+
+                        if (userPosts.isEmpty()) {
+                            showEmptyState("Anda belum memiliki postingan " + currentKategori);
+                        } else {
+                            updatePostinganList(userPosts);
+                            Toast.makeText(this,
+                                    "Menampilkan " + userPosts.size() + " postingan Anda",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+                        Log.d(TAG, "📭 No data found in API response");
+                        showEmptyState("Tidak ada data ditemukan");
+                    }
+                } else {
+                    String message = json.optString("message", "No message");
+                    Log.e(TAG, "❌ API success = false: " + message);
+                    showEmptyState("Gagal memuat data: " + message);
+                }
+
+                showLoading(false);
+
+            } catch (Exception e) {
+                Log.e(TAG, "❌ Error processing data: " + e.getMessage());
+                showLoading(false);
+                loadDummyData();
+            }
+        });
+    }
+
+    private boolean shouldShowInTab(String itemKategori, String selectedTab) {
+        if (itemKategori == null || selectedTab == null) return false;
+
+        // Normalize kategori
+        itemKategori = itemKategori.toLowerCase().trim();
+
+        Log.d(TAG, "🔍 Checking kategori - Item: '" + itemKategori + "', Tab: '" + selectedTab + "'");
+
+        if ("Lost&Found".equals(selectedTab)) {
+            // Untuk Lost&Found, terima berbagai variasi
+            boolean shouldShow = itemKategori.contains("lost") ||
+                    itemKategori.contains("found") ||
+                    itemKategori.contains("hilang") ||
+                    itemKategori.contains("temu") ||
+                    itemKategori.equals("lost&found") ||
+                    itemKategori.equals("lostfound") ||
+                    itemKategori.equals("lost found");
+
+            Log.d(TAG, "   ✅ Should show in Lost&Found: " + shouldShow);
+            return shouldShow;
+
+        } else if ("Tim".equals(selectedTab)) {
+            // Untuk Tim, terima berbagai variasi
+            boolean shouldShow = itemKategori.contains("tim") ||
+                    itemKategori.contains("team") ||
+                    itemKategori.contains("kelompok") ||
+                    itemKategori.contains("proyek") ||
+                    itemKategori.contains("project") ||
+                    itemKategori.equals("tim") ||
+                    itemKategori.equals("team");
+
+            Log.d(TAG, "   ✅ Should show in Tim: " + shouldShow);
+            return shouldShow;
+        }
+
+        return false;
+    }
+
+
+    private void loadDummyData() {
+        List<PostinganItem> dummyList = new ArrayList<>();
+
+        if ("Lost&Found".equals(currentKategori)) {
+            dummyList.add(new PostinganItem(
+                    "1", currentUserId, currentUserName, "Lost&Found",
+                    "Kunci Motor Hilang",
+                    "Hilang kunci motor di area kampus",
+                    "2 jam yang lalu", 15, 5, 2
+            ));
+            dummyList.add(new PostinganItem(
+                    "2", currentUserId, currentUserName, "Lost&Found",
+                    "Dompet Ditemukan",
+                    "Menemukan dompet di kantin pusat",
+                    "1 hari yang lalu", 24, 8, 3
+            ));
+        } else {
+            dummyList.add(new PostinganItem(
+                    "3", currentUserId, currentUserName, "Tim",
+                    "Mencari Frontend Developer",
+                    "Untuk project mobile app development",
+                    "2 hari yang lalu", 32, 12, 5
+            ));
+            dummyList.add(new PostinganItem(
+                    "4", currentUserId, currentUserName, "Tim",
+                    "Butuh UI/UX Designer",
+                    "Startup edutech mencari designer",
+                    "3 hari yang lalu", 18, 6, 1
+            ));
+        }
+
+        updatePostinganList(dummyList);
+    }
+
+    private void updatePostinganList(List<PostinganItem> newList) {
+        postinganList.clear();
+        postinganList.addAll(newList);
+        adapter.notifyDataSetChanged();
+
+        if (postinganList.isEmpty()) {
+            showEmptyState("Anda belum memiliki postingan " + currentKategori);
+        } else {
+            recyclerViewPostingan.setVisibility(View.VISIBLE);
+            layoutEmpty.setVisibility(View.GONE);
+        }
+    }
+
+    private void showLoading(boolean show) {
+        if (show) {
+            progressBar.setVisibility(View.VISIBLE);
+            recyclerViewPostingan.setVisibility(View.GONE);
+            layoutEmpty.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    private void showEmptyState(String message) {
+        progressBar.setVisibility(View.GONE);
+        recyclerViewPostingan.setVisibility(View.GONE);
+        layoutEmpty.setVisibility(View.VISIBLE);
+
+        TextView tvMessage = layoutEmpty.findViewById(R.id.tv_empty_message);
+        if (tvMessage != null) {
+            tvMessage.setText(message);
+        }
+    }
+
+    private String formatDate(String dateStr) {
+        if (dateStr == null || dateStr.isEmpty()) {
+            return "Baru saja";
+        }
+
+        try {
+            // Format sederhana: "2024-01-15" -> "15 Jan"
+            String[] parts = dateStr.split(" ")[0].split("-");
+            if (parts.length >= 3) {
+                String[] months = {"Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+                        "Jul", "Agu", "Sep", "Okt", "Nov", "Des"};
+                int monthIdx = Integer.parseInt(parts[1]) - 1;
+                if (monthIdx >= 0 && monthIdx < 12) {
+                    return parts[2] + " " + months[monthIdx];
+                }
+            }
+            return dateStr;
+        } catch (Exception e) {
+            return dateStr;
+        }
+    }
+
+    // ==================== DATA CLASS ====================
+    class PostinganItem {
+        String id;
+        String userId;
+        String nama;
+        String kategori;
+        String judul;
+        String deskripsi;
+        String tanggal;
+        int likes;
+        int comments;
+        int shares;
+
+        PostinganItem() {}
+
+        PostinganItem(String id, String userId, String nama, String kategori,
+                      String nama_barang, String deskripsi, String tanggal,
+                      int likes, int comments, int shares) {
+            this.id = id;
+            this.userId = userId;
+            this.nama = nama;
+            this.kategori = kategori;
+            this.judul = judul;
+            this.deskripsi = deskripsi;
+            this.tanggal = tanggal;
+            this.likes = likes;
+            this.comments = comments;
+            this.shares = shares;
+        }
+    }
+
+    // ==================== ADAPTER ====================
+    class PostinganAdapter extends RecyclerView.Adapter<PostinganAdapter.ViewHolder> {
+        private Context context;
+        private List<PostinganItem> itemList;
+
+        public PostinganAdapter(Context context, List<PostinganItem> itemList) {
+            this.context = context;
+            this.itemList = itemList;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_postingan, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            PostinganItem item = itemList.get(position);
+
+            // Set data
+            holder.tvNamaPoster.setText(item.nama);
+            holder.tvTanggal.setText(item.tanggal);
+            holder.tvJudul.setText(item.judul);
+            holder.tvDeskripsi.setText(item.deskripsi);
+            holder.tvLikes.setText(String.valueOf(item.likes));
+            holder.tvComments.setText(String.valueOf(item.comments));
+            holder.tvShares.setText(String.valueOf(item.shares));
+
+            // Badge kategori
+            if (item.kategori != null && !item.kategori.isEmpty()) {
+                holder.badgeKategori.setText(item.kategori);
+                holder.badgeKategori.setVisibility(View.VISIBLE);
+
+                if (item.kategori.toLowerCase().contains("lost") ||
+                        item.kategori.toLowerCase().contains("found")) {
+                    holder.badgeKategori.setBackgroundResource(R.drawable.badge_green);
+                    holder.badgeKategori.setTextColor(Color.parseColor("#4CAF50"));
+                } else if (item.kategori.toLowerCase().contains("tim")) {
+                    holder.badgeKategori.setBackgroundResource(R.drawable.badge_purple);
+                    holder.badgeKategori.setTextColor(Color.parseColor("#2196F3"));
+                } else {
+                    // Gunakan background solid untuk kategori lainnya
+                    holder.badgeKategori.setBackgroundColor(Color.parseColor("#2D3748"));
+                    holder.badgeKategori.setTextColor(Color.parseColor("#858891"));
+                }
+            } else {
+                holder.badgeKategori.setVisibility(View.GONE);
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return itemList.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+            TextView tvNamaPoster, tvTanggal, badgeKategori, tvJudul, tvDeskripsi;
+            TextView tvLikes, tvComments, tvShares;
+            ImageView imagePost, iconMore;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                tvNamaPoster = itemView.findViewById(R.id.tv_nama_poster);
+                tvTanggal = itemView.findViewById(R.id.tv_tanggal);
+                badgeKategori = itemView.findViewById(R.id.badge_kategori);
+                tvJudul = itemView.findViewById(R.id.tv_judul);
+                tvDeskripsi = itemView.findViewById(R.id.tv_deskripsi);
+                tvLikes = itemView.findViewById(R.id.tv_likes);
+                tvComments = itemView.findViewById(R.id.tv_comments);
+                tvShares = itemView.findViewById(R.id.tv_shares);
+                imagePost = itemView.findViewById(R.id.image_post);
+                iconMore = itemView.findViewById(R.id.icon_more);
+            }
+        }
+    }
+
+    // ================ METODE-METODE LAIN YANG SUDAH ADA ================
     private void showBantuanLayout() {
         setContentView(R.layout.layout_bantuan);
 
@@ -243,7 +752,7 @@ public class PengaturanActivity extends AppCompatActivity {
         if (back != null) back.setOnClickListener(v -> showPusatBantuanLayout());
     }
 
-//INI DRODOWN FAQ WOI
+    //INI DROPDOWN FAQ
     private void showFAQLayout() {
         setContentView(R.layout.layout_bantuan_faq);
 

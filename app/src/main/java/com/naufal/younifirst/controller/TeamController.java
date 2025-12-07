@@ -162,4 +162,59 @@ public class TeamController {
         Log.d(TAG, "Loading confirmed teams...");
         loadTeamsData(callback); // Gunakan method yang sama dengan filter confirm
     }
+    // Tambahkan interface ini di dalam TeamController class
+    public interface TeamDetailCallback {
+        void onSuccess(Team team);
+        void onFailure(String error);
+    }
+
+    // Tambahkan method ini ke dalam TeamController class
+    public void getTeamById(String teamId, TeamDetailCallback callback) {
+        if (teamId == null || teamId.isEmpty()) {
+            callback.onFailure("ID tim tidak valid");
+            return;
+        }
+
+        Log.d(TAG, "Fetching team detail for ID: " + teamId);
+
+        // Gunakan ApiHelper untuk fetch data tim
+        ApiHelper.fetchTeamById(teamId, new ApiHelper.ApiCallback() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    Log.d(TAG, "Team detail response: " + result);
+
+                    JSONObject response = new JSONObject(result);
+                    JSONObject teamJson = null;
+
+                    // Cari data tim dalam response
+                    if (response.has("data")) {
+                        teamJson = response.getJSONObject("data");
+                    } else if (response.has("team")) {
+                        teamJson = response.getJSONObject("team");
+                    } else {
+                        // Jika response langsung berisi data tim
+                        teamJson = response;
+                    }
+
+                    if (teamJson != null) {
+                        Team team = new Team(teamJson);
+                        callback.onSuccess(team);
+                    } else {
+                        callback.onFailure("Data tim tidak ditemukan");
+                    }
+
+                } catch (Exception e) {
+                    Log.e(TAG, "Error parsing team detail: " + e.getMessage());
+                    callback.onFailure("Error parsing data");
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.e(TAG, "Error fetching team detail: " + error);
+                callback.onFailure(error);
+            }
+        });
+    }
 }
